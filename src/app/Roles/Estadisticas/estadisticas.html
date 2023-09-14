@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../reset.css" />
+  <link rel="stylesheet" href="estadisticas.css" />
+
+  <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal@4/minimal.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+  <script defer src="../../logOut2.js" type="module"></script>
+  <script defer src="estadisticas.js" type="module"></script>
+
+</head>
+
+<body>
+
+  <div class="opciones">
+    <ul class="lista-Opciones">
+
+
+      <li>
+        <a href="../roles.html">
+          <img src="../../assets/pagina-de-inicio.png" alt="logo" class="logo" />
+          <p> Atender turno </p>
+        </a>
+      </li>
+
+
+      <li>
+        <a href="./estadisticas.html">
+          <img src="../../assets/estadisticas.png" alt="logo" class="logo" />
+          <p> Estadisticas Sedes </p>
+        </a>
+      </li>
+
+      
+
+
+      <li id="logout">
+        <a href="../Inicio-Login/index.html">
+          <img src="../../assets/cerrar-sesion.png" alt="logo" class="logo" />
+          <p>Cerrar Sesion</p>
+        </a>
+      </li>
+
+      
+
+    </ul>
+
+  </div>
+
+
+  <header>
+    <div class="cajontitulo">
+      <h1 class="titulo">Bienvenido</h1>
+    </div>
+    <div class="perfil">
+      <h1 clas class="titulo">Hola, <span id="username"></span></h1>
+      <h1 id="perfil" class="titulo"></h1>
+    </div>
+  </header>
+
+  <div class="contenido">
+    <div class="cuadroTexto">
+      <div class="valor">
+        
+
+        <button class="btn" id="boton">Descargar excel</button>
+      </div>
+    </div>
+
+    
+
+  </div>
+
+
+
+
+
+</body>
+
+</html>
