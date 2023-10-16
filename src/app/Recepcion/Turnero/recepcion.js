@@ -28,7 +28,7 @@ function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelaperson
             method: 'POST',
             body:
                 JSON.stringify({
-                    numeroderturno: numerT,
+                    numerodeturno: numerT,
                     tipodedocumento: tipoDoc,
                     numerodedocumento: cedula,
                     tipodeturno: tipoT,
@@ -66,7 +66,10 @@ let turnos = {
     A: 0, // Afiliaciones
     T: 0, // Tesorería
     SST: 0, // SST
-    G: 0  // Gerencia
+    G: 0,  // Gerencia
+    RH: 0, // Recursos Humanos
+    CO: 0, // Coordinador
+
 };
 
 boton.addEventListener('click', async ()  => {
@@ -83,19 +86,19 @@ boton.addEventListener('click', async ()  => {
         aviso("warning", "Por favor llene todos los campos");
     }
 
-    if (tipo == "Seleccion") {
+    if (tipo == "SELECCION") {
         turnos.S++;
         turnoAux = "S" + turnos.S ;
     }
-    if (tipo == "Contratacion") {
+    if (tipo == "CONTRATACION") {
         turnos.C++
         turnoAux = "C" + turnos.C ;
     }
-    if (tipo == "Afiliaciones") {
+    if (tipo == "AFILIACIONES") {
         turnos.A++
         turnoAux = "A" + turnos.A ;
     }
-    if (tipo == "Tesoreria") {
+    if (tipo == "TESORERIA") {
         turnos.T++
         turnoAux = "T" + turnos.T ;
     }
@@ -103,9 +106,17 @@ boton.addEventListener('click', async ()  => {
         turnos.SST++
         turnoAux = "SST" + turnos.SST ;
     }
-    if (tipo == "Gerencia") {
+    if (tipo == "GERENCIA") {
         turnos.G++
         turnoAux = "G" + turnos.G ;
+    }
+    if (tipo == "RECURSOS-HUMANOS") {
+        turnos.RH++
+        turnoAux = "RH" + turnos.RH ;
+    }
+    if (tipo == "COORDINADOR") {
+        turnos.CO++
+        turnoAux = "CO" + turnos.CO ;
     }
 
     await crearTurno(turnoAux, tipoDoc, cedula, tipo, "", nombre, numeroCeluar);
