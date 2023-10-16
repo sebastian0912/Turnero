@@ -1,5 +1,5 @@
 
-import { aviso } from "../../Avisos/avisos.js";
+import { aviso, avisoConfirmado } from "../../Avisos/avisos.js";
 import { urlBack } from "../../model/base.js";
 
 const uid = localStorage.getItem("idUsuario");
@@ -16,7 +16,17 @@ const sede = localStorage.getItem("sede");
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
 
-function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelapersona, celular  ){
+
+ver.addEventListener('click', () => {
+    // Abre un archivo HTML local en una nueva ventana
+    const rutaArchivo = '../visualizar/turnosV.html';
+    const nuevaVentana = window.open(rutaArchivo, 'NombreVentana', 'opciones');
+
+});
+
+
+
+function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelapersona, celular) {
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
     const jwtToken = obj.jwt;
@@ -28,7 +38,7 @@ function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelaperson
             method: 'POST',
             body:
                 JSON.stringify({
-                    numeroderturno: numerT,
+                    numerodeturno: numerT,
                     tipodedocumento: tipoDoc,
                     numerodedocumento: cedula,
                     tipodeturno: tipoT,
@@ -47,10 +57,11 @@ function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelaperson
                     throw new Error('Error en la petición POST');
                 }
             })
-            .then(responseData => {                
+            .then(responseData => {
                 console.log('Respuesta:', responseData);
             })
             .catch(error => {
+                aviso("warning", "Por favor vuelva a pedir un turno");
                 console.error('Error:', error);
             });
 
@@ -60,60 +71,86 @@ function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelaperson
     }
 }
 
-let turnos = {
-    S: 0, // Selección
-    C: 0, // Contratación
-    A: 0, // Afiliaciones
-    T: 0, // Tesorería
-    SST: 0, // SST
-    G: 0  // Gerencia
-};
+// Recupera la cadena JSON desde localStorage
+const turnosJSON = localStorage.getItem('turnos');
 
-boton.addEventListener('click', async ()  => {
+// Convierte la cadena JSON nuevamente a un objeto JavaScript
+let turnos = JSON.parse(turnosJSON);
+console.log(turnos);
+
+// Verifica si se pudo recuperar el objeto turnos
+if (turnos == null) {
+    // Si no se encuentra en localStorage, inicializa el objeto turnos
+    turnos = {
+        S: 0,
+        C: 0,
+        A: 0,
+        T: 0,
+        SST: 0,
+        G: 0,
+        RH: 0
+    };
+}
+
+boton.addEventListener('click', async () => {
     let cedula = document.querySelector('#cedula').value;
     let nombre = document.querySelector('#nombre').value;
     let tipo = document.querySelector('#tipo').value;
     let numeroCeluar = document.querySelector('#numeroCelular').value;
     let tipoDoc = document.querySelector('#tipoDoc').value;
 
-    
 
-    let turnoAux ;
+
+    let turnoAux;
     if (cedula == "" || nombre == "" || tipo == "" || numeroCeluar == "") {
         aviso("warning", "Por favor llene todos los campos");
+        return;
     }
 
-    if (tipo == "Seleccion") {
+    if (tipo == "SELECCION") {
         turnos.S++;
-        turnoAux = "S" + turnos.S ;
+        turnoAux = "S" + turnos.S;
     }
-    if (tipo == "Contratacion") {
+    if (tipo == "CONTRATACION") {
         turnos.C++
-        turnoAux = "C" + turnos.C ;
+        turnoAux = "C" + turnos.C;
     }
-    if (tipo == "Afiliaciones") {
+    if (tipo == "AFILIACIONES") {
         turnos.A++
-        turnoAux = "A" + turnos.A ;
+        turnoAux = "A" + turnos.A;
     }
-    if (tipo == "Tesoreria") {
+    if (tipo == "TESORERIA") {
         turnos.T++
-        turnoAux = "T" + turnos.T ;
+        turnoAux = "T" + turnos.T;
+    }
+    if (tipo == "RECURSOS-HUMANOS") {
+        turnos.RH++
+        turnoAux = "RH" + turnos.RH;
+    }
+    if (tipo == "GERENCIA") {
+        turnos.G++
+        turnoAux = "G" + turnos.G;
     }
     if (tipo == "SST") {
         turnos.SST++
-        turnoAux = "SST" + turnos.SST ;
-    }
-    if (tipo == "Gerencia") {
-        turnos.G++
-        turnoAux = "G" + turnos.G ;
+        turnoAux = "SST" + turnos.SST;
     }
 
     await crearTurno(turnoAux, tipoDoc, cedula, tipo, "", nombre, numeroCeluar);
 
     // su turno es 
-    aviso("Su turno es: " + turnoAux, "success");
+    let avisoTurno = await avisoConfirmado("Su turno es: " + turnoAux, "success");
 
+    if (avisoTurno) {
+        location.reload();
+    }
 
+    // Antes de guardar, convierte el objeto turnos a una cadena JSON
+    const turnosJSON = JSON.stringify(turnos);
 
-    
+    // Almacena la cadena JSON en localStorage
+    localStorage.setItem('turnos', turnosJSON);
+
+    console.log(turnos);
+
 });

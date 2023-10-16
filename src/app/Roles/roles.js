@@ -15,7 +15,10 @@ const usernameLocal = localStorage.getItem("username");
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
 
+let graficas = document.getElementById("estadisticas");
 
-
+if (perfilLocal == "GERENCIA" ) {
+    graficas.style.display = "block";
+}
 
 

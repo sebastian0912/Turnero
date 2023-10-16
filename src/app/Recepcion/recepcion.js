@@ -16,6 +16,13 @@ const sede = localStorage.getItem("sede");
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
 
+ver.addEventListener('click', () => {
+    // Abre un archivo HTML local en una nueva ventana
+    const rutaArchivo = './visualizar/turnosV.html';
+    const nuevaVentana = window.open(rutaArchivo);
+});
+
+
 async function datosTTurnos() {
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
@@ -47,50 +54,57 @@ async function datosTTurnos() {
     }
 }
 
-/* Obtener codigos de la base de datos */
-const aux = await datosTTurnos();
-let arrayCodigos = [];
+// Función para obtener los códigos de la base de datos
+async function obtenerCodigos() {
+    const aux = await datosTTurnos();
+    let arrayCodigos = [];
+    console.log(aux.turno);
+    aux.turno.forEach((c) => {
+        if (c.oficinaemisiradelturno_id == sede) {
+            arrayCodigos.push(c);
+        }
+    });
 
-aux.turno.forEach((c) => {
-    if (c.horadeIniciodeAtencion != null) {
-        arrayCodigos.push(c);
-    }
-});
-console.log(arrayCodigos);
-
-// Mostar contenido en una tabla
-arrayCodigos.forEach((c) => {
-    // si horadeIniciodeAtencion  en formato hh:mm:ss han pasado mas de 3 horas mostrar en rojo solamente 
-    const hora = c.horadeIniciodeAtencion;
-    const horaActual = new Date();
-
-    // separar hora por caracteres :
-    const horaSeparada = hora.split(':');
-    const horaActualSeparada = horaActual.toLocaleTimeString().split(':');
-
-    // convertir a numeros
-    const horaNumero = parseInt(horaSeparada[0]);
-    const horaActualNumero = parseInt(horaActualSeparada[0]);
-
-    // calcular diferencia
-    const diferencia = horaActualNumero - horaNumero;
-
-    // c.fechadecreado pasar de yyyy-mm-dd a dd/mm/yyyy
-
-    let dia = c.fechadecreado.split('-');
-    let diaTurnoCreado = new Date(dia[0], dia[1], dia[2]);
-
-    let diaActual = new Date();   
-
-    let asusentimos = "Asusentimo";
-
+    console.log(arrayCodigos);
+    
     const tabla = document.querySelector('#tablaTurnos');
     // si el turno es creado el mismo dia
-    if (sede == c.oficinaemisiradelturno_id){
+    tabla.innerHTML = "";
+
+    // Mostar contenido en una tabla
+    arrayCodigos.forEach((c) => {
+        // si horadeIniciodeAtencion  en formato hh:mm:ss han pasado mas de 3 horas mostrar en rojo solamente 
+        const hora = c.horadecreado;
+        const horaActual = new Date();
+
+        // separar hora por caracteres :
+        const horaSeparada = hora.split(':');
+        const horaActualSeparada = horaActual.toLocaleTimeString().split(':');
+
+        // convertir a numeros
+        const horaNumero = parseInt(horaSeparada[0]);
+        const horaActualNumero = parseInt(horaActualSeparada[0]);
+
+        // calcular diferencia
+        const diferencia = horaActualNumero - horaNumero;
+
+        // c.fechadecreado pasar de yyyy-mm-dd a dd/mm/yyyy
+
+        let dia = c.fechadecreado.split('-');
+        let diaTurnoCreado = new Date(dia[0], dia[1], dia[2]);
+
+        let diaActual = new Date();
+
+        let asusentimos = "Asusentimo";
+
+
+
         if (diaTurnoCreado.getDate() == diaActual.getDate()) {
-            if (diferencia > 3) {
+            if (diferencia < 3) {
                 asusentimos = " ";
-                tabla.innerHTML += `
+            }
+
+            tabla.innerHTML += `
                 <tr>
                     <td>${c.numerodedocumento}</td>
                     <td>${c.numeroderturno}</td>
@@ -100,8 +114,10 @@ arrayCodigos.forEach((c) => {
                     <td>${asusentimos}</td>
                 </tr>
                 `
-            }
-        }   
-    }
+        }
+    });
+}
 
-});
+
+setInterval(obtenerCodigos, 1000); // 1000 milisegundos = 1 segundo
+
