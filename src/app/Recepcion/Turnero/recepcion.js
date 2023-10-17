@@ -73,24 +73,17 @@ function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelaperson
 
 // Recupera la cadena JSON desde localStorage
 const turnosJSON = localStorage.getItem('turnos');
+let turnos = {
+    S: 0, // Selección
+    C: 0, // Contratación
+    A: 0, // Afiliaciones
+    T: 0, // Tesorería
+    SST: 0, // SST
+    G: 0,  // Gerencia
+    RH: 0, // Recursos Humanos
+    CO: 0, // Coordinador
 
-// Convierte la cadena JSON nuevamente a un objeto JavaScript
-let turnos = JSON.parse(turnosJSON);
-console.log(turnos);
-
-// Verifica si se pudo recuperar el objeto turnos
-if (turnos == null) {
-    // Si no se encuentra en localStorage, inicializa el objeto turnos
-    turnos = {
-        S: 0,
-        C: 0,
-        A: 0,
-        T: 0,
-        SST: 0,
-        G: 0,
-        RH: 0
-    };
-}
+};
 
 boton.addEventListener('click', async () => {
     let cedula = document.querySelector('#cedula').value;
@@ -98,8 +91,6 @@ boton.addEventListener('click', async () => {
     let tipo = document.querySelector('#tipo').value;
     let numeroCeluar = document.querySelector('#numeroCelular').value;
     let tipoDoc = document.querySelector('#tipoDoc').value;
-
-
 
     let turnoAux;
     if (cedula == "" || nombre == "" || tipo == "" || numeroCeluar == "") {
@@ -134,16 +125,29 @@ boton.addEventListener('click', async () => {
     if (tipo == "SST") {
         turnos.SST++
         turnoAux = "SST" + turnos.SST;
+        turnoAux = "SST" + turnos.SST ;
+    }
+    if (tipo == "GERENCIA") {
+        turnos.G++
+        turnoAux = "G" + turnos.G ;
+    }
+    if (tipo == "RECURSOS-HUMANOS") {
+        turnos.RH++
+        turnoAux = "RH" + turnos.RH ;
+    }
+    if (tipo == "COORDINADOR") {
+        turnos.CO++
+        turnoAux = "CO" + turnos.CO ;
     }
 
-    await crearTurno(turnoAux, tipoDoc, cedula, tipo, "", nombre, numeroCeluar);
+    crearTurno(turnoAux, tipoDoc, cedula, tipo, "", nombre, numeroCeluar);
 
     // su turno es 
     let avisoTurno = await avisoConfirmado("Su turno es: " + turnoAux, "success");
 
-    if (avisoTurno) {
+    /*if (avisoTurno) {
         location.reload();
-    }
+    }*/
 
     // Antes de guardar, convierte el objeto turnos a una cadena JSON
     const turnosJSON = JSON.stringify(turnos);

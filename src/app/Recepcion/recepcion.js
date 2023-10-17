@@ -54,16 +54,26 @@ async function datosTTurnos() {
     }
 }
 
+
+
+
 // Función para obtener los códigos de la base de datos
 async function obtenerCodigos() {
+    
     const aux = await datosTTurnos();
     let arrayCodigos = [];
+    console.log(aux);
+    
+    
+
     console.log(aux.turno);
+
     aux.turno.forEach((c) => {
         if (c.oficinaemisiradelturno_id == sede) {
             arrayCodigos.push(c);
         }
     });
+
 
     console.log(arrayCodigos);
     
@@ -119,5 +129,5 @@ async function obtenerCodigos() {
 }
 
 
-setInterval(obtenerCodigos, 1000); // 1000 milisegundos = 1 segundo
+setInterval(obtenerCodigos, 2000); // 1000 milisegundos = 1 segundo
 

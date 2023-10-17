@@ -1,5 +1,5 @@
 export let urlBack = {
-    url: 'http://10.0.0.60:4545'
+    url: 'http://10.10.20.60:4545'
 }
 
 export let usuarioR = {
