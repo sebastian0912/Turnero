@@ -112,14 +112,15 @@ async function vancanteId(id) {
     }
 }
 
-function crearVacante(Cargovacante_id, quienpublicolavacante, Localizaciondelavacante,
-    localizacionDeLaPersona, Pruebatecnica, fechadePruebatecnica, horadePruebatecnica,
-    fechadeIngreso, experiencia, numeroDeGenteRequerida, observacionVacante, empresaQueSolicita_id) {
+function crearVacante(Cargovacante_id, CargovacanteOtros, Localizaciondelavacante, zonaquenoesta, empresaUsuaria, empresausuariaquenoesta, experiencia, Pruebatecnica, fechadePruebatecnica, horadePruebatecnica, fechadeIngreso, numeroDeGenteRequerida, observacionVacante, empresaQueSolicita_id) {
 
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
     const jwtToken = obj.jwt;
     console.log(jwtToken);
+
+    console.log("fechadeIngreso: " + fechadeIngreso);
+    console.log("fechadePruebatecnica: " + fechadePruebatecnica);
 
     const urlcompleta = urlBack.url + '/publicacion/crearVacante';
     try {
@@ -128,18 +129,22 @@ function crearVacante(Cargovacante_id, quienpublicolavacante, Localizaciondelava
             body:
                 JSON.stringify({
                     Cargovacante: Cargovacante_id,
-                    quienpublicolavacante: quienpublicolavacante,
+                    CargovacanteOtros: CargovacanteOtros,
                     Localizaciondelavacante: Localizaciondelavacante,
-                    localizacionDeLaPersona: localizacionDeLaPersona,
+                    zonaquenoesta: zonaquenoesta,
+                    localizacionDeLaPersona: empresaUsuaria,
+                    empresausuariaquenoesta: empresausuariaquenoesta,
+
+                    experiencia: experiencia,
                     Pruebatecnica: Pruebatecnica,
                     fechadePruebatecnica: fechadePruebatecnica,
                     horadepruebatecnica: horadePruebatecnica,
-                    fechadeingreso: fechadeIngreso,
-                    experiencia: experiencia,
                     numeroDeGenteRequerida: numeroDeGenteRequerida,
-                    observacionVacante: observacionVacante,
+                    Observaciones: observacionVacante,
                     empresaQueSolicita: empresaQueSolicita_id,
-                    Observaciones: "",
+
+                    fechadeingreso: fechadeIngreso,
+
 
                     jwt: jwtToken
                 })
@@ -166,34 +171,39 @@ function crearVacante(Cargovacante_id, quienpublicolavacante, Localizaciondelava
     }
 }
 
-function modificarV(id, Cargovacante_id, quienpublicolavacante, Localizaciondelavacante,
-    localizacionDeLaPersona, Pruebatecnica, fechadePruebatecnica, horadePruebatecnica,
-    fechadeIngreso, experiencia, numeroDeGenteRequerida, observacionVacante, empresaQueSolicita_id) {
+function modificarV(id, Localizaciondelavacante, empresaUsuaria, fechadeIngreso, numeroDeGenteRequerida) {
 
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
     const jwtToken = obj.jwt;
     console.log(jwtToken);
 
+    let x = JSON.stringify({
+                   
+        Localizaciondelavacante: Localizaciondelavacante,
+        localizacionDeLaPersona: empresaUsuaria,
+
+        numeroDeGenteRequerida: numeroDeGenteRequerida,
+
+        fechadeIngreso: fechadeIngreso,
+
+        jwt: jwtToken
+    })
+
+    // imprimir el json bonito
+    console.log(JSON.stringify(JSON.parse(x), null, 2));
     const urlcompleta = urlBack.url + '/publicacion/editarVacante/' + id;
     try {
         fetch(urlcompleta, {
             method: 'POST',
             body:
                 JSON.stringify({
-                    Cargovacante: Cargovacante_id,
-                    quienpublicolavacante: quienpublicolavacante,
+                   
                     Localizaciondelavacante: Localizaciondelavacante,
-                    localizacionDeLaPersona: localizacionDeLaPersona,
-                    Pruebatecnica: Pruebatecnica,
-                    fechadePruebatecnica: fechadePruebatecnica,
-                    horadepruebatecnica: horadePruebatecnica,
-                    fechadeingreso: fechadeIngreso,
-                    experiencia: experiencia,
+                    localizacionDeLaPersona: empresaUsuaria,
+
                     numeroDeGenteRequerida: numeroDeGenteRequerida,
-                    observacionVacante: observacionVacante,
-                    empresaQueSolicita: empresaQueSolicita_id,
-                    Observaciones: "",
+                    fechadeIngreso: fechadeIngreso,
 
                     jwt: jwtToken
                 })
@@ -222,13 +232,11 @@ function modificarV(id, Cargovacante_id, quienpublicolavacante, Localizaciondela
 
 const tabla = document.querySelector('#tabla');
 
-if (tabla) {
-
-    tabla.innerHTML = '';
+function ejecutarCodigo() {
 
     if (responseData.message == "error") {
         aviso("No se han encontrado vacantes", "warning");
-        
+        return true; // Indicamos que la condición se cumplió
     }
 
     responseData.publicacion.forEach(async (p) => {
@@ -255,6 +263,15 @@ if (tabla) {
             </tr>
         `);
     });
+
+
+}
+
+
+
+if (tabla) {
+    tabla.innerHTML = '';
+    ejecutarCodigo();
 }
 
 
@@ -315,29 +332,15 @@ if (select && botonC) {
         }
     });
 
-    let pruebaTecnica = document.getElementById("pruebaTecnica");
-    // si selecciona si, mostrar fecha prueba y hora prueba
-    pruebaTecnica.addEventListener('change', function () {
-        if (pruebaTecnica.value == "Si") {
-            fechaPrueba.style.display = "inline-block";
-            horaPrueba.style.display = "inline-block";
-        } else {
-            fechaPrueba.style.display = "none";
-            horaPrueba.style.display = "none";
-            fechaPrueba.value = "";
-            horaPrueba.value = "";
-        }
-    });
-
     let FechaIngreso = document.getElementById("FechaIngreso");
 
     // si selecciona si, mostrar fecha prueba y hora prueba
     FechaIngreso.addEventListener('change', function () {
         if (FechaIngreso.value == "Si") {
-            fechaIngreso.style.display = "inline-block";
+            fechaIngresoHello.style.display = "inline-block";
         } else {
-            fechaIngreso.style.display = "none";
-            fechaIngreso.value = "";
+            fechaIngresoHello.style.display = "none";
+            fechaIngresoHello.value = "";
         }
     });
 
@@ -356,55 +359,52 @@ if (select && botonC) {
         // Variables para los elementos con sus respectivos id
         let tipoCargo = document.getElementById("tipoCargo");
         let otroCargo = document.getElementById("otroCargo");
+
         let empresaUsuaria = document.getElementById("empresaUsuaria");
         let otraEmpresa = document.getElementById("otraEmpresa");
+
         let zonaReq = document.getElementById("zonaReq");
         let otraZona = document.getElementById("otraZona");
+
         let pruebaTecnica = document.getElementById("pruebaTecnica");
+
         let fechaPrueba = document.getElementById("fechaPrueba");
         let horaPrueba = document.getElementById("horaPrueba");
         let FechaIngreso = document.getElementById("FechaIngreso");
-        let fechaIngreso = document.getElementById("fechaIngreso");
+        let fechaIngreso = document.getElementById("fechaIngresoHello");
         let experiencia = document.getElementById("experiencia");
         let numPersonas = document.getElementById("numPersonas");
         let observaciones = document.getElementById("observaciones");
         let empresaS = document.getElementById("empresaS");
 
-        // otroCargo no esta vacio
-        if (otroCargo.value != "") {
-            tipoCargo.value = otroCargo.value;
-        }
-
-        // otraEmpresa no esta vacio
-        if (otraEmpresa.value != "") {
-            empresaUsuaria.value = otraEmpresa.value;
-        }
-
-        // otraZona no esta vacio
-        if (otraZona.value != "") {
-            zonaReq.value = otraZona.value;
-        }
-
-        let prueba;
-        // si selecciona no en prueba tecnica, borrar fecha y hora
-        if (pruebaTecnica.value == "No") {
-            fechaPrueba.value = null;
-            horaPrueba.value = null;
-            prueba = false;
-        }
-        else {
-            prueba = true;
-        }
-
+        let auxFechaI;
         // si selecciona no en FechaIngreso, borrar fecha
         if (FechaIngreso.value == "No") {
-            fechaIngreso.value = null;
+            auxFechaI = "No aplica";
+        }
+        else {
+            auxFechaI = fechaIngreso.value;
         }
 
-        //console.log(tipoCargo.value, usernameLocal, empresaUsuaria.value, zonaReq.value, prueba, fechaPrueba.value, horaPrueba.value, FechaIngreso.value, experiencia.value, numPersonas.value, observaciones.value);
-        crearVacante(tipoCargo.value, idUsuario, empresaUsuaria.value, zonaReq.value, pruebaTecnica, fechaPrueba.value, horaPrueba.value, FechaIngreso.value, experiencia.value, numPersonas.value, observaciones.value, empresaS.value);
-        aviso("Se ha creado la vacante exitosamente", "success");
+        let auxPruebaT = true;
 
+
+        console.log("tipoCargo: " + tipoCargo.value);
+        console.log("empresaUsuaria: " + empresaUsuaria.value);
+        console.log("zonaReq: " + zonaReq.value);
+        //console.log("pruebaTecnica: " + prueba);    
+        console.log("fechaPrueba: " + fechaPrueba.value);
+        console.log("horaPrueba: " + horaPrueba.value);
+        console.log("FechaIngreso: " + auxFechaI);
+        console.log("Fecha ingreso 2: " + fechaIngreso.value);
+
+        console.log("experiencia: " + experiencia.value);
+        console.log("numPersonas: " + numPersonas.value);
+        console.log("observaciones: " + observaciones.value);
+        console.log("empresaS: " + empresaS.value);
+
+
+        crearVacante(tipoCargo.value, otroCargo.value, zonaReq.value, otraZona.value, empresaUsuaria.value, otraEmpresa.value, experiencia.value, auxPruebaT, fechaPrueba.value, horaPrueba.value, auxFechaI, numPersonas.value, observaciones.value, empresaS.value);
 
 
     });
@@ -416,6 +416,7 @@ if (botonEb) {
 
     botonEb.addEventListener('click', async function () {
         let id = document.getElementById("id");
+
         let aux = await vancanteId(id.value);
         let vacante = aux.publicacion[0];
 
@@ -426,33 +427,38 @@ if (botonEb) {
         }
 
         let Lcargos = await cargos();
+
+        // Variables para los elementos con sus respectivos id
+
+        let empresaUsuaria = document.getElementById("empresaUsuaria");
+        let otraEmpresa = document.getElementById("otraEmpresa");
+
+        let zonaReq = document.getElementById("zonaReq");
+        let otraZona = document.getElementById("otraZona");
+
+        let FechaIngreso = document.getElementById("FechaIngreso");
+        let fechaIngreso = document.getElementById("fechaIngreso");
+        let numPersonas = document.getElementById("numPersonas");
+
         let aux2L = Lcargos.publicacion;
         console.log(aux2L);
 
-        for (let i = 0; i < aux2L.length; i++) {
-            let option = document.createElement("option");
-            option.text = aux2L[i].nombredelavacante;
-            option.value = aux2L[i].nombredelavacante;
-            select.appendChild(option);
+        // PONER VISIBILIDAD DE BOTONES
+        botonEb.style.display = "none";
+        botonE.style.display = "inline-block";
+        empresaUsuaria.style.display = "inline-block";
+        zonaReq.style.display = "inline-block";
+        numPersonas.style.display = "inline-block";
+
+        if (vacante.fechadeIngreso != "No aplica") {
+            fechaIngreso.style.display = "inline-block";
+            fechaIngreso.value = vacante.fechadeIngreso;
+            FechaIngreso.value = "Si";
+        }
+        else {
+            fechaIngreso.value = "No";
         }
 
-        // agregar opcion otro al inicio
-        let option = document.createElement("option");
-        option.text = "Otro";
-        option.value = "Otro";
-        select.appendChild(option);
-
-        // if select otro, mostrar input y borrando el valor del select
-        select.addEventListener('change', function () {
-            if (select.value == "Otro") {
-                otroCargo.style.display = "inline-block";
-            } else {
-                otroCargo.style.display = "none";
-                otroCargo.value = "";
-            }
-        });
-
-        let empresaUsuaria = document.getElementById("empresaUsuaria");
         // if select otro, mostrar input y borrando el valor del select
         empresaUsuaria.addEventListener('change', function () {
             if (empresaUsuaria.value == "OTRO") {
@@ -462,22 +468,6 @@ if (botonEb) {
                 otraEmpresa.value = "";
             }
         });
-
-        let pruebaTecnica = document.getElementById("pruebaTecnica");
-        // si selecciona si, mostrar fecha prueba y hora prueba
-        pruebaTecnica.addEventListener('change', function () {
-            if (pruebaTecnica.value == "Si") {
-                fechaPrueba.style.display = "inline-block";
-                horaPrueba.style.display = "inline-block";
-            } else {
-                fechaPrueba.style.display = "none";
-                horaPrueba.style.display = "none";
-                fechaPrueba.value = "";
-                horaPrueba.value = "";
-            }
-        });
-
-        let FechaIngreso = document.getElementById("FechaIngreso");
 
         // si selecciona si, mostrar fecha prueba y hora prueba
         FechaIngreso.addEventListener('change', function () {
@@ -489,7 +479,6 @@ if (botonEb) {
             }
         });
 
-        let zonaReq = document.getElementById("zonaReq");
         // Si OTRO, mostrar input
         zonaReq.addEventListener('change', function () {
             if (zonaReq.value == "OTRO") {
@@ -501,65 +490,35 @@ if (botonEb) {
         }
         );
 
-        // Variables para los elementos con sus respectivos id
-        let tipoCargo = document.getElementById("tipoCargo");
-        let otroCargo = document.getElementById("otroCargo");
-        let otraEmpresa = document.getElementById("otraEmpresa");
-        let otraZona = document.getElementById("otraZona");
-        let fechaPrueba = document.getElementById("fechaPrueba");
-        let horaPrueba = document.getElementById("horaPrueba");
-        let fechaIngreso = document.getElementById("fechaIngreso");
-        let experiencia = document.getElementById("experiencia");
-        let numPersonas = document.getElementById("numPersonas");
-        let observaciones = document.getElementById("observaciones");
-        let empresaS = document.getElementById("empresaS");
+        let auxFechaI;
 
-        // PONER VISIBILIDAD DE BOTONES
-        botonEb.style.display = "none";
-        botonE.style.display = "inline-block";
-        tipoCargo.style.display = "inline-block";
-        empresaUsuaria.style.display = "inline-block";
-        zonaReq.style.display = "inline-block";
-        pruebaTecnica.style.display = "inline-block";
-        FechaIngreso.style.display = "inline-block";
-        experiencia.style.display = "inline-block";
-        numPersonas.style.display = "inline-block";
-        observaciones.style.display = "inline-block";
-        empresaS.style.display = "inline-block";
-
-        let auxFechaI = "Si";
-        let auxPruebaT = 'Si';
-
-        if (vacante.fechadeIngreso == null) {
+        // si selecciona no en FechaIngreso, borrar fecha
+        if (FechaIngreso.value == "No") {
             auxFechaI = "No";
         }
-        if (vacante.Pruebatecnica == false) {
-            auxPruebaT = "No";
-        }
+        else {
+            auxFechaI = vacante.fechadeIngreso;
+        }        
+
 
         // LLENAR PLACEHOLDER CON AUX segun el id
-        tipoCargo.value = vacante.Cargovacante_id;
         numPersonas.value = vacante.numeroDeGenteRequerida;
-        observaciones.value = vacante.observacionVacante;
-        empresaS.value = vacante.empresaQueSolicita_id;
-        experiencia.value = vacante.experiencia;
         zonaReq.value = vacante.localizacionDeLaPersona;
         empresaUsuaria.value = vacante.Localizaciondelavacante;
-        pruebaTecnica.value = auxPruebaT;
-        FechaIngreso.value = auxFechaI;
-        fechaPrueba.value = vacante.fechadePruebatecnica;
-        horaPrueba.value = vacante.horadePruebatecnica;
         fechaIngreso.value = vacante.fechadeIngreso;
 
-        if (auxPruebaT == "No") {
-            auxPruebaT = false;
-        }
-        else {
-            auxPruebaT = true;
-        }
+        console.log("empresaUsuaria: " + empresaUsuaria.value);
+        console.log("zonaReq: " + zonaReq.value);
+        console.log("FechaIngreso: " + auxFechaI);
+        console.log("Fecha ingreso 2: " + fechaIngreso.value);
+        console.log("numPersonas: " + numPersonas.value);
+
+
 
         botonE.addEventListener('click', async function () {
-            modificarV(id.value, tipoCargo.value, idUsuario, empresaUsuaria.value, zonaReq.value, pruebaTecnica, fechaPrueba.value, horaPrueba.value, FechaIngreso.value, experiencia.value, numPersonas.value, observaciones.value, empresaS.value);
+
+                     
+            modificarV(id.value, zonaReq.value, empresaUsuaria.value, auxFechaI, numPersonas.value);
             aviso("Se ha modificado la vacante exitosamente", "success");
         }
         );

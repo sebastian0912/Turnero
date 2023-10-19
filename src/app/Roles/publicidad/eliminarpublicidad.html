@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../reset.css" />
-    <link rel="stylesheet" href="publicidad.css" />
+    <link rel="stylesheet" href="./publicidad.css" />
 
     <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal@4/minimal.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
@@ -43,18 +43,19 @@
             </li>
 
             <li id="estadisticas">
-                <a href="../vacantes/vacantes.html">
+                <a href="./vacantes.html">
                     <img src="../../assets/trabajos.png" alt="logo" class="logo" />
                     <p> Vacantes </p>
                 </a>
             </li>
 
             <li id="estadisticas">
-                <a href="./publicidad.html">
+                <a href="../publicidad/publicidad.html">
                     <img src="../../assets/publicidad-digital.png" alt="logo" class="logo" />
                     <p> Publicidad </p>
                 </a>
             </li>
+
 
             <li id="logout">
                 <a href="../Inicio-Login/index.html">
@@ -62,7 +63,6 @@
                     <p>Cerrar Sesion</p>
                 </a>
             </li>
-
         </ul>
     </div>
 
@@ -78,27 +78,21 @@
     </header>
 
     <div class="contenido">
+        <div class="cuadroTexto">
+            <div class="valor">
+                <div class="valoresEscribir">
+                    <h1 class="titulo" style="margin-right: 10px;"> Dilegencie la siguiente información:
+                    </h1>
 
-        <div class="botones-container">
-            <a href="./Crearpublicidad.html">
-                <button class="btn2" id="boton" style="margin-top: 15px; ">Crear</button>
-            </a>
-            <a href="./editarpublicidad.html">
-                <button class="btn2" id="boton" style="margin-top: 15px;">Editar</button>
-            </a>
-            <a href="./eliminarpublicidad.html">
-                <button class="btn2" id="boton" style="margin-top: 15px; ">Eliminar</button>
-            </a>
+                    <input type="text" id="id" placeholder="Escribir el id a eliminar" class="input" />
+                    <button class="btn2" id="botonELI"> Buscar </button>
+                </div>
+            </div>
+            <h1 id="datosPersona" class="titulo" style="float: left; margin-left: 30px"></h1>
         </div>
 
-        <!-- Contenedor para el modal -->
-
-
-        <div id="card-container"></div>
-
-
-
     </div>
+
 
 </body>
 
