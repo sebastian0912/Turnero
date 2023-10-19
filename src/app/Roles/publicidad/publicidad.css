@@ -327,8 +327,8 @@ select {
 
 .botones-container {
   display: flex;
-  justify-content: center;
   align-items: center;
+  flex: 1 1 100%;
   margin-top: 10px;
   /* Ajusta el margen superior según tu preferencia */
   margin-left: 50px;

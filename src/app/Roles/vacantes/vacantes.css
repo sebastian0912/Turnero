@@ -311,15 +311,6 @@ select{
   margin: 20px 0px 10px 50px; /* Añadido margen inferior para separar botones */
 }
 
-.botones-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px; /* Ajusta el margen superior según tu preferencia */
-    margin-left: 50px;
-}
-
-
 
 
 
