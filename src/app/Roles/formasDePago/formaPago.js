@@ -20,38 +20,41 @@ if (perfilLocal == "GERENCIA") {
 }
 
 input.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    let datosFinales = [];
-    // leer archivo excel y convertirlo en una matriz de datos JSON imprimir en consola
-    reader.onload = (event) => {
-        const fileContent = event.target.result;
+    const files = event.target.files;
 
-        const workbook = XLSX.read(fileContent, { type: 'binary' });
-        const sheetName = workbook.SheetNames[0];
-        const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    if (files.length) {
+        const file = files[0];
+        const reader = new FileReader();
 
-        for (const rowData of sheetData) {
-            let fila = [
-                rowData['Nro Des'] || '0',
-                rowData['Contrato'] || '0',
-                rowData['Cedula'] || '0',
-                rowData['Nombre'] || '0',
-                rowData['Centro de Costo'] || '0',
-                rowData['Concepto'] || '0',
-                rowData['Forma de Pago'] || '0',
-                rowData['Valor'] || '0',
-                rowData['Banco'] || '0',
-                rowData['FECHA DE PAGO'] || '0'
-            ];
-            datosFinales.push(fila);
-        }
+        reader.onload = (event) => {
+            const arrayBuffer = event.target.result;
+            const data = new Uint8Array(arrayBuffer);
 
-        console.log('Datos cargados desde Excel:', datosFinales);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+
+            const rows = XLSX.utils.sheet_to_json(worksheet);
+
+            const modifiedRows = rows.map((row) => {
+                const modifiedRow = {};
+
+                for (const key in row) {
+                    if (row.hasOwnProperty(key)) {
+                        const trimmedKey = key.replace(/\s+/g, '').trim();
+                        modifiedRow[trimmedKey] = row[key] !== null ? row[key] : 'N/A';
+                    }
+                }
+                return modifiedRow;
+            });
+
+            // Hacer algo con modifiedRows, por ejemplo, almacenarlo en una variable
+            guardarDatos(modifiedRows);
+        };
+
+        reader.readAsArrayBuffer(file);
     }
-    reader.readAsBinaryString(file);
-
-    guardarDatos(datosFinales);
+    
 
 });
 
