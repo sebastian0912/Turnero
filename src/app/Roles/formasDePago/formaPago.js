@@ -117,11 +117,10 @@ boton.addEventListener('click', async () => {
 
     // ordenar por 
 
-    if (datosExtraidos.message == "error") {
-        aviso("No se han encontrado vacantes", "warning");
-        return true; // Indicamos que la condición se cumplió
+    if (datosExtraidos.message == "No se encontró el número de cédula") {
+        aviso("No se encontró el número de cédula en las formas de pago", "warning");
+        return;
     }
-
     const tabla = document.querySelector('#tabla');
 
     tabla.innerHTML = '';
@@ -205,7 +204,7 @@ boton.addEventListener('click', async () => {
                     console.log(formadePago);
                     console.log(fechadepago);
 
-                    modificarV(id.value, datos.banco, datos.nombre, datos.centrodecosto, datos.concepto, datos.contrato, fechadepago, formadePago, datos.valor) 
+                    modificarV(id.value, datos.banco, datos.nombre, datos.centrodecosto, datos.concepto, datos.contrato, fechadepago, formadePago, datos.valor)
 
 
                 });

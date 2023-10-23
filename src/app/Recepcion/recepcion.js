@@ -105,7 +105,7 @@ async function obtenerCodigos() {
 
         let diaActual = new Date();
 
-        let asusentimos = "Asusentimo";
+        let asusentimos = "No";
 
 
 

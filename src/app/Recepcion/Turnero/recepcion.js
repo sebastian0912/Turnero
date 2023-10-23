@@ -145,16 +145,16 @@ boton.addEventListener('click', async () => {
     // su turno es 
     let avisoTurno = await avisoConfirmado("Su turno es: " + turnoAux, "success");
 
-    /*if (avisoTurno) {
-        location.reload();
-    }*/
-
+    
     // Antes de guardar, convierte el objeto turnos a una cadena JSON
     const turnosJSON = JSON.stringify(turnos);
-
+    
     // Almacena la cadena JSON en localStorage
     localStorage.setItem('turnos', turnosJSON);
-
+    
     console.log(turnos);
-
+    if (avisoTurno) {
+        location.reload();
+    }
+    
 });

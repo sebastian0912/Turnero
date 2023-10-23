@@ -12,10 +12,10 @@ signInform.addEventListener('submit', async (e) => {
     localStorage.setItem('username', values.primer_nombre + ' ' + values.primer_apellido);
     localStorage.setItem('sede', values.sucursalde);
 
-    if (values.rol != 'RECEPCION' && values.numero_de_documento != null)  {           
+    if (values.rol != 'RECEPCION' && values.numero_de_documento != null && values.primer_nombre !=  'KAREN' && values.primer_apellido != "RIQUETT" )  {           
         window.location.href = "../Roles/roles.html";
     } 
-    else if (values.rol == 'RECEPCION' && values.numero_de_documento != null) {
+    else if (values.primer_nombre ==  'KAREN' && values.primer_apellido == "RIQUETT" ) {
         window.location.href = "../Recepcion/recepcion.html";
     } else {
         aviso('No tienes acceso todavia, comunicate con el administrador', 'error');
