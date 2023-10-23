@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../reset.css" />
+  <link rel="stylesheet" href="atender.css" />
+
+  <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal@4/minimal.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+  <script defer src="../../logOut2.js" type="module"></script>
+  <script defer src="atender.js" type="module"></script>
+
+</head>
+
+<body>
+
+  <div class="opciones">
+    <ul class="lista-Opciones">
+
+
+      <li>
+        <a href="../recepcion.html">
+          <img src="../../assets/pagina-de-inicio.png" alt="logo" class="logo" />
+          <p> Recepción </p>
+        </a>
+      </li>
+
+
+      <li>
+        <a href="../Turnero/recepcion.html">
+          <img src="../../assets/giratorio.png" alt="logo" class="logo" />
+          <p> Turno </p>
+        </a>
+      </li>
+
+      <li id="ver">
+        <img src="../../assets/televisor.png" alt="logo" class="logo" />
+        <p> Visualizar Turnos </p>
+      </li>
+
+
+      <li>
+        <a href="./atender.html">
+          <img src="../../assets/delegar.png" alt="logo" class="logo" />
+          <p> Atender turno </p>
+        </a>
+      </li>
+
+      <li id="logout">
+          <img src="../../assets/cerrar-sesion.png" alt="logo" class="logo" />
+          <p>Cerrar Sesion</p>
+      </li>
+
+
+
+    </ul>
+
+  </div>
+
+
+  <header>
+    <div class="cajontitulo">
+      <h1 class="titulo">Bienvenido</h1>
+    </div>
+    <div class="perfil">
+      <h1 clas class="titulo">Hola, <span id="username"></span></h1>
+      <h1 id="perfil" class="titulo"></h1>
+    </div>
+  </header>
+
+  <div class="contenido">
+    <div class="cuadroTexto">
+      <div class="valor">
+        <h1 class="titulo" style="text-align: left;"> Diligencie los campos </h1>
+        <input type="text" id="turno" placeholder="Numero Turno" class="input2" />
+        <input type="text" id="comentario" placeholder="Comentario" class="input2" />
+
+        <button class="btn" id="boton">Finalizar turno</button>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+
+
+
+</body>
+
+</html>

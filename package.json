@@ -1,6 +1,6 @@
 {
-  "name": "turnero2",
-  "version": "1.0.4",
+  "name": "turnero",
+  "version": "1.0.6",
   "description": "GestionEmpresa",
   "main": "main.js",
   "repository": "https://github.com/sebastian0912/Turnero.git",
@@ -41,7 +41,7 @@
     "electron": "^25.2.0",
     "electron-builder": "^24.6.4"
   },
-
+  
   "dependencies": {
     "electron-updater": "^6.1.4"
   }
