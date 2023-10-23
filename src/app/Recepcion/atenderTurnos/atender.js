@@ -1,6 +1,6 @@
 
-import { aviso } from "../Avisos/avisos.js";
-import { urlBack } from "../model/base.js";
+import { aviso } from "../../Avisos/avisos.js";
+import { urlBack } from "../../model/base.js";
 
 const uid = localStorage.getItem("idUsuario");
 

@@ -125,7 +125,6 @@ boton.addEventListener('click', async () => {
     if (tipo == "SST") {
         turnos.SST++
         turnoAux = "SST" + turnos.SST;
-        turnoAux = "SST" + turnos.SST ;
     }
     if (tipo == "GERENCIA") {
         turnos.G++
@@ -153,8 +152,6 @@ boton.addEventListener('click', async () => {
     localStorage.setItem('turnos', turnosJSON);
     
     console.log(turnos);
-    if (avisoTurno) {
-        location.reload();
-    }
+
     
 });
