@@ -1,0 +1,452 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,600;1,400;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,1000;1,1000&display=swap');
+
+body {
+  background-size: 100%;
+  min-width: 100vh;
+  min-height: 100vh;
+  background: linear-gradient(120deg, #eeeeee 50%, #FEBB2E 40%);
+  background-repeat: no-repeat;
+  font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.diasT {
+  width: 100%;
+  margin: 20px 0 10px 30px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14pt;
+  font-weight: 400;
+}
+
+.dias {
+  text-align: justify;
+  margin: 0px 0 10px 120px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 16pt;
+  font-weight: 600;
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+
+
+.opciones {
+  width: 20%;
+  height: 100%;
+  position: relative;
+  float: left;
+
+}
+
+.lista-Opciones {
+  margin: 100px 0 0 50px;
+}
+
+li {
+  list-style: none;
+  height: 30px;
+  width: 100%;
+  padding: 20px 0 10px 30px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+li:hover {
+  background: #bbd0ff;
+  color: #000000;
+  transform: scale(1.1);
+  border-left: #1157fb 8px solid;
+}
+
+
+li:nth-child(5) {
+  background: #bbd0ff;
+  color: #000000;
+  transform: scale(1.1);
+  border-left: #1157fb 8px solid;
+}
+
+.p {
+  margin: 0;
+  /* Ajusta según sea necesario */
+  padding: 0;
+  /* Ajusta según sea necesario */
+}
+
+
+.logo {
+  width: 40px;
+  height: 40px;
+  padding: 0 10px 0 0;
+  margin-top: -10px;
+}
+
+.boton {
+  position: absolute;
+  background-color: #1157fb;
+  margin-top: -110px;
+  height: 149px;
+  width: 240px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+header {
+  margin-top: 0px;
+  height: 50px;
+  width: 80%;
+  float: right;
+}
+
+.titulo {
+  flex: 1 1 100%;
+  padding: 20px 20px 0px 0px;
+  text-align: right;
+  color: #000000;
+}
+
+.cajontitulo {
+  height: 50px;
+  width: 60%;
+  float: left;
+}
+
+.cajontitulo .titulo {
+  float: left;
+  padding-left: 50px;
+  padding-top: 20px;
+  font-size: 25pt;
+  font-weight: 600;
+  /*font-style: italic;*/
+}
+
+span {
+  font-weight: 600;
+}
+
+.titulo:nth-of-type(2) {
+  font-size: 10pt;
+  font-weight: 500;
+  margin-top: -15px;
+  font-style: italic;
+}
+
+
+.contenido {
+  max-width: 78%;
+  width: 80%;
+  height: 100%;
+  float: right;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.cuadro {
+  width: 250px;
+  height: 150px;
+  background: #ffffff;
+  margin: 50px -60px 0 80px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 12px 8px rgba(0, 0, 0, 0.1);
+  font-size: 14pt;
+  font-weight: 700;
+}
+
+.titulo-Opciones {
+  padding: 0 20px 0 20px;
+  font-size: 12pt;
+  margin-top: 10px;
+}
+
+.tabla {
+  width: 1000px;
+  height: 5 00px;
+  overflow: auto;
+  max-height: 50%;
+  background: #ffffff;
+  margin: 50px 0 0 80px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 12px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tabla-contenido {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 12pt;
+  text-align: center;
+}
+
+.tabla-contenido tr:nth-child(even) {
+  background-color: #f2f2f2;
+  /* color para filas pares */
+}
+
+.tabla-contenido tr:nth-child(odd) {
+  background-color: #cccccc;
+  /* color para filas impares */
+}
+
+th,
+td {
+  vertical-align: middle;
+}
+
+
+th {
+  border-bottom: #b9b9b9 1px solid;
+  padding: 15px;
+  background: #5e6a75;
+  color: #ffffff;
+  font-weight: 400;
+}
+
+tr {
+  height: 40px;
+
+}
+
+/* Aplicar escala solo al cuarto cuadro utilizando :nth-child */
+.cuadroTlinea :hover {
+  transform: scale(1.1);
+  transition: transform 0.3s;
+  /* Agregar transición para suavizar el cambio */
+  cursor: pointer;
+}
+
+.cuadroSlinea .cuadro:nth-child(3):hover {
+  transform: scale(1.1);
+  transition: transform 0.3s;
+  /* Agregar transición para suavizar el cambio */
+}
+
+
+.cuadroTexto {
+  width: 800px;
+  height: auto;
+  /* Cambiado a "auto" para adaptarse al contenido */
+  background: #ffffff;
+  margin: 50px auto;
+  /* Centrado horizontalmente */
+  border-radius: 15px;
+  box-shadow: 0px 0px 12px 8px rgba(0, 0, 0, 0.1);
+  font-size: 16pt;
+  font-weight: 700;
+  display: flex;
+  /* Añadido display:flex para el contenedor principal */
+  flex-wrap: wrap;
+  /* Habilitar flex-wrap para envolver elementos */
+  justify-content: space-between;
+  /* Espaciado uniforme entre elementos */
+  padding: 0 20px 0 20px;
+}
+
+.valor {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* Espaciado uniforme entre elementos */
+}
+
+.valor .titulo {
+  margin: 5px 0 30px 0;
+  flex: 1 1 100%;
+  /* Para ocupar todo el ancho disponible */
+}
+
+select {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  margin: 0 0 20px 0;
+  flex: 1 1 calc(50% - 40px);
+  /* Distribuir el ancho de dos elementos en una fila */
+}
+
+.select-wrap,
+.input-wrap {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 calc(50% - 40px);
+  /* Distribuir el ancho de dos elementos en una fila */
+}
+
+.input {
+  font-family: 'Poppins', sans-serif;
+  width: 300px;
+  height: 40px;
+  padding: 5px;
+  margin-left: 50px;
+  font-size: 16px;
+  border: 1px solid #cccccc;
+  /* Cambiado border-width y border-style a un solo valor */
+  background-color: #ffffff;
+  border-radius: 11px;
+  box-shadow: 0px 0px 5px rgba(66, 66, 66, 0.75);
+}
+
+.input:focus {
+  outline: none;
+}
+
+.btn,
+.btn2 {
+  height: 50px;
+  width: 85%;
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+  background-color: #0066cc;
+  padding: 10px 30px;
+  border: 2px solid #0066cc;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  /* Cambiado valores de box-shadow */
+  border-radius: 50px;
+  transition: 1000ms;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  margin: 20px 0px 10px 50px;
+  /* Añadido margen inferior para separar botones */
+}
+
+.botones-container {
+  display: flex;
+  align-items: center;
+  flex: 1 1 100%;
+  margin-top: 10px;
+  /* Ajusta el margen superior según tu preferencia */
+  margin-left: 50px;
+}
+
+
+
+
+
+
+
+
+
+/* Contenedor de las tarjetas */
+#card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  /* Espaciado entre tarjetas */
+  padding: 20px;
+  justify-content: center;
+  margin-left: 50px;
+}
+
+/* Estilos básicos para las tarjetas */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  /* Esquinas redondeadas */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Sombra sutil */
+  width: 300px;
+  /* Ancho fijo, puedes cambiarlo o hacerlo responsivo con max-width y flexbox */
+  overflow: hidden;
+  /* Esconde cualquier contenido que se desborde del borde redondeado */
+  transition: transform 0.3s;
+  /* Transición suave para el efecto hover */
+  background-color: #eeeeee;
+}
+
+/* Efecto hover para las tarjetas */
+.card:hover {
+  transform: translateY(-10px);
+  /* Mueve la tarjeta hacia arriba un poco cuando se pasa el ratón */
+}
+
+/* Estilo para la imagen en la tarjeta */
+.card-img-top {
+  width: 100%;
+  height: 200px;
+  /* Mantiene la proporción de la imagen */
+}
+
+/* Contenedor para el cuerpo de la tarjeta */
+.card-body {
+  padding: 20px;
+}
+
+/* Estilo para el título de la tarjeta */
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 15px;
+}
+
+/* Estilo para el texto de la tarjeta */
+.card-text {
+  font-size: 1rem;
+  color: #000000;
+  /* Color de texto más suave */
+}
+
+/* Estilo para los links en las tarjetas */
+.card-text a {
+  color: #007BFF;
+  /* Color azul, puedes cambiarlo a cualquier color que prefieras */
+  text-decoration: none;
+}
+
+/* Efecto hover para los links en las tarjetas */
+.card-text a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos para el modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}

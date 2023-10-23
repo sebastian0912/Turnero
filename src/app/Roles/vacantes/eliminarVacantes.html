@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../reset.css" />
+    <link rel="stylesheet" href="vacantes.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal@4/minimal.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+    <script defer src="../../logOut2.js" type="module"></script>
+    <script defer src="vacantes.js" type="module"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="opciones">
+        <ul class="lista-Opciones">
+
+            <li>
+                <a href="../roles.html">
+                    <img src="../../assets/pagina-de-inicio.png" alt="logo" class="logo" />
+                    <p> Atender turno </p>
+                </a>
+            </li>
+
+
+            <li style="display: none;" id="estadisticas">
+                <a href="../Estadisticas/estadisticas.html">
+                    <img src="../../assets/estadisticas.png" alt="logo" class="logo" />
+                    <p> Estadisticas Sedes </p>
+                </a>
+            </li>
+
+            <li id="estadisticas">
+                <a href="../formasDePago/formaPago.html">
+                    <img src="../../assets/pago-web.png" alt="logo" class="logo" />
+                    <p> Formas de pago </p>
+                </a>
+            </li>
+
+            <li id="estadisticas">
+                <a href="./vacantes.html">
+                    <img src="../../assets/trabajos.png" alt="logo" class="logo" />
+                    <p> Vacantes </p>
+                </a>
+            </li>
+
+            <li id="estadisticas">
+                <a href="../publicidad/publicidad.html">
+                    <img src="../../assets/publicidad-digital.png" alt="logo" class="logo" />
+                    <p> Publicidad </p>
+                </a>
+            </li>
+
+            <li id="">
+                <a href="../Seleccion/seleccion.html">
+                    <img src="../../assets/delegar.png" alt="logo" class="logo" />
+                    <p> Seleccion </p>
+                </a>
+            </li>
+
+            <li id="">
+                <a href="../contratacion/contratacion.html">
+                    <img src="../../assets/contratacion.png" alt="logo" class="logo" />
+                    <p> Contratacion </p>
+                </a>
+            </li>
+
+
+            <li id="logout">
+                <a href="../Inicio-Login/index.html">
+                    <img src="../../assets/cerrar-sesion.png" alt="logo" class="logo" />
+                    <p>Cerrar Sesion</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <header>
+        <div class="cajontitulo">
+            <h1 class="titulo">Bienvenido</h1>
+        </div>
+        <div class="perfil">
+            <h1 clas class="titulo">Hola, <span id="username"></span></h1>
+            <h1 id="perfil" class="titulo"></h1>
+        </div>
+    </header>
+
+    <div class="contenido">
+        <div class="cuadroTexto">
+            <div class="valor">
+                <div class="valoresEscribir">
+                    <h1 class="titulo" style="margin-right: 10px;"> Dilegencie la siguiente información:
+                    </h1>
+
+                    <input type="text" id="id" placeholder="Escribir el id a eliminar" class="input" />
+                    <button class="btn2" id="botonELI"> Buscar </button>
+                </div>
+            </div>
+            <h1 id="datosPersona" class="titulo" style="float: left; margin-left: 30px"></h1>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

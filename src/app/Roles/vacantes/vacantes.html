@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../reset.css" />
+    <link rel="stylesheet" href="vacantes.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal@4/minimal.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+    <script defer src="../../logOut2.js" type="module"></script>
+    <script defer src="vacantes.js" type="module"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="opciones">
+        <ul class="lista-Opciones">
+
+            <li>
+                <a href="../roles.html">
+                    <img src="../../assets/pagina-de-inicio.png" alt="logo" class="logo" />
+                    <p> Atender turno </p>
+                </a>
+            </li>
+
+
+            <li style="display: none;" id="estadisticas">
+                <a href="../Estadisticas/estadisticas.html">
+                    <img src="../../assets/estadisticas.png" alt="logo" class="logo" />
+                    <p> Estadisticas Sedes </p>
+                </a>
+            </li>
+
+            <li id="estadisticas">
+                <a href="../formasDePago/formaPago.html">
+                    <img src="../../assets/pago-web.png" alt="logo" class="logo" />
+                    <p> Formas de pago </p>
+                </a>
+            </li>
+
+            <li id="estadisticas">
+                <a href="./vacantes.html">
+                    <img src="../../assets/trabajos.png" alt="logo" class="logo" />
+                    <p> Vacantes </p>
+                </a>
+            </li>
+
+            <li id="estadisticas">
+                <a href="../publicidad/publicidad.html">
+                    <img src="../../assets/publicidad-digital.png" alt="logo" class="logo" />
+                    <p> Publicidad </p>
+                </a>
+            </li>
+
+            <li id="">
+                <a href="../Seleccion/seleccion.html">
+                    <img src="../../assets/delegar.png" alt="logo" class="logo" />
+                    <p> Seleccion </p>
+                </a>
+            </li>
+
+            <li id="">
+                <a href="../contratacion/contratacion.html">
+                    <img src="../../assets/contratacion.png" alt="logo" class="logo" />
+                    <p> Contratacion </p>
+                </a>
+            </li>
+
+            <li id="logout">
+                <a href="../Inicio-Login/index.html">
+                    <img src="../../assets/cerrar-sesion.png" alt="logo" class="logo" />
+                    <p>Cerrar Sesion</p>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+
+    <header>
+        <div class="cajontitulo">
+            <h1 class="titulo">Bienvenido</h1>
+        </div>
+        <div class="perfil">
+            <h1 clas class="titulo">Hola, <span id="username"></span></h1>
+            <h1 id="perfil" class="titulo"></h1>
+        </div>
+    </header>
+
+    <div class="contenido">
+
+        <div class="tabla" id="oculto">
+            <table class="tabla-contenido">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cargo vacante</th>
+                        <th>Quién Publicó la Vacante</th>
+                        <th>Empresa que solicita</th>
+                        <th>Fecha de Ingreso</th>
+                        <th>Fecha de Prueba Técnica</th>
+                        <th>Localización de la vacante</th>
+                        <th>Fecha Publicado</th>
+                        <th>Localización de la Persona</th>
+                        <th>Número de Gente Requerida</th>
+                        <th>Prueba técnica</th>
+                        <th>Experiencia</th>
+                        <th>Observación de la Vacante</th>
+                        <th>Observaciones</th>
+                        <th>Hora de Prueba Técnica</th>
+
+                    </tr>
+                </thead>
+                <tbody id="tabla"> </tbody>
+            </table>
+        </div>
+        <div class="botones-container">
+            <a href="./Crearvacantes.html">
+                <button class="btn2" id="boton" style="margin-top: 15px; ">Crear</button>
+            </a>
+            <a href="./editarVacantes.html">
+                <button class="btn2" id="boton" style="margin-top: 15px;">Editar</button>
+            </a>
+            <a href="./eliminarVacantes.html">
+                <button class="btn2" id="boton" style="margin-top: 15px; ">Eliminar</button>
+            </a>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

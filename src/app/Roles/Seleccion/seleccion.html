@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../reset.css" />
+    <link rel="stylesheet" href="seleccion.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal@4/minimal.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+    <script defer src="../../logOut2.js" type="module"></script>
+    <script defer src="seleccion.js" type="module"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="opciones">
+        <ul class="lista-Opciones">
+
+            <li>
+                <a href="../roles.html">
+                    <img src="../../assets/pagina-de-inicio.png" alt="logo" class="logo" />
+                    <p> Atender turno </p>
+                </a>
+            </li>
+
+
+            <li style="display: none;" id="estadisticas">
+                <a href="../Estadisticas/estadisticas.html">
+                    <img src="../../assets/estadisticas.png" alt="logo" class="logo" />
+                    <p> Estadisticas Sedes </p>
+                </a>
+            </li>
+
+            <li id="estadisticas">
+                <a href="../formasDePago/formaPago.html">
+                    <img src="../../assets/pago-web.png" alt="logo" class="logo" />
+                    <p> Formas de pago </p>
+                </a>
+            </li>
+
+            <li id="estadisticas">
+                <a href="./vacantes.html">
+                    <img src="../../assets/trabajos.png" alt="logo" class="logo" />
+                    <p> Vacantes </p>
+                </a>
+            </li>
+
+            <li id="estadisticas">
+                <a href="../publicidad/publicidad.html">
+                    <img src="../../assets/publicidad-digital.png" alt="logo" class="logo" />
+                    <p> Publicidad </p>
+                </a>
+            </li>
+
+            <li id="">
+                <a href="./seleccion.html">
+                    <img src="../../assets/delegar.png" alt="logo" class="logo" />
+                    <p> Seleccion </p>
+                </a>
+            </li>
+
+            <li id="">
+                <a href="../contratacion/contratacion.html">
+                    <img src="../../assets/contratacion.png" alt="logo" class="logo" />
+                    <p> Contratacion </p>
+                </a>
+            </li>
+
+
+
+
+            <li id="logout">
+                <a href="../Inicio-Login/index.html">
+                    <img src="../../assets/cerrar-sesion.png" alt="logo" class="logo" />
+                    <p>Cerrar Sesion</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <header>
+        <div class="cajontitulo">
+            <h1 class="titulo">Bienvenido</h1>
+        </div>
+        <div class="perfil">
+            <h1 clas class="titulo">Hola, <span id="username"></span></h1>
+            <h1 id="perfil" class="titulo"></h1>
+        </div>
+    </header>
+
+    <div class="contenido">
+        <div class="cuadroTexto">
+            <div class="valor">
+                <div class="valoresEscribir">
+                    <h1 class="titulo" style="margin-right: 10px;"> Dilegencie la siguiente información:
+                    </h1>
+
+                    <input type="text" id="nombreEvaluador" placeholder="NOMBRE DEL EVALUADOR" class="input">
+                    <input type="text" id="validacionCedula" placeholder="Validacion de la cedula frente a la temporal"
+                        class="input">
+                    <input type="text" id="eps" placeholder="EPS" class="input">
+                    <input type="text" id="afp" placeholder="AFP" class="input">
+                    <input type="text" id="policivos" placeholder="POLICIVOS" class="input">
+                    <input type="text" id="procuraduria" placeholder="PROCURADURIA" class="input">
+                    <input type="text" id="contraloria" placeholder="CONTRALORIA" class="input">
+                    <input type="text" id="ramaJudicial" placeholder="RAMA JUDICIAL" class="input">
+                    <input type="text" id="medidasCorrectivas" placeholder="MEDIDAS CORRECTIVAS" class="input">
+                    <input type="text" id="tiempoViveMunicipio" placeholder="TIEMPO QUE VIVE EN EL MUNICIPIO"
+                        class="input">
+                    <input type="text" id="areaAplica" placeholder="Área para la que aplica" class="input">
+                    <input type="text" id="postulante" placeholder="POSTULANTE" class="input">
+                    <input type="text" id="centroCosto" placeholder="CENTRO DE COSTO ENTREVISTA O PRUEBA TECNICA"
+                        class="input">
+                    <input type="text" id="cargo" placeholder="CARGO" class="input">
+                    <input type="text" id="areaEntrevista" placeholder="ÁREA EN LA QUE PRESENTARA LA ENTREVISTA"
+                        class="input"> <br>
+                    <label style="margin-left: 50px; margin-bottom: 20px;">Fecha prueba tecnica</label> <br> <br>
+
+                    <select id="mes" class="input" style="width: 310px;">
+                        <option value="01">Enero</option>
+                        <option value="02">Febrero</option>
+                        <option value="03">Marzo</option>
+                        <option value="04">Abril</option>
+                        <option value="05">Mayo</option>
+                        <option value="06">Junio</option>
+                        <option value="07">Julio</option>
+                        <option value="08">Agosto</option>
+                        <option value="09">Septiembre</option>
+                        <option value="10">Octubre</option>
+                        <option value="11">Noviembre</option>
+                        <option value="12">Diciembre</option>
+                    </select>
+
+                    <select id="dia" class="input" style="width: 310px;">
+                        <option value="01">1</option>
+                    </select>
+
+                    <input type="time" id="horaPruebaEntrevista" class="input">
+                    <input type="text" id="direccionEmpresa"
+                        placeholder="DIRECCION O INDICACION PARA LLEGAR A LA EMPRESA" class="input">
+                    <input type="text" id="ips" placeholder="IPS" class="input">
+                    <input type="text" id="laboratorios" placeholder="LABORATORIOS" class="input">
+                    <input type="text" id="ipsLab" placeholder="IPSLAB" class="input">
+                    <input type="text" id="empresaUsuaria" placeholder="EMPRESA USUARIA" class="input">
+                    <input type="text" id="cargoEmpresa" placeholder="CARGO" class="input"> <br>
+                    <label style="margin-left: 50px; margin-bottom: 20px;">Fecha ingreso</label> <br> <br>
+                    <select id="mes" class="input" style="width: 310px;">
+                        <option value="01">Enero</option>
+                        <option value="02">Febrero</option>
+                        <option value="03">Marzo</option>
+                        <option value="04">Abril</option>
+                        <option value="05">Mayo</option>
+                        <option value="06">Junio</option>
+                        <option value="07">Julio</option>
+                        <option value="08">Agosto</option>
+                        <option value="09">Septiembre</option>
+                        <option value="10">Octubre</option>
+                        <option value="11">Noviembre</option>
+                        <option value="12">Diciembre</option>
+                    </select>
+
+                    <select id="dia" class="input" style="width: 310px;">
+                        <option value="01">1</option>
+                    </select>
+
+                    <input type="text" id="salario" placeholder="SALARIO" class="input">
+                    <input type="text" id="auxTransporte" placeholder="AUXTRANSPORTE" class="input">
+                    <input type="text" id="rodamiento" placeholder="RODAMIENTO" class="input">
+                    <input type="text" id="auxMovilidad" placeholder="AUX MOVILIDAD" class="input">
+                    <input type="text" id="bonificacion" placeholder="BONIFICACION" class="input">
+
+                    <button class="btn2" id="botonC">Cargar</button>
+
+                </div>
+            </div>
+            <h1 id="datosPersona" class="titulo" style="float: left; margin-left: 30px"></h1>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

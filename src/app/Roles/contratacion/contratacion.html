@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../reset.css" />
+    <link rel="stylesheet" href="contratacion.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal@4/minimal.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+    <script defer src="../../logOut2.js" type="module"></script>
+    <script defer src="contratacion.js" type="module"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="opciones">
+        <ul class="lista-Opciones">
+
+            <li>
+                <a href="../roles.html">
+                    <img src="../../assets/pagina-de-inicio.png" alt="logo" class="logo" />
+                    <p> Atender turno </p>
+                </a>
+            </li>
+
+
+            <li style="display: none;" id="estadisticas">
+                <a href="../Estadisticas/estadisticas.html">
+                    <img src="../../assets/estadisticas.png" alt="logo" class="logo" />
+                    <p> Estadisticas Sedes </p>
+                </a>
+            </li>
+
+            <li id="estadisticas">
+                <a href="../formasDePago/formaPago.html">
+                    <img src="../../assets/pago-web.png" alt="logo" class="logo" />
+                    <p> Formas de pago </p>
+                </a>
+            </li>
+
+            <li id="estadisticas">
+                <a href="./vacantes.html">
+                    <img src="../../assets/trabajos.png" alt="logo" class="logo" />
+                    <p> Vacantes </p>
+                </a>
+            </li>
+
+            <li id="estadisticas">
+                <a href="../publicidad/publicidad.html">
+                    <img src="../../assets/publicidad-digital.png" alt="logo" class="logo" />
+                    <p> Publicidad </p>
+                </a>
+            </li>
+            <li id="">
+                <a href="../Seleccion/seleccion.html">
+                    <img src="../../assets/delegar.png" alt="logo" class="logo" />
+                    <p> Seleccion </p>
+                </a>
+            </li>
+
+            <li id="">
+                <a href="./contratacion.html">
+                    <img src="../../assets/contratacion.png" alt="logo" class="logo" />
+                    <p> Contratacion </p>
+                </a>
+            </li>
+
+
+
+
+            <li id="logout">
+                <a href="../Inicio-Login/index.html">
+                    <img src="../../assets/cerrar-sesion.png" alt="logo" class="logo" />
+                    <p>Cerrar Sesion</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <header>
+        <div class="cajontitulo">
+            <h1 class="titulo">Bienvenido</h1>
+        </div>
+        <div class="perfil">
+            <h1 clas class="titulo">Hola, <span id="username"></span></h1>
+            <h1 id="perfil" class="titulo"></h1>
+        </div>
+    </header>
+
+    <div class="contenido">
+        <div class="cuadroTexto">
+            <div class="valor">
+                <div class="valoresEscribir">
+                    <h1 class="titulo" style="margin-right: 10px;"> Dilegencie la siguiente información:
+                    </h1>
+
+                    <!-- Entradas para imágenes -->
+                    <input type="file" id="foto" class="boton" accept="image/*" placeholder="Foto" >
+                    <button class="input" id="boton" style="width: 315px;">Foto</button>
+
+                    <input type="file" id="firma" class="boton" accept="image/*" placeholder="Firma">
+                    <button class="input" id="boton" style="width: 315px;">Firma</button>
+
+                    <input type="file" id="huella" class="boton" accept="image/*" placeholder="Huella">
+                    <button class="input" id="boton" style="width: 315px;">Huella</button>
+
+                    <!-- Otros campos de entrada -->
+                    <input type="text" id="sitioContratacion" class="input" placeholder="Sitio que Contratación">
+                    <input type="text" id="personaContrata" class="input" placeholder="Persona que Contrata">
+                    <input type="text" id="eps" class="input" placeholder="EPS">
+                    <input type="text" id="epsTrasladar" class="input" placeholder="EPS a Trasladar">
+                    
+                    <input type="file" id="afp" class="boton" accept=".pdf" placeholder="AFP (PDF)">
+                    <button class="input" id="boton" style="width: 315px;">AFP</button>
+
+                    <input type="file" id="afc" class="boton" accept=".pdf" placeholder="AFC (PDF)">
+                    <button class="input" id="boton" style="width: 315px;">AFC</button>
+
+                    <input type="file" id="verificacionProcuraduria" class="boton" accept=".pdf"
+                        placeholder="Verificación Procuraduría (PDF)">
+                    <button class="input" id="boton" style="width: 315px;">Verificación Procuraduría</button>
+
+                    <input type="file" id="verificacionContraloria" class="boton" accept=".pdf"
+                        placeholder="Verificación Contraloría (PDF)">
+                    <button class="input" id="boton" style="width: 315px;">Verificación Contraloría</button>
+
+                    <input type="file" id="ofac" class="boton" accept=".pdf" placeholder="OFAC o Lista Clinton (PDF)">
+                    <button class="input" id="boton" style="width: 315px;">OFAC o Lista Clinton</button>
+
+                    <input type="file" id="policivos" class="boton" accept=".pdf" placeholder="Policivos (PDF)">
+                    <button class="input" id="boton" style="width: 315px;">Policivos</button>
+
+                    <input type="file" id="adress" class="boton" accept=".pdf" placeholder="Adress (PDF)">
+                    <button class="input" id="boton" style="width: 315px;">Adress</button>
+
+                    <input type="file" id="sisben" class="boton" accept=".pdf" placeholder="Sisben (PDF)">
+                    <button class="input" id="boton" style="width: 315px;">Sisben</button>
+
+                    <input type="file" id="fondoPension" class="boton" accept=".pdf"
+                        placeholder="Fondo de Pensión (PDF)">
+                    <button class="input" id="boton" style="width: 315px;">Fondo de Pensión</button>
+
+
+                    <input type="number" id="semanasCotizadas" class="input" placeholder="Semanas Cotizadas">
+                    <input type="text" id="formaPago" class="input" placeholder="Forma de Pago">
+                    <input type="text" id="numeroPagos" class="input" placeholder="Número para Pagos">
+                    <input type="text" id="validacionNumeroCuenta" class="input"
+                        placeholder="Validación Número de Cuenta">
+                    <input type="text" id="seguroFunerario" class="input" placeholder="Seguro Funerario">
+                    <input type="text" id="Ccostos" class="input" placeholder="Ccostos">
+                    <input type="text" id="subcentro" class="input" placeholder="Subcentro">
+                    <input type="text" id="grupo" class="input" placeholder="Grupo">
+                    <input type="text" id="categoria" class="input" placeholder="Categoría">
+                    <input type="text" id="operacion" class="input" placeholder="Operación">
+                    <input type="text" id="sublabor" class="input" placeholder="Sublabor">
+                    <input type="text" id="salario" class="input" placeholder="Salario">
+                    <input type="number" id="auxilioTransporte" class="input" placeholder="Auxilio de Transporte">
+                    <input type="text" id="ruta" class="input" placeholder="Ruta">
+                    <input type="text" id="valorTransporte" class="input" placeholder="Valor Transporte">
+                    <input type="text" id="horasExtras" class="input" placeholder="Horas Extras">
+                    <input type="number" id="porcentajeARL" class="input" step="0.01" placeholder="% ARL">
+                    <input type="text" id="parentescoReferencia1" class="input" placeholder="Parentesco Referencia 1">
+                    <input type="text" id="conoceReferencia1" class="input" placeholder="Hace Cuánto lo Conoce 1">
+                    <input type="text" id="refiereReferencia1" class="input" placeholder="Cómo lo Refiere 1">
+                    <input type="text" id="parentescoReferencia2" class="input" placeholder="Parentesco Referencia 2">
+                    <input type="text" id="conoceReferencia2" class="input" placeholder="Hace Cuánto lo Conoce 2">
+                    <input type="text" id="refiereReferencia2" class="input" placeholder="Cómo lo Refiere 2">
+                    <input type="text" id="referenciaronLaboral" class="input" placeholder="Referenciaron Laboral">
+                    <label for=" " style="margin-left: 50px; margin-right: 125px;"> Fecha Expedicion</label>
+                    <input type="date" id="validacionFechaExpedicion" class="input"
+                        placeholder="Validación Fecha de Expedición">
+                        <label for=" " style="margin-left: 50px; margin-right: 115px;"> Fecha Nacimiento</label>
+
+                    <input type="date" id="validacionFechaNacimiento" class="input"
+                        placeholder="Validación Fecha de Nacimiento">
+
+                    <input type="text" id="primerApellido" class="input" placeholder="Primer Apellido">
+                    <input type="text" id="segundoApellido" class="input" placeholder="Segundo Apellido">
+                    <input type="text" id="primerNombre" class="input" placeholder="Primer Nombre">
+                    <input type="text" id="segundoNombre" class="input" placeholder="Segundo Nombre">
+
+
+                    <button class=" btn2" id="botonC">Cargar</button>
+
+                </div>
+            </div>
+            <h1 id="datosPersona" class="titulo" style="float: left; margin-left: 30px"></h1>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
