@@ -1,17 +1,14 @@
 module.exports = {
-  packagerConfig: {
-    asar: true,
-  },
+  packagerConfig: {},
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        //certificateFile: './cert.pfx',
-        //certificatePassword: process.env.CERTIFICATE_PASSWORD
-      }
+        /*certificateFile: './cert.pfx',
+        certificatePassword: process.env.CERTIFICATE_PASSWORD*/
+      },
     },
-
     {
       name: '@electron-forge/maker-zip',
       platforms: ['darwin'],
@@ -25,10 +22,5 @@ module.exports = {
       config: {},
     },
   ],
-  plugins: [
-    {
-      name: '@electron-forge/plugin-auto-unpack-natives',
-      config: {},
-    },
-  ],
+
 };

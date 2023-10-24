@@ -2,6 +2,7 @@
   "name": "turnero",
   "version": "1.0.10",
   "description": "GestionEmpresa",
+  "GITHUB_TOKEN": "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",
   "main": "main.js",
   "repository": "https://github.com/sebastian0912/Turnero.git",
   "publish": {
@@ -13,7 +14,7 @@
   "author": "SebastianGuarnizoCampos",
   "license": "Uso Interno en TuAlianza, Apoyo Laboral, Comercializadora, prohibida su distribucion",
   "build": {
-    "appId": "Gestion_Empresa",
+    "appId": "GestionEmpresa",
     "productName": "Gestion-Empresa",
     "win": {
       "target": "nsis",
@@ -32,10 +33,16 @@
     "dist": "electron-builder"
   },
   "devDependencies": {
+    "@electron-forge/maker-deb": "^6.1.1",
+    "@electron-forge/maker-rpm": "^6.1.1",
+    "@electron-forge/maker-squirrel": "^6.1.1",
+    "@electron-forge/maker-zip": "^6.1.1",
     "electron": "^25.2.0",
     "electron-builder": "^24.6.4"
   },
   "dependencies": {
+    "electron-fetch": "^1.9.1",
+    "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^6.1.4"
   }
 }
