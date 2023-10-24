@@ -152,8 +152,8 @@ span {
 }
 
 .cuadroTexto {
-    width: 600px;
-    height: 450px;
+    width: 700px;
+    height: 500px;
     background: #ffffff;
     margin: 50px 0 0 80px;
     border-radius: 15px;
@@ -175,17 +175,9 @@ span {
     float: left;
 }
 
-select {
+.input2, select {
     font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    margin: 0 50px 20px 30px;
-    width: 240px;
-    height: 50px;
-}
-
-.input2 {
-    font-family: 'Poppins', sans-serif;
-    width: 230px;
+    width: 250px; /* Cambia el ancho a automático */
     height: 40px;
     padding: 5px;
     font-size: 16px;
@@ -195,14 +187,9 @@ select {
     border-style: solid;
     border-radius: 11px;
     box-shadow: 0px 0px 5px rgba(66, 66, 66, 0.75);
-    margin: 0 50px 20px 30px;
+    margin: 0 20px 20px 10px; /* Ajusta los márgenes para que estén más cerca */
     position: relative;
 }
-
-.input2:focus {
-    outline: none;
-}
-
 
 .input {
     font-family: 'Poppins', sans-serif;
@@ -216,12 +203,9 @@ select {
     border-style: solid;
     border-radius: 11px;
     box-shadow: 0px 0px 5px rgba(66, 66, 66, 0.75);
-    margin: 0px 20px 20px 30px;
+    margin: 0 20px 20px 30px; /* Ajusta los márgenes para que estén más cerca */
 }
 
-.input:focus {
-    outline: none;
-}
 
 .btn {
     height: 50px;

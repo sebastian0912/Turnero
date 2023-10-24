@@ -26,7 +26,7 @@ ver.addEventListener('click', () => {
 
 
 
-function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelapersona, celular) {
+function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelapersona, celular, whatsapp) {
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
     const jwtToken = obj.jwt;
@@ -42,6 +42,7 @@ function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelaperson
                     tipodedocumento: tipoDoc,
                     numerodedocumento: cedula,
                     tipodeturno: tipoT,
+                    whatsapp: whatsapp,
                     comentario: "",
                     oficinaemisiradelturno: sede,
                     nombredelapersona: nombredelapersona,
@@ -91,6 +92,7 @@ boton.addEventListener('click', async () => {
     let tipo = document.querySelector('#tipo').value;
     let numeroCeluar = document.querySelector('#numeroCelular').value;
     let tipoDoc = document.querySelector('#tipoDoc').value;
+    let whatsapp = document.querySelector('#whatsapp').value;
 
     let turnoAux;
     if (cedula == "" || nombre == "" || tipo == "" || numeroCeluar == "") {
@@ -139,7 +141,7 @@ boton.addEventListener('click', async () => {
         turnoAux = "CO" + turnos.CO ;
     }
 
-    crearTurno(turnoAux, tipoDoc, cedula, tipo, "", nombre, numeroCeluar);
+    crearTurno(turnoAux, tipoDoc, cedula, tipo, "", nombre, numeroCeluar, whatsapp);
 
     // su turno es 
     let avisoTurno = await avisoConfirmado("Su turno es: " + turnoAux, "success");

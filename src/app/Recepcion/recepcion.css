@@ -2,19 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,1000;1,1000&display=swap');
 
 body {
-  background-size: 100%; 
+  background-size: 100%;
   min-height: 100vh;
   background: linear-gradient(120deg, #eeeeee 50%, #FEBB2E 40%);
   background-repeat: no-repeat;
   font-family: 'Poppins', sans-serif;
 }
-
-
 h1 {
   margin: 0;
   padding: 0;
 }
-
 .diasT {
   width: 100%;
   margin: 20px 0 10px 30px;
@@ -22,7 +19,6 @@ h1 {
   font-size: 14pt;
   font-weight: 400;
 }
-
 .dias {
   text-align: justify;
   margin: 0px 0 20px 120px;
@@ -30,7 +26,6 @@ h1 {
   font-size: 20pt;
   font-weight: 600;
 }
-
 a {
   text-decoration: none;
   color: #000000;
@@ -39,21 +34,15 @@ a {
   display: flex;
   align-items: center;
 }
-
-
-
 .opciones {
   width: 20%;
   height: 100%;
   position: relative;
   float: left;
-
 }
-
 .lista-Opciones {
   margin: 100px 0 0 50px;
 }
-
 li {
   list-style: none;
   height: 30px;
@@ -63,64 +52,53 @@ li {
   align-items: center;
   cursor: pointer;
 }
-
 li:hover {
   background: #bbd0ff;
   color: #000000;
   transform: scale(1.1);
   border-left: #1157fb 8px solid;
 }
-
-
 li:nth-child(1) {
   background: #bbd0ff;
   color: #000000;
   transform: scale(1.1);
   border-left: #1157fb 8px solid;
 }
-
 .p {
   margin: 0;
   /* Ajusta según sea necesario */
   padding: 0;
   /* Ajusta según sea necesario */
 }
-
-
 .logo {
   width: 40px;
   height: 40px;
   padding: 0 10px 0 0;
   margin-top: -10px;
 }
-
 .boton {
   position: absolute;
   width: 100%;
   opacity: 0;
   cursor: pointer;
 }
-
 header {
   margin-top: 0px;
   height: 50px;
   width: 80%;
   float: right;
 }
-
 .titulo {
   flex: 1 1 100%;
   padding: 20px 20px 0px 0px;
   text-align: right;
   color: #000000;
 }
-
 .cajontitulo {
   height: 50px;
   width: 60%;
   float: left;
 }
-
 .cajontitulo .titulo {
   float: left;
   padding-left: 50px;
@@ -180,24 +158,27 @@ span {
 }
 
 .tabla-contenido {
-  width: 100%;  
+  width: 100%;
   margin: 0;
   border-collapse: collapse;
-  border-spacing: 0; 
+  border-spacing: 0;
   font-family: 'Nunito Sans', sans-serif;
-  font-size: 12pt;  
+  font-size: 12pt;
   text-align: center;
 }
 
 .tabla-contenido tr:nth-child(even) {
-  background-color: #f2f2f2; /* color para filas pares */
+  background-color: #f2f2f2;
+  /* color para filas pares */
 }
 
 .tabla-contenido tr:nth-child(odd) {
-  background-color: #cccccc; /* color para filas impares */
+  background-color: #cccccc;
+  /* color para filas impares */
 }
 
-th, td {
+th,
+td {
   vertical-align: middle;
 }
 
@@ -211,7 +192,7 @@ th {
 
 tr {
   height: 40px;
-  
+
 }
 
 
@@ -233,7 +214,7 @@ tr {
   display: block;
   overflow: hidden;
   cursor: pointer;
-  border:2px solid #1157FB;
+  border: 2px solid #1157FB;
   border-radius: 21px;
 }
 

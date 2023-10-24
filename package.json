@@ -1,13 +1,12 @@
 {
   "name": "turnero",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "GestionEmpresa",
   "main": "main.js",
   "repository": "https://github.com/sebastian0912/Turnero.git",
   "publish": {
     "provider": "github",
     "owner": "sebastian0912",
-    "realeaseType": "release",
     "repo": "Turnero"
   },
   "keywords": [],
