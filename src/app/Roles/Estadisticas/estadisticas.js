@@ -15,6 +15,146 @@ const usernameLocal = localStorage.getItem("username");
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
 
+async function datosTTurnos() {
+    var body = localStorage.getItem('key');
+    const obj = JSON.parse(body);
+    const jwtKey = obj.jwt;
+
+    const headers = {
+        'Authorization': jwtKey
+    };
+
+    const urlcompleta = urlBack.url + '/Turnos/verturnos';
+
+    try {
+        const response = await fetch(urlcompleta, {
+            method: 'GET',
+            headers: headers,
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log(responseData);
+            return responseData;
+        } else {
+            throw new Error('Error en la petición GET');
+        }
+    } catch (error) {
+        console.error('Error en la petición HTTP GET');
+        console.error(error);
+        throw error; // Propaga el error para que se pueda manejar fuera de la función
+    }
+}
+
+async function datosUsuarios() {
+    var body = localStorage.getItem('key');
+    const obj = JSON.parse(body);
+    const jwtKey = obj.jwt;
+
+    const headers = {
+        'Authorization': jwtKey
+    };
+
+    const urlcompleta = urlBack.url + '/usuarios/usuarios';
+
+    try {
+        const response = await fetch(urlcompleta, {
+            method: 'GET',
+            headers: headers,
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log(responseData);
+            return responseData;
+        } else {
+            throw new Error('Error en la petición GET');
+        }
+    } catch (error) {
+        console.error('Error en la petición HTTP GET');
+        console.error(error);
+        throw error; // Propaga el error para que se pueda manejar fuera de la función
+    }
+}
+
+function nombre (datos, cedula) {
+    let nombre = "";
+    datos.forEach((usuario) => {
+        if (usuario.numero_de_documento == cedula) {
+            nombre = usuario.primer_nombre + " " + usuario.primer_apellido;
+        }
+    });
+    return nombre;
+}
+
+
+boton.addEventListener('click', async () => {
+    let datos2 = await datosUsuarios();
+
+    const datosTurnos = await datosTTurnos();
+
+    if (!datosTurnos || datosTurnos.length === 0) {
+        aviso("No se han encontrado datos de turnos", "warning");
+        return;
+    }
+
+    let excelData = [['Número de Documento', 'Tipo de Documento', 'Tipo de Turno ID', 'Oficina de Emisión del Turno ID', 'Fecha de Creación', 'Hora de Creación', 'Fecha de Finalización de Atención', 'Hora de Finalización de Atención', 'COMENTARIO', 'Nombre de la Persona', 'Número de Contacto',  'Número de Turno',  'Quien lo Atiende ID']];
+
+    datosTurnos.turno.forEach((turno) => {
+        let nombrePersona = nombre(datos2, turno.quienloatiende_id);
+        console.log(nombrePersona);
+        excelData.push([
+            turno.numerodedocumento || "",
+            turno.tipodedocumento || "",
+            turno.tipodeturno_id || "",
+            turno.oficinaemisiradelturno_id || "",
+
+            turno.fechadecreado || "",
+            turno.horadecreado || "",
+
+            turno.fechadeIniciodeAtencion || "",
+            turno.horadeIniciodeAtencion || "",
+            turno.comentario || "",
+
+            turno.nombredelapersona || "",
+            turno.numerodecontacto || "",
+            turno.numeroderturno || "",
+            nombrePersona || "",
+        ]);
+    });
+
+    const ws = XLSX.utils.aoa_to_sheet(excelData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Datos Turnos');
+
+    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+    const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+    const url = URL.createObjectURL(blob);
+
+    const element = document.createElement('a');
+    element.href = url;
+    element.download = 'datosTurnos.xlsx';
+    element.style.display = 'none';
+
+    document.body.appendChild(element);
+    element.click();
+
+    document.body.removeChild(element);
+    URL.revokeObjectURL(url);
+});
+
+
+function s2ab(s) {
+    const buf = new ArrayBuffer(s.length);
+    const view = new Uint8Array(buf);
+    for (let i = 0; i < s.length; i++) {
+        view[i] = s.charCodeAt(i) & 0xFF;
+    }
+    return buf;
+}
+
+
 
 
 

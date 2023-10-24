@@ -54,9 +54,6 @@ async function datosTTurnos() {
     }
 }
 
-
-
-
 // Función para obtener los códigos de la base de datos
 async function obtenerCodigos() {
     
@@ -110,8 +107,8 @@ async function obtenerCodigos() {
 
 
         if (diaTurnoCreado.getDate() == diaActual.getDate()) {
-            if (diferencia < 3) {
-                asusentimos = " ";
+            if (c.fechadeIniciodeAtencion != null) {
+                asusentimos = "Si";
             }
 
             tabla.innerHTML += `
