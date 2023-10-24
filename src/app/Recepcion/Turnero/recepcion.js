@@ -21,8 +21,37 @@ ver.addEventListener('click', () => {
     // Abre un archivo HTML local en una nueva ventana
     const rutaArchivo = '../visualizar/turnosV.html';
     const nuevaVentana = window.open(rutaArchivo, 'NombreVentana', 'opciones');
-
 });
+
+async function datosTTurnos() {
+    var body = localStorage.getItem('key');
+    const obj = JSON.parse(body);
+    const jwtKey = obj.jwt;
+
+    const headers = {
+        'Authorization': jwtKey
+    };
+
+    const urlcompleta = urlBack.url + '/Turnos/verturnos';
+
+    try {
+        const response = await fetch(urlcompleta, {
+            method: 'GET',
+            headers: headers,
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            return responseData;
+        } else {
+            throw new Error('Error en la petición GET');
+        }
+    } catch (error) {
+        console.error('Error en la petición HTTP GET');
+        console.error(error);
+        throw error; // Propaga el error para que se pueda manejar fuera de la función
+    }
+}
 
 
 
@@ -94,66 +123,65 @@ boton.addEventListener('click', async () => {
     let tipoDoc = document.querySelector('#tipoDoc').value;
     let whatsapp = document.querySelector('#whatsapp').value;
 
-    let turnoAux;
     if (cedula == "" || nombre == "" || tipo == "" || numeroCeluar == "") {
         aviso("warning", "Por favor llene todos los campos");
         return;
     }
 
+    let turnos = await datosTTurnos();
+    let auxTurnos = turnos.turno;
+    console.log(auxTurnos);
+    let turnoAux = [];
+
+    // Obtener todos los turnos existentes
+    auxTurnos.forEach(element => {
+        turnoAux.push(element.numeroderturno);
+    });
+
+    // Función para encontrar el último número asociado a un tipo de turno
+    function encontrarUltimoNumero(tipo) {
+        const numeros = turnoAux
+            .filter(turno => turno.startsWith(tipo))
+            .map(turno => parseInt(turno.slice(tipo.length)));
+
+        return Math.max(...numeros, 0);
+    }
+
+    let inicial;
+
     if (tipo == "SELECCION") {
-        turnos.S++;
-        turnoAux = "S" + turnos.S;
+        inicial = "S" + (encontrarUltimoNumero("S") + 1);
     }
     if (tipo == "CONTRATACION") {
-        turnos.C++
-        turnoAux = "C" + turnos.C;
+        inicial = "C" + (encontrarUltimoNumero("C") + 1);
     }
     if (tipo == "AFILIACIONES") {
-        turnos.A++
-        turnoAux = "A" + turnos.A;
+        inicial = "A" + (encontrarUltimoNumero("A") + 1);
     }
     if (tipo == "TESORERIA") {
-        turnos.T++
-        turnoAux = "T" + turnos.T;
+        inicial = "T" + (encontrarUltimoNumero("T") + 1);
     }
     if (tipo == "RECURSOS-HUMANOS") {
-        turnos.RH++
-        turnoAux = "RH" + turnos.RH;
+        inicial = "RH" + (encontrarUltimoNumero("RH") + 1);
     }
     if (tipo == "GERENCIA") {
-        turnos.G++
-        turnoAux = "G" + turnos.G;
+        inicial = "G" + (encontrarUltimoNumero("G") + 1);
     }
     if (tipo == "SST") {
-        turnos.SST++
-        turnoAux = "SST" + turnos.SST;
-    }
-    if (tipo == "GERENCIA") {
-        turnos.G++
-        turnoAux = "G" + turnos.G ;
-    }
-    if (tipo == "RECURSOS-HUMANOS") {
-        turnos.RH++
-        turnoAux = "RH" + turnos.RH ;
+        inicial = "SST" + (encontrarUltimoNumero("SST") + 1);
     }
     if (tipo == "COORDINADOR") {
-        turnos.CO++
-        turnoAux = "CO" + turnos.CO ;
+        inicial = "CO" + (encontrarUltimoNumero("CO") + 1);
     }
+
+    console.log(inicial);
 
     crearTurno(turnoAux, tipoDoc, cedula, tipo, "", nombre, numeroCeluar, whatsapp);
 
-    // su turno es 
     let avisoTurno = await avisoConfirmado("Su turno es: " + turnoAux, "success");
 
-    
-    // Antes de guardar, convierte el objeto turnos a una cadena JSON
-    const turnosJSON = JSON.stringify(turnos);
-    
-    // Almacena la cadena JSON en localStorage
-    localStorage.setItem('turnos', turnosJSON);
-    
-    console.log(turnos);
+    if (avisoTurno == true) {
+        window.location.href = "../Turnero/recepcion.html";
+    }
 
-    
 });
