@@ -54,7 +54,6 @@ async function datosTTurnos() {
 }
 
 
-
 function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelapersona, celular, whatsapp) {
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
@@ -103,17 +102,6 @@ function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelaperson
 
 // Recupera la cadena JSON desde localStorage
 const turnosJSON = localStorage.getItem('turnos');
-let turnos = {
-    S: 0, // Selección
-    C: 0, // Contratación
-    A: 0, // Afiliaciones
-    T: 0, // Tesorería
-    SST: 0, // SST
-    G: 0,  // Gerencia
-    RH: 0, // Recursos Humanos
-    CO: 0, // Coordinador
-
-};
 
 boton.addEventListener('click', async () => {
     let cedula = document.querySelector('#cedula').value;
@@ -174,14 +162,12 @@ boton.addEventListener('click', async () => {
         inicial = "CO" + (encontrarUltimoNumero("CO") + 1);
     }
 
-    console.log(inicial);
+    crearTurno(inicial, tipoDoc, cedula, tipo, "", nombre, numeroCeluar, whatsapp);
 
-    crearTurno(turnoAux, tipoDoc, cedula, tipo, "", nombre, numeroCeluar, whatsapp);
-
-    let avisoTurno = await avisoConfirmado("Su turno es: " + turnoAux, "success");
+    let avisoTurno = await avisoConfirmado("Su turno es: " + inicial, "success");
 
     if (avisoTurno == true) {
-        window.location.href = "../Turnero/recepcion.html";
+        location.reload();
     }
 
 });
