@@ -72,7 +72,7 @@ function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelaperson
                     numerodedocumento: cedula,
                     tipodeturno: tipoT,
                     whatsapp: whatsapp,
-                    comentario: "",
+                    comentario: comentario,
                     oficinaemisiradelturno: sede,
                     nombredelapersona: nombredelapersona,
                     numerodecontacto: celular,
