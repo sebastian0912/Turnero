@@ -56,14 +56,18 @@ async function datosTTurnos() {
 
 // Función para obtener los códigos de la base de datos
 async function obtenerCodigos() {
-    
+
     const aux = await datosTTurnos();
     let arrayCodigos = [];
     console.log(aux);
-    
-    
+
+
 
     console.log(aux.turno);
+
+    if (aux.message == "error no hay turnos") {
+        return;
+    }
 
     aux.turno.forEach((c) => {
         if (c.oficinaemisiradelturno_id == sede) {
@@ -73,7 +77,19 @@ async function obtenerCodigos() {
 
 
     console.log(arrayCodigos);
-    
+
+    // ordenar por hora de creado
+    arrayCodigos.sort(function (a, b) {
+        if (a.horadecreado > b.horadecreado) {
+            return 1;
+        }
+        if (a.horadecreado < b.horadecreado) {
+            return -1;
+        }
+        // a must be equal to b
+        return 0;
+    });
+
     const tabla = document.querySelector('#tablaTurnos');
     // si el turno es creado el mismo dia
     tabla.innerHTML = "";

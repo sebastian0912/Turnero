@@ -19,11 +19,11 @@ const sede = localStorage.getItem("sede");
 
 let graficas = document.getElementById("estadisticas");
 
-if (perfilLocal == "GERENCIA" ) {
-    graficas.style.display = "block";    
+if (perfilLocal == "GERENCIA") {
+    graficas.style.display = "block";
 }
 
-function RecibirTurno (turno, comentario) {
+function RecibirTurno(turno, comentario) {
 
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
@@ -112,9 +112,11 @@ async function obtenerCodigos() {
     let arrayCodigos = [];
     console.log(aux);
 
-
-
     console.log(aux.turno);
+
+    if (aux.message == "error no hay turnos") {
+        return;
+    }
 
     aux.turno.forEach((c) => {
         if (c.oficinaemisiradelturno_id == sede) {
@@ -123,6 +125,19 @@ async function obtenerCodigos() {
     });
 
 
+    // ordenar por hora de creado
+    arrayCodigos.sort(function (a, b) {
+        if (a.horadecreado > b.horadecreado) {
+            return 1;
+        }
+        if (a.horadecreado < b.horadecreado) {
+            return -1;
+        }
+        // a must be equal to b
+        return 0;
+    });
+
+    
     console.log(arrayCodigos);
 
     const tabla = document.querySelector('#tablaTurnos');
@@ -167,7 +182,7 @@ async function obtenerCodigos() {
                 const horaDeInicioDeAtencionDate = new Date(`2023-10-23T${c.horadeIniciodeAtencion}`);
 
                 // Calcula la diferencia en milisegundos
-                const diferenciaEnMilisegundos = horaDeInicioDeAtencionDate - horaDeCreadoDate ;
+                const diferenciaEnMilisegundos = horaDeInicioDeAtencionDate - horaDeCreadoDate;
 
                 // Convierte la diferencia en horas, minutos y segundos
                 const horas = Math.floor(diferenciaEnMilisegundos / 3600000);
@@ -175,10 +190,10 @@ async function obtenerCodigos() {
                 const segundos = Math.floor((diferenciaEnMilisegundos % 60000) / 1000);
 
                 // Formatea la diferencia en "hh:mm:ss"
-                
+
                 let diferenciaFormateada = `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
 
-                if (diferenciaFormateada == "NaN:NaN:NaN"){
+                if (diferenciaFormateada == "NaN:NaN:NaN") {
                     diferenciaFormateada = "00:00:00";
                 }
 

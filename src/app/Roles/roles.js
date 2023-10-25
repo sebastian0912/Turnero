@@ -119,6 +119,10 @@ async function obtenerCodigos() {
 
     console.log(aux.turno);
 
+    if (aux.message == "error no hay turnos") {
+        return;
+    }
+
     aux.turno.forEach((c) => {
         if (c.oficinaemisiradelturno_id == sede) {
             arrayCodigos.push(c);
