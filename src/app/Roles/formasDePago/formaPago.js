@@ -13,13 +13,18 @@ let input = document.getElementById('archivoInput');
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
 
-let graficas = document.getElementById("estadisticas");
-
 const over = document.querySelector('#overlay');
 const loader = document.querySelector('#loader');
 
 if (perfilLocal == "GERENCIA") {
-    graficas.style.display = "block";
+    estadisticas.style.display = "block";
+    vacantes.style.display = "block";
+    publicidad.style.display = "block";
+    seleccion.style.display = "block";
+    contratacion.style.display = "block";
+}
+if (usernameLocal == "HEIDY TORRES"){
+    formasDePago.style.display = "block";
 }
 
 

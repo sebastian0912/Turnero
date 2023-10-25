@@ -17,11 +17,15 @@ const sede = localStorage.getItem("sede");
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
 
-let graficas = document.getElementById("estadisticas");
-
 if (perfilLocal == "GERENCIA") {
-    graficas.style.display = "block";
-
+    estadisticas.style.display = "block";
+    vacantes.style.display = "block";
+    publicidad.style.display = "block";
+    seleccion.style.display = "block";
+    contratacion.style.display = "block";
+}
+if (usernameLocal == "HEIDY TORRES"){
+    formasDePago.style.display = "block";
 }
 
 function RecibirTurno(turno, comentario) {
@@ -37,6 +41,7 @@ function RecibirTurno(turno, comentario) {
             method: 'POST',
             body:
                 JSON.stringify({
+                    
                     jwt: jwtToken
                 })
         })
@@ -126,7 +131,20 @@ async function obtenerCodigos() {
     const tabla = document.querySelector('#tablaTurnos');
     // si el turno es creado el mismo dia
     tabla.innerHTML = "";
-    console.log("a");
+
+    // ordenar por hora de creado
+    arrayCodigos.sort(function (a, b) {
+        if (a.horadecreado > b.horadecreado) {
+            return 1;
+        }
+        if (a.horadecreado < b.horadecreado) {
+            return -1;
+        }
+        // a must be equal to b
+        return 0;
+    });
+
+
     // Mostar contenido en una tabla
     arrayCodigos.forEach((c) => {
         // si horadeIniciodeAtencion  en formato hh:mm:ss han pasado mas de 3 horas mostrar en rojo solamente 
@@ -156,8 +174,10 @@ async function obtenerCodigos() {
 
 
         if (diaTurnoCreado.getDate() === diaActual.getDate()) {
-            if (c.fechadeIniciodeAtencion !== null) {
-                asusentimos = "Si";
+            if (c.fechadecreado != null) {
+                if (c.fechadeIniciodeAtencion != null) {
+                    asusentimos = "Si";
+                }
                 // Convierte las cadenas de hora en objetos Date
                 const horaDeCreadoDate = new Date(`2023-10-23T${c.horadecreado}`);
                 const horaDeInicioDeAtencionDate = new Date(`2023-10-23T${c.horadeIniciodeAtencion}`);
@@ -171,7 +191,12 @@ async function obtenerCodigos() {
                 const segundos = Math.floor((diferenciaEnMilisegundos % 60000) / 1000);
 
                 // Formatea la diferencia en "hh:mm:ss"
-                const diferenciaFormateada = `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+                
+                let diferenciaFormateada = `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+
+                if (diferenciaFormateada == "NaN:NaN:NaN"){
+                    diferenciaFormateada = "00:00:00";
+                }
 
                 // Agrega la fila a la tabla
                 tabla.innerHTML += `

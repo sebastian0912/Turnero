@@ -1,5 +1,5 @@
 import { urlBack } from "../../model/base.js";
-import { aviso } from "../../Avisos/avisos.js";
+import { aviso, avisoConfirmado } from "../../Avisos/avisos.js";
 // Capturar el h1 del titulo y perfil
 const titulo = document.querySelector('#username');
 const perfil = document.querySelector('#perfil');
@@ -14,47 +14,22 @@ let input = document.getElementById('archivoInput');
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
 
-let graficas = document.getElementById("estadisticas");
 
 if (perfilLocal == "GERENCIA") {
-    graficas.style.display = "block";
+    estadisticas.style.display = "block";
+    vacantes.style.display = "block";
+    publicidad.style.display = "block";
+    seleccion.style.display = "block";
+    contratacion.style.display = "block";
 }
-
+if (usernameLocal == "HEIDY TORRES") {
+    formasDePago.style.display = "block";
+}
 let responseData
 
-var body = localStorage.getItem('key');
-const obj = JSON.parse(body);
-const jwtKey = obj.jwt;
+let card = document.getElementById('card-container');
+if (card) {
 
-const headers = {
-    'Authorization': jwtKey
-};
-
-const urlcompleta = urlBack.url + '/Marketing/VertodosLosregistros';
-
-try {
-    const response = await fetch(urlcompleta, {
-        method: 'GET',
-        headers: headers,
-    });
-
-    if (response.ok) {
-        responseData = await response.json();
-        renderCards(responseData);  // Llama a la función renderCards con responseData como argumento
-
-        console.log(responseData);
-    } else {
-        throw new Error('Error en la petición GET');
-    }
-} catch (error) {
-    //aviso("No hay publicaciones", "warning");
-
-    console.error('Error en la petición HTTP GET');
-    console.error(error);
-    throw error; // Propaga el error para que se pueda manejar fuera de la función
-}
-
-async function vancanteId(id) {
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
     const jwtKey = obj.jwt;
@@ -63,7 +38,41 @@ async function vancanteId(id) {
         'Authorization': jwtKey
     };
 
-    const urlcompleta = urlBack.url + '/publicacion/publicaciones/' + id;
+    const urlcompleta = urlBack.url + '/Marketing/VertodosLosregistros';
+
+    try {
+        const response = await fetch(urlcompleta, {
+            method: 'GET',
+            headers: headers,
+        });
+
+        if (response.ok) {
+            responseData = await response.json();
+            renderCards(responseData);  // Llama a la función renderCards con responseData como argumento
+
+            console.log(responseData);
+        } else {
+            throw new Error('Error en la petición GET');
+        }
+    } catch (error) {
+        //aviso("No hay publicaciones", "warning");
+
+        console.error('Error en la petición HTTP GET');
+        console.error(error);
+        throw error; // Propaga el error para que se pueda manejar fuera de la función
+    }
+}
+
+async function publicidadId(id) {
+    var body = localStorage.getItem('key');
+    const obj = JSON.parse(body);
+    const jwtKey = obj.jwt;
+
+    const headers = {
+        'Authorization': jwtKey
+    };
+
+    const urlcompleta = urlBack.url + '/Marketing/traerRegistro/' + id;
 
     try {
         const response = await fetch(urlcompleta, {
@@ -85,35 +94,29 @@ async function vancanteId(id) {
     }
 }
 
-function crearVacante(Cargovacante_id, quienpublicolavacante, Localizaciondelavacante,
-    localizacionDeLaPersona, Pruebatecnica, fechadePruebatecnica, horadePruebatecnica,
-    fechadeIngreso, experiencia, numeroDeGenteRequerida, observacionVacante, empresaQueSolicita_id) {
+function crearPublicidad(nombredelapublicacion, linkdelapublicacion, imagenenbase, redsocial, estadopublicacion, numerodevistaspublicacion, numerodemegusta, numerodecompartidos, comentariAdicional, cantidaddecomentarios) {
 
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
     const jwtToken = obj.jwt;
     console.log(jwtToken);
 
-    const urlcompleta = urlBack.url + '/publicacion/crearVacante';
+    const urlcompleta = urlBack.url + '/Marketing/CrearRegistroMarketing';
     try {
         fetch(urlcompleta, {
             method: 'POST',
             body:
                 JSON.stringify({
-                    Cargovacante: Cargovacante_id,
-                    quienpublicolavacante: quienpublicolavacante,
-                    Localizaciondelavacante: Localizaciondelavacante,
-                    localizacionDeLaPersona: localizacionDeLaPersona,
-                    Pruebatecnica: Pruebatecnica,
-                    fechadePruebatecnica: fechadePruebatecnica,
-                    horadepruebatecnica: horadePruebatecnica,
-                    fechadeingreso: fechadeIngreso,
-                    experiencia: experiencia,
-                    numeroDeGenteRequerida: numeroDeGenteRequerida,
-                    observacionVacante: observacionVacante,
-                    empresaQueSolicita: empresaQueSolicita_id,
-                    Observaciones: "",
-
+                    nombredelapublicacion: nombredelapublicacion,
+                    linkdelapublicacion: linkdelapublicacion,
+                    imagenenbase: imagenenbase,
+                    redsocial: redsocial,
+                    estadopublicacion: estadopublicacion,
+                    numerodevistaspublicacion: numerodevistaspublicacion,
+                    numerodemegusta: numerodemegusta,
+                    numerodecompartidos: numerodecompartidos,
+                    cantidaddecomentarios: cantidaddecomentarios,
+                    comentariAdicional: comentariAdicional,
                     jwt: jwtToken
                 })
         })
@@ -139,36 +142,29 @@ function crearVacante(Cargovacante_id, quienpublicolavacante, Localizaciondelava
     }
 }
 
-function modificarV(id, Cargovacante_id, quienpublicolavacante, Localizaciondelavacante,
-    localizacionDeLaPersona, Pruebatecnica, fechadePruebatecnica, horadePruebatecnica,
-    fechadeIngreso, experiencia, numeroDeGenteRequerida, observacionVacante, empresaQueSolicita_id) {
+function modificarP(id, nombredelapublicacion, linkdelapublicacion, valores, estadopublicacion, numerodevistaspublicacion, numerodemegusta, numerodecompartidos, cantidaddecomentarios, comentariAdicional) {
 
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
     const jwtToken = obj.jwt;
     console.log(jwtToken);
 
-    const urlcompleta = urlBack.url + '/publicacion/editarVacante/' + id;
+    const urlcompleta = urlBack.url + '/Marketing/editarRegistroMarketing/' + id;
     try {
         fetch(urlcompleta, {
             method: 'POST',
             body:
                 JSON.stringify({
-                    Cargovacante: Cargovacante_id,
-                    quienpublicolavacante: quienpublicolavacante,
-                    Localizaciondelavacante: Localizaciondelavacante,
-                    localizacionDeLaPersona: localizacionDeLaPersona,
-                    Pruebatecnica: Pruebatecnica,
-                    fechadePruebatecnica: fechadePruebatecnica,
-                    horadepruebatecnica: horadePruebatecnica,
-                    fechadeingreso: fechadeIngreso,
-                    experiencia: experiencia,
-                    numeroDeGenteRequerida: numeroDeGenteRequerida,
-                    observacionVacante: observacionVacante,
-                    empresaQueSolicita: empresaQueSolicita_id,
-                    Observaciones: "",
-
+                    nombredelapublicacion: nombredelapublicacion,
+                    linkdelapublicacion: linkdelapublicacion,
+                    estadopublicacion: estadopublicacion,
+                    numerodevistaspublicacion: numerodevistaspublicacion,
+                    numerodemegusta: numerodemegusta,
+                    numerodecompartidos: numerodecompartidos,
+                    cantidaddecomentarios: cantidaddecomentarios,
+                    comentariAdicional: comentariAdicional,
                     jwt: jwtToken
+
                 })
         })
             .then(response => {
@@ -251,162 +247,103 @@ function showImage(src) {
 }
 
 
-
-
-
-
-
-
-/*
-let Lcargos = await cargos();
-console.log(Lcargos.publicacion);
-let aux = Lcargos.publicacion;
-
-// ordenar los cargos por orden alfabetico
-aux.sort(function (a, b) {
-    if (a.nombre > b.nombre) {
-        return 1;
-    }
-    if (a.nombre < b.nombre) {
-        return -1;
-    }
-    // a must be equal to b
-    return 0;
-});
-
-
-let select = document.getElementById("tipoCargo");
 let botonC = document.getElementById("botonC");
 
 // si select existe hacere esto
-if (select && botonC) {
-
-    for (let i = 0; i < aux.length; i++) {
-        let option = document.createElement("option");
-        option.text = aux[i].nombredelavacante;
-        option.value = aux[i].nombredelavacante;
-        select.appendChild(option);
-    }
-
-    // agregar opcion otro al inicio
-    let option = document.createElement("option");
-    option.text = "Otro";
-    option.value = "Otro";
-    select.appendChild(option);
-
-    // if select otro, mostrar input y borrando el valor del select
-    select.addEventListener('change', function () {
-        if (select.value == "Otro") {
-            otroCargo.style.display = "inline-block";
-        } else {
-            otroCargo.style.display = "none";
-            otroCargo.value = "";
-        }
-    });
-
-    let empresaUsuaria = document.getElementById("empresaUsuaria");
-    // if select otro, mostrar input y borrando el valor del select
-    empresaUsuaria.addEventListener('change', function () {
-        if (empresaUsuaria.value == "OTRO") {
-            otraEmpresa.style.display = "inline-block";
-        } else {
-            otraEmpresa.style.display = "none";
-            otraEmpresa.value = "";
-        }
-    });
-
-    let pruebaTecnica = document.getElementById("pruebaTecnica");
-    // si selecciona si, mostrar fecha prueba y hora prueba
-    pruebaTecnica.addEventListener('change', function () {
-        if (pruebaTecnica.value == "Si") {
-            fechaPrueba.style.display = "inline-block";
-            horaPrueba.style.display = "inline-block";
-        } else {
-            fechaPrueba.style.display = "none";
-            horaPrueba.style.display = "none";
-            fechaPrueba.value = "";
-            horaPrueba.value = "";
-        }
-    });
-
-    let FechaIngreso = document.getElementById("FechaIngreso");
-
-    // si selecciona si, mostrar fecha prueba y hora prueba
-    FechaIngreso.addEventListener('change', function () {
-        if (FechaIngreso.value == "Si") {
-            fechaIngreso.style.display = "inline-block";
-        } else {
-            fechaIngreso.style.display = "none";
-            fechaIngreso.value = "";
-        }
-    });
-
-    let zonaReq = document.getElementById("zonaReq");
-    // Si OTRO, mostrar input
-    zonaReq.addEventListener('change', function () {
-        if (zonaReq.value == "OTRO") {
-            otraZona.style.display = "inline-block";
-        } else {
-            otraZona.style.display = "none";
-            otraZona.value = "";
-        }
-    }
-    );
-
-    botonC.addEventListener('click', async function () {
+if (botonC) {
+    botonC.addEventListener('click', function () {
         // Variables para los elementos con sus respectivos id
-        let tipoCargo = document.getElementById("tipoCargo");
-        let otroCargo = document.getElementById("otroCargo");
-        let empresaUsuaria = document.getElementById("empresaUsuaria");
-        let otraEmpresa = document.getElementById("otraEmpresa");
-        let zonaReq = document.getElementById("zonaReq");
-        let otraZona = document.getElementById("otraZona");
-        let pruebaTecnica = document.getElementById("pruebaTecnica");
-        let fechaPrueba = document.getElementById("fechaPrueba");
-        let horaPrueba = document.getElementById("horaPrueba");
-        let FechaIngreso = document.getElementById("FechaIngreso");
-        let fechaIngreso = document.getElementById("fechaIngreso");
-        let experiencia = document.getElementById("experiencia");
-        let numPersonas = document.getElementById("numPersonas");
-        let observaciones = document.getElementById("observaciones");
-        let empresaS = document.getElementById("empresaS");
 
-        // otroCargo no esta vacio
-        if (otroCargo.value != "") {
-            tipoCargo.value = otroCargo.value;
+        let imagen = document.getElementById("imagen");
+
+
+
+        let checkboxes = document.querySelectorAll('.control-group input[type="checkbox"]');
+
+        // Inicializa una cadena vacía para almacenar los valores marcados
+        let valoresMarcados = '';
+
+        // Itera sobre las casillas de verificación
+        checkboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                // Si la casilla de verificación está marcada, agrega su valor a la cadena
+                valoresMarcados += checkbox.parentNode.textContent.trim() + ', ';
+            }
+        });
+
+        // Elimina la coma y el espacio finales si existen
+        if (valoresMarcados.endsWith(', ')) {
+            valoresMarcados = valoresMarcados.slice(0, -2);
         }
 
-        // otraEmpresa no esta vacio
-        if (otraEmpresa.value != "") {
-            empresaUsuaria.value = otraEmpresa.value;
-        }
+        const archivo = imagen.files[0]; // Obtiene el archivo de imagen seleccionado
+        let imagenBase64 = null;
 
-        // otraZona no esta vacio
-        if (otraZona.value != "") {
-            zonaReq.value = otraZona.value;
-        }
+        if (archivo) {
+            const lector = new FileReader();
 
-        let prueba;
-        // si selecciona no en prueba tecnica, borrar fecha y hora
-        if (pruebaTecnica.value == "No") {
-            fechaPrueba.value = null;
-            horaPrueba.value = null;
-            prueba = false;
-        }
-        else {
-            prueba = true;
-        }
+            // Configura el manejador de carga para el lector
+            lector.onload = function (evento) {
+                imagenBase64 = evento.target.result; // Obtiene la imagen en base64
 
-        // si selecciona no en FechaIngreso, borrar fecha
-        if (FechaIngreso.value == "No") {
-            fechaIngreso.value = null;
-        }
+                // Elimina el encabezado "data:image/png;base64," para obtener solo la parte de la cadena en base64
+                const partes = imagenBase64.split(',');
+                if (partes.length === 2) {
+                    imagenBase64 = partes[1];
+                }
 
-        console.log(tipoCargo.value, usernameLocal, empresaUsuaria.value, zonaReq.value, prueba, fechaPrueba.value, horaPrueba.value, FechaIngreso.value, experiencia.value, numPersonas.value, observaciones.value);
-        //crearVacante(tipoCargo.value, idUsuario, empresaUsuaria.value, zonaReq.value, pruebaTecnica, fechaPrueba.value, horaPrueba.value, FechaIngreso.value, experiencia.value, numPersonas.value, observaciones.value, empresaS.value);
-        aviso("Se ha creado la vacante exitosamente", "success");
+                // Continúa con tu lógica aquí, por ejemplo, mostrar la imagen en un elemento HTML
+                const imgElement = document.createElement('img');
+                imgElement.src = 'data:image/png;base64,' + imagenBase64; // Agrega el encabezado nuevamente
+                document.body.appendChild(imgElement);
+                // margen izquierda de la imagen
+                imgElement.style.marginLeft = "700px";
+
+                // Llama a una función que contenga el resto de tu lógica
+                procesarDatos(imagenBase64, valoresMarcados);
+            };
+
+            // Lee el archivo como una cadena en base64
+            lector.readAsDataURL(archivo);
+        }
 
     });
+}
+
+async function procesarDatos(imagenBase64, valoresMarcados) {
+    let tituloP = document.getElementById("tituloP");
+    let linkP = document.getElementById("LinkP");
+    let estado = document.getElementById("estado");
+    let NumV = document.getElementById("NumV");
+    let NumL = document.getElementById("NumL");
+    let NumC = document.getElementById("NumC");
+    let Comentario = document.getElementById("Comentario");
+    let NumCo = document.getElementById("NumCo");
+
+    // ningun campo vacio
+    if (tituloP.value == "" || linkP.value == "" || estado.value == "" || NumV.value == "" || NumL.value == "" || NumC.value == "" || imagenBase64 == "" || valoresMarcados == "") {
+        aviso("Por favor llene todos los campos", "warning");
+        return;
+    }
+
+    // console log de todos separados por titulo y valor
+    console.log(tituloP.value);
+    console.log(linkP.value);
+    console.log(estado.value);
+    console.log(NumV.value);
+    console.log(NumL.value);
+    console.log(NumC.value);
+    console.log(imagenBase64);
+    console.log(valoresMarcados);
+
+    // crear publicidad
+    crearPublicidad(tituloP.value, linkP.value, imagenBase64, valoresMarcados, estado.value, NumV.value, NumL.value, NumC.value, Comentario.value, NumCo.value);
+    let confirmado = await avisoConfirmado("Se ha creado la vacante exitosamente", "success");
+    if (confirmado) {
+        window.location.href = "publicidad.html";
+    }
+
+
 }
 
 let botonEb = document.getElementById("botonEb");
@@ -415,151 +352,98 @@ if (botonEb) {
 
     botonEb.addEventListener('click', async function () {
         let id = document.getElementById("id");
-        let aux = await vancanteId(id.value);
-        let vacante = aux.publicacion[0];
+        let aux = await publicidadId(id.value);
+        let vacante = aux.marketing[0];
 
         // si aux.mensaje es error, mostrar una cadena vacía en su lugar
         if (aux.message == "error") {
             aviso("No se encontro la vacante", "warning");
             return;
         }
+        let valoresMarcados = '';
 
-        let Lcargos = await cargos();
-        let aux2L = Lcargos.publicacion;
-        console.log(aux2L);
+        /*let checkboxes = document.querySelectorAll('.control-group input[type="checkbox"]');
 
-        for (let i = 0; i < aux2L.length; i++) {
-            let option = document.createElement("option");
-            option.text = aux2L[i].nombredelavacante;
-            option.value = aux2L[i].nombredelavacante;
-            select.appendChild(option);
-        }
+        // Inicializa una cadena vacía para almacenar los valores marcados
 
-        // agregar opcion otro al inicio
-        let option = document.createElement("option");
-        option.text = "Otro";
-        option.value = "Otro";
-        select.appendChild(option);
-
-        // if select otro, mostrar input y borrando el valor del select
-        select.addEventListener('change', function () {
-            if (select.value == "Otro") {
-                otroCargo.style.display = "inline-block";
-            } else {
-                otroCargo.style.display = "none";
-                otroCargo.value = "";
+        // Itera sobre las casillas de verificación
+        checkboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                // Si la casilla de verificación está marcada, agrega su valor a la cadena
+                valoresMarcados += checkbox.parentNode.textContent.trim() + ', ';
             }
         });
 
-        let empresaUsuaria = document.getElementById("empresaUsuaria");
-        // if select otro, mostrar input y borrando el valor del select
-        empresaUsuaria.addEventListener('change', function () {
-            if (empresaUsuaria.value == "OTRO") {
-                otraEmpresa.style.display = "inline-block";
-            } else {
-                otraEmpresa.style.display = "none";
-                otraEmpresa.value = "";
-            }
-        });
+        // Elimina la coma y el espacio finales si existen
+        if (valoresMarcados.endsWith(', ')) {
+            valoresMarcados = valoresMarcados.slice(0, -2);
+        }*/
 
-        let pruebaTecnica = document.getElementById("pruebaTecnica");
-        // si selecciona si, mostrar fecha prueba y hora prueba
-        pruebaTecnica.addEventListener('change', function () {
-            if (pruebaTecnica.value == "Si") {
-                fechaPrueba.style.display = "inline-block";
-                horaPrueba.style.display = "inline-block";
-            } else {
-                fechaPrueba.style.display = "none";
-                horaPrueba.style.display = "none";
-                fechaPrueba.value = "";
-                horaPrueba.value = "";
-            }
-        });
+        let tituloP = document.getElementById("tituloP");
+        let linkP = document.getElementById("LinkP");
+        let estado = document.getElementById("estado");
+        let NumV = document.getElementById("NumV");
+        let NumL = document.getElementById("NumL");
+        let NumC = document.getElementById("NumC");
+        let Comentario = document.getElementById("Comentario");
+        let NumCo = document.getElementById("NumCo");
+        //let group = document.getElementById("group");
 
-        let FechaIngreso = document.getElementById("FechaIngreso");
-
-        // si selecciona si, mostrar fecha prueba y hora prueba
-        FechaIngreso.addEventListener('change', function () {
-            if (FechaIngreso.value == "Si") {
-                fechaIngreso.style.display = "inline-block";
-            } else {
-                fechaIngreso.style.display = "none";
-                fechaIngreso.value = "";
-            }
-        });
-
-        let zonaReq = document.getElementById("zonaReq");
-        // Si OTRO, mostrar input
-        zonaReq.addEventListener('change', function () {
-            if (zonaReq.value == "OTRO") {
-                otraZona.style.display = "inline-block";
-            } else {
-                otraZona.style.display = "none";
-                otraZona.value = "";
-            }
-        }
-        );
-
-        // Variables para los elementos con sus respectivos id
-        let tipoCargo = document.getElementById("tipoCargo");
-        let otroCargo = document.getElementById("otroCargo");
-        let otraEmpresa = document.getElementById("otraEmpresa");
-        let otraZona = document.getElementById("otraZona");
-        let fechaPrueba = document.getElementById("fechaPrueba");
-        let horaPrueba = document.getElementById("horaPrueba");
-        let fechaIngreso = document.getElementById("fechaIngreso");
-        let experiencia = document.getElementById("experiencia");
-        let numPersonas = document.getElementById("numPersonas");
-        let observaciones = document.getElementById("observaciones");
-        let empresaS = document.getElementById("empresaS");
 
         // PONER VISIBILIDAD DE BOTONES
         botonEb.style.display = "none";
+
+        tituloP.style.display = "inline-block";
+        linkP.style.display = "inline-block";
+        estado.style.display = "inline-block";
+        NumV.style.display = "inline-block";
+        NumL.style.display = "inline-block";
+        NumC.style.display = "inline-block";
+        Comentario.style.display = "inline-block";
+        NumCo.style.display = "inline-block";
+        //group.style.display = "inline-block";
         botonE.style.display = "inline-block";
-        tipoCargo.style.display = "inline-block";
-        empresaUsuaria.style.display = "inline-block";
-        zonaReq.style.display = "inline-block";
-        pruebaTecnica.style.display = "inline-block";
-        FechaIngreso.style.display = "inline-block";
-        experiencia.style.display = "inline-block";
-        numPersonas.style.display = "inline-block";
-        observaciones.style.display = "inline-block";
-        empresaS.style.display = "inline-block";
-
-        let auxFechaI = "Si";
-        let auxPruebaT = 'Si';
-
-        if (vacante.fechadeIngreso == null) {
-            auxFechaI = "No";
-        }
-        if (vacante.Pruebatecnica == false) {
-            auxPruebaT = "No";
-        }
 
         // LLENAR PLACEHOLDER CON AUX segun el id
-        tipoCargo.value = vacante.Cargovacante_id;
-        numPersonas.value = vacante.numeroDeGenteRequerida;
-        observaciones.value = vacante.observacionVacante;
-        empresaS.value = vacante.empresaQueSolicita_id;
-        experiencia.value = vacante.experiencia;
-        zonaReq.value = vacante.localizacionDeLaPersona;
-        empresaUsuaria.value = vacante.Localizaciondelavacante;
-        pruebaTecnica.value = auxPruebaT;
-        FechaIngreso.value = auxFechaI;
-        fechaPrueba.value = vacante.fechadePruebatecnica;
-        horaPrueba.value = vacante.horadePruebatecnica;
-        fechaIngreso.value = vacante.fechadeIngreso;
+        tituloP.value = vacante.nombredelapublicacion;
+        linkP.value = vacante.linkdelapublicacion;
+        estado.value = vacante.estadopublicacion;
+        NumV.value = vacante.numerodevistaspublicacion;
+        NumL.value = vacante.numerodemegusta;
+        NumC.value = vacante.numerodecompartidos;
+        Comentario.value = vacante.comentariAdicional;
+        NumCo.value = vacante.cantidaddecomentarios;
 
-        if (auxPruebaT == "No") {
-            auxPruebaT = false;
+        //const redesSocialesSeleccionadas = vacante.redsocial.split(',').map(item => item.trim()); // Divide la cadena y elimina espacios
+        /*console.log(redesSocialesSeleccionadas);
+
+        checkboxes.forEach(function (checkbox) {
+            if (redesSocialesSeleccionadas.includes(checkbox.parentNode.textContent.trim())) {
+                checkbox.checked = true;
+            }
         }
-        else {
-            auxPruebaT = true;
-        }
+        );*/
+
 
         botonE.addEventListener('click', async function () {
-            modificarV(id.value, tipoCargo.value, idUsuario, empresaUsuaria.value, zonaReq.value, pruebaTecnica, fechaPrueba.value, horaPrueba.value, FechaIngreso.value, experiencia.value, numPersonas.value, observaciones.value, empresaS.value);
-            aviso("Se ha modificado la vacante exitosamente", "success");
+            let id = document.getElementById("id");
+            console.log("-------------------------------------------------------");
+            console.log(id.value);
+            console.log(tituloP.value);
+            console.log(linkP.value);
+            console.log(estado.value);
+            console.log(NumV.value);
+            console.log(NumL.value);
+            console.log(NumC.value);
+            console.log(Comentario.value);
+            console.log(NumCo.value);
+            console.log(valoresMarcados);
+            modificarP(id.value, tituloP.value, linkP.value, valoresMarcados, estado.value, NumV.value, NumL.value, NumC.value, NumCo.value, Comentario.value);
+            let confirmado = await avisoConfirmado("Se ha modificado la vacante exitosamente", "success");
+            if (confirmado) {
+                window.location.href = "publicidad.html";
+            }
+
         }
         );
 
@@ -575,7 +459,7 @@ async function EliminarEm(id) {
     const obj = JSON.parse(body);
     const jwtToken = obj.jwt;
 
-    const urlcompleta = urlBack.url + '/publicacion/eliminarVacante/' + id;
+    const urlcompleta = urlBack.url + '/Marketing/eliminarRegistroMarketing/' + id;
     try {
         fetch(urlcompleta, {
             method: 'DELETE',
@@ -617,9 +501,12 @@ if (botonELI) {
 
         let id = document.getElementById("id");
         EliminarEm(id.value);
-        aviso("Se ha eliminado la vacante exitosamente", "success");
+        let confirmado = await avisoConfirmado("Se ha eliminado la vacante exitosamente", "success");
+        if (confirmado) {
+            window.location.href = "publicidad.html";
+        }
     });
-}*/
+}
 
 
 

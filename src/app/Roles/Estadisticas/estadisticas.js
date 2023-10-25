@@ -15,6 +15,17 @@ const usernameLocal = localStorage.getItem("username");
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
 
+if (perfilLocal == "GERENCIA") {
+    estadisticas.style.display = "block";
+    vacantes.style.display = "block";
+    publicidad.style.display = "block";
+    seleccion.style.display = "block";
+    contratacion.style.display = "block";
+}
+if (usernameLocal == "HEIDY TORRES"){
+    formasDePago.style.display = "block";
+}
+
 async function datosTTurnos() {
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);

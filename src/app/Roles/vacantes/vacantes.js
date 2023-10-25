@@ -1,5 +1,5 @@
 import { urlBack } from "../../model/base.js";
-import { aviso } from "../../Avisos/avisos.js";
+import { aviso, avisoConfirmado } from "../../Avisos/avisos.js";
 // Capturar el h1 del titulo y perfil
 const titulo = document.querySelector('#username');
 const perfil = document.querySelector('#perfil');
@@ -14,40 +14,51 @@ let input = document.getElementById('archivoInput');
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
 
-let graficas = document.getElementById("estadisticas");
 
 if (perfilLocal == "GERENCIA") {
-    graficas.style.display = "block";
+    estadisticas.style.display = "block";
+    vacantes.style.display = "block";
+    publicidad.style.display = "block";
+    seleccion.style.display = "block";
+    contratacion.style.display = "block";
+}
+if (usernameLocal == "HEIDY TORRES") {
+    formasDePago.style.display = "block";
 }
 
 let responseData
+let card = document.getElementById('card-container');
+if (card) {
 
-var body = localStorage.getItem('key');
-const obj = JSON.parse(body);
-const jwtKey = obj.jwt;
 
-const headers = {
-    'Authorization': jwtKey
-};
 
-const urlcompleta = urlBack.url + '/publicacion/publicaciones';
+    var body = localStorage.getItem('key');
+    const obj = JSON.parse(body);
+    const jwtKey = obj.jwt;
 
-try {
-    const response = await fetch(urlcompleta, {
-        method: 'GET',
-        headers: headers,
-    });
+    const headers = {
+        'Authorization': jwtKey
+    };
 
-    if (response.ok) {
-        responseData = await response.json();
-        console.log(responseData);
-    } else {
-        throw new Error('Error en la petición GET');
+    const urlcompleta = urlBack.url + '/publicacion/publicaciones';
+
+    try {
+        const response = await fetch(urlcompleta, {
+            method: 'GET',
+            headers: headers,
+        });
+
+        if (response.ok) {
+            responseData = await response.json();
+            renderCards(responseData);  // Llama a la función renderCards con responseData como argumento
+        } else {
+            throw new Error('Error en la petición GET');
+        }
+    } catch (error) {
+        console.error('Error en la petición HTTP GET');
+        console.error(error);
+        throw error; // Propaga el error para que se pueda manejar fuera de la función
     }
-} catch (error) {
-    console.error('Error en la petición HTTP GET');
-    console.error(error);
-    throw error; // Propaga el error para que se pueda manejar fuera de la función
 }
 
 async function cargos() {
@@ -179,7 +190,7 @@ function modificarV(id, Localizaciondelavacante, empresaUsuaria, fechadeIngreso,
     console.log(jwtToken);
 
     let x = JSON.stringify({
-                   
+
         Localizaciondelavacante: Localizaciondelavacante,
         localizacionDeLaPersona: empresaUsuaria,
 
@@ -198,7 +209,7 @@ function modificarV(id, Localizaciondelavacante, empresaUsuaria, fechadeIngreso,
             method: 'POST',
             body:
                 JSON.stringify({
-                   
+
                     Localizaciondelavacante: Localizaciondelavacante,
                     localizacionDeLaPersona: empresaUsuaria,
 
@@ -230,7 +241,40 @@ function modificarV(id, Localizaciondelavacante, empresaUsuaria, fechadeIngreso,
     }
 }
 
-const tabla = document.querySelector('#tabla');
+function renderCards(data) {
+    const container = document.getElementById('card-container');
+
+    data.publicacion.forEach(item => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+
+
+
+        const cardBody = document.createElement('div');
+        cardBody.classList.add('card-body');
+
+        cardBody.innerHTML = `
+            <p class="card-text">
+                <strong>Id:</strong> ${item.id}<br>
+                <strong>Cargo de la vacante:</strong> ${item.Cargovacante_id}<br>
+                <strong>Quien publicó la vacante:</strong> ${item.quienpublicolavacante}<br>
+                <strong>Fecha de ingreso :</strong> ${item.fechadeIngreso}<br>
+                <strong>Fecha de Prueba Técnica:</strong> ${item.fechadePruebatecnica}<br>
+                <strong>Localización de la vacante:</strong> ${item.Localizaciondelavacante}<br>
+                <strong>Fecha Publicado:</strong> ${item.fechaPublicado}<br>
+                <strong>Localización de la Persona:</strong> ${item.localizacionDeLaPersona}<br>
+                <strong>Número de Gente Requerida:</strong> ${item.numeroDeGenteRequerida}<br>
+                <strong>Prueba Técnica:</strong> ${item.Pruebatecnica}<br>
+                <strong>Experiencia:</strong> ${item.experiencia}<br>
+                <strong>Observación Vacante:</strong> ${item.observacionVacante}<br>
+                <strong>Hora de Prueba Técnica:</strong> ${item.horadePruebatecnica}<br>            
+            </p>
+        `;
+        card.appendChild(cardBody);
+        container.appendChild(card);
+    });
+}
+
 
 function ejecutarCodigo() {
 
@@ -268,7 +312,7 @@ function ejecutarCodigo() {
 }
 
 
-
+let tabla = document.getElementById("tabla");
 if (tabla) {
     tabla.innerHTML = '';
     ejecutarCodigo();
@@ -406,7 +450,11 @@ if (select && botonC) {
 
         crearVacante(tipoCargo.value, otroCargo.value, zonaReq.value, otraZona.value, empresaUsuaria.value, otraEmpresa.value, experiencia.value, auxPruebaT, fechaPrueba.value, horaPrueba.value, auxFechaI, numPersonas.value, observaciones.value, empresaS.value);
 
-
+        let confirmacion = await avisoConfirmado("Se ha creado la vacante exitosamente", "success");
+        if (confirmacion) {
+            // retornar a la pagina de vacantes
+            window.location.href = "vacantes.html";
+        }
     });
 }
 
@@ -498,7 +546,7 @@ if (botonEb) {
         }
         else {
             auxFechaI = vacante.fechadeIngreso;
-        }        
+        }
 
 
         // LLENAR PLACEHOLDER CON AUX segun el id
@@ -516,10 +564,12 @@ if (botonEb) {
 
 
         botonE.addEventListener('click', async function () {
-
-                     
             modificarV(id.value, zonaReq.value, empresaUsuaria.value, auxFechaI, numPersonas.value);
-            aviso("Se ha modificado la vacante exitosamente", "success");
+            let confirmacion = await avisoConfirmado("Se ha modificado la vacante exitosamente", "success");
+            if (confirmacion) {
+                // retornar a la pagina de vacantes
+                window.location.href = "vacantes.html";
+            }
         }
         );
 
@@ -528,7 +578,6 @@ if (botonEb) {
     }
     );
 }
-
 
 async function EliminarEm(id) {
     var body = localStorage.getItem('key');
@@ -577,7 +626,11 @@ if (botonELI) {
 
         let id = document.getElementById("id");
         EliminarEm(id.value);
-        aviso("Se ha eliminado la vacante exitosamente", "success");
+        let confirmacion = await avisoConfirmado("Se ha eliminado la vacante exitosamente", "success");
+        if (confirmacion) {
+            // retornar a la pagina de vacantes
+            window.location.href = "vacantes.html";
+        }
     });
 }
 

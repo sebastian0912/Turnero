@@ -15,10 +15,16 @@ const usernameLocal = localStorage.getItem("username");
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
 
-let graficas = document.getElementById("estadisticas");
 
-if (perfilLocal == "GERENCIA" ) {
-    graficas.style.display = "block";
+if (perfilLocal == "GERENCIA") {
+    estadisticas.style.display = "block";
+    vacantes.style.display = "block";
+    publicidad.style.display = "block";
+    seleccion.style.display = "block";
+    contratacion.style.display = "block";
+}
+if (usernameLocal == "HEIDY TORRES"){
+    formasDePago.style.display = "block";
 }
 
 

@@ -35,40 +35,49 @@
                 </a>
             </li>
 
-            <li id="estadisticas">
+            <li id="formasDePago" style="display: none;">
                 <a href="../formasDePago/formaPago.html">
                     <img src="../../assets/pago-web.png" alt="logo" class="logo" />
                     <p> Formas de pago </p>
                 </a>
             </li>
 
-            <li id="estadisticas">
-                <a href="./vacantes.html">
+            <li id="vacantes" style="display: none;">
+                <a href="../vacantes/vacantes.html">
                     <img src="../../assets/trabajos.png" alt="logo" class="logo" />
                     <p> Vacantes </p>
                 </a>
             </li>
 
-            <li id="estadisticas">
-                <a href="../publicidad/publicidad.html">
+            <li id="publicidad" style="display: none;">
+                <a href="./publicidad.html">
                     <img src="../../assets/publicidad-digital.png" alt="logo" class="logo" />
                     <p> Publicidad </p>
                 </a>
             </li>
 
+            <li id="seleccion" style="display: none;">
+                <a href="../Seleccion/seleccion.html">
+                    <img src="../../assets/delegar.png" alt="logo" class="logo" />
+                    <p> Seleccion </p>
+                </a>
+            </li>
 
-
+            <li id="contratacion" style="display: none;">
+                <a href="../contratacion/contratacion.html">
+                    <img src="../../assets/contratacion.png" alt="logo" class="logo" />
+                    <p> Contratacion </p>
+                </a>
+            </li>
 
             <li id="logout">
-                <a href="../Inicio-Login/index.html">
-                    <img src="../../assets/cerrar-sesion.png" alt="logo" class="logo" />
-                    <p>Cerrar Sesion</p>
-                </a>
+                <img src="../../assets/cerrar-sesion.png" alt="logo" class="logo" />
+                <p>Cerrar Sesion</p>
             </li>
         </ul>
     </div>
-
-
+    
+    
     <header>
         <div class="cajontitulo">
             <h1 class="titulo">Bienvenido</h1>
@@ -78,7 +87,7 @@
             <h1 id="perfil" class="titulo"></h1>
         </div>
     </header>
-
+    
     <div class="contenido">
         <div class="cuadroTexto">
             <div class="valor">
@@ -86,83 +95,55 @@
                     <h1 class="titulo" style="margin-right: 10px;"> Dilegencie la siguiente información:
                     </h1>
 
-                    <select name="" id="empresaS" class="input" style="width: 313px;">
-                        <option value="0">Empresa que solicita</option>
-                        <option value="TU ALIANZA SAS">TU ALIANZA SAS</option>
-                        <option value="APOYO LABORAL">APOYO LABORAL</option>
+                    <input type="text" id="tituloP" placeholder="Titulo de la publicacion" class="input" />
+                    <input type="text" id="LinkP" placeholder="Link de la publicacion" class="input" />
+                    
+                    <div class="control-group" >
+
+                        <label class="control control-checkbox" style="max-width: 250px;">
+                            Instagram
+                            <input type="checkbox" />
+                            <div class="control_indicator"></div>
+                        </label>
+                        <label class="control control-checkbox" style="max-width: 250px;">
+                            Facebook
+                            <input type="checkbox" />
+                            <div class="control_indicator"></div>
+                        </label>
+                        <label class="control control-checkbox" style="max-width: 250px;">
+                            Twitter
+                            <input type="checkbox" />
+                            <div class="control_indicator"></div>
+                        </label>       
+                        <label class="control control-checkbox" style="max-width: 250px;">
+                            Youtube
+                            <input type="checkbox" />
+                            <div class="control_indicator"></div>
+                        </label>  
+
+                        
+                    </div>
+
+                    <select name="" id="estado" class="input" style="width: 330px;">
+                        <option value="0">Estado de la publicacion</option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                        <option value="Borrador">Borrador</option>
                     </select>
 
-                    <select name="tipo" id="tipoCargo" class="input" style="width: 313px;">
-                        <option value="0">Cargo que necesita</option>
-                    </select>
+                    <input type="number" id="NumV" placeholder="Numero vistas publicacion" class="input" />
+                    <input type="number" id="NumL" placeholder="Numereo likes de la publicacion" class="input" />
 
-                    <input type="text" id="otroCargo" placeholder="Otro Cargo" class="input" style="display: none;"/>
+                    <input type="number" id="NumC" placeholder="Numero de compatidos publicacion" class="input" />
+                    <input type="number" id="NumCo" placeholder="Numero de comentarios de la publicacion" class="input" />
 
-                    <select name="" id="empresaUsuaria" class="input" style="width: 313px;">
-                        <option value="0">Empresa Usuaria</option>
-                        <option value="FACA_PRINCIPAL">FACATATIVA</option>
-                        <option value="ROSAL">ROSAL</option>
-                        <option value="CARTAGENITA">CARTAGENITA</option>
-                        <option value="MADRID">MADRID</option>
-                        <option value="FUNZA">FUNZA</option>
-                        <option value="SOACHA">SOACHA</option>
-                        <option value="FONTIBÓN">FONTIBÓN</option>
-                        <option value="SUBA">SUBA</option>
-                        <option value="TOCANCIPÁ">TOCANCIPÁ</option>
-                        <option value="BOSA">BOSA</option>
-                        <option value="BOGOTÁ">BOGOTÁ</option>
-                        <option value="OTRO">OTRA</option>
-                    </select>
+                    <input type="text" id="Comentario" placeholder="Comentario de la publicacion" class="input" /> <br>
 
-                    <input type="text" id="otraEmpresa" placeholder="Otra Empresa" class="input" style="display: none;"/>
+                    <input type="file" id="imagen" name="imagen" accept="image/*" class="input" /> 
 
-                    <select name="" id="zonaReq" class="input" style="width: 313px;">
-                        <option value="0">Empresa Usuaria</option>
-                        <option value="FACA_PRINCIPAL">FACATATIVA</option>
-                        <option value="ROSAL">ROSAL</option>
-                        <option value="CARTAGENITA">CARTAGENITA</option>
-                        <option value="MADRID">MADRID</option>
-                        <option value="FUNZA">FUNZA</option>
-                        <option value="SOACHA">SOACHA</option>
-                        <option value="FONTIBÓN">FONTIBÓN</option>
-                        <option value="SUBA">SUBA</option>
-                        <option value="TOCANCIPÁ">TOCANCIPÁ</option>
-                        <option value="BOSA">BOSA</option>
-                        <option value="BOGOTÁ">BOGOTÁ</option>
-                        <option value="OTRO">OTRA</option>
-                    </select>
+                    <button class="btn2" id="boton" style="width: 200px;"> Cargar imagen </button>
 
-                    <input type="text" id="otraZona" placeholder="Otra Empresa" class="input" style="display: none;"/>
-
-                    <select name="" id="pruebaTecnica" class="input" style="width: 313px;">
-                        <option value="0">Prueba Tecnica</option>
-                        <option value="Si">SI</option>
-                        <option value="No">NO</option>
-                    </select>
-
-                    <!-- FECHA -->
-                    <input type="date" id="fechaPrueba" placeholder="Fecha" class="input" style="margin-bottom: 20px; display: none;"/>
-                    <!-- Hora -->
-                    <input type="time" id="horaPrueba" placeholder="Hora" class="input" style="margin-bottom: 20px; display: none;"/>
-
-                    <select name="" id="FechaIngreso" class="input" style="width: 313px;">
-                        <option value="0">Tiene fecha de Ingreso?</option>
-                        <option value="Si">SI</option>
-                        <option value="No">NO</option>
-                    </select>
-
-                    <!-- FECHA -->
-                    <input type="date" id="fechaIngreso" placeholder="Fecha" class="input" style="margin-bottom: 20px; display: none;"/>
-
-                    <select name="" id="experiencia" class="input" style="width: 313px;">
-                        <option value="0">Requiere Experiencia?</option>
-                        <option value="Si">SI</option>
-                        <option value="No">NO</option>
-                        <option value="Ambas">Ambas</option>
-                    </select>
-
-                    <input type="text" id="numPersonas" placeholder="Numero de Personas" class="input" />
-                    <input type="text" id="observaciones" placeholder="Observaciones" class="input" />
                     <button class="btn2" id="botonC">Cargar</button>
 
                 </div>

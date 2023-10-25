@@ -44,10 +44,11 @@ a {
 .opciones {
   width: 20%;
   height: 100%;
-  position: relative;
-  float: left;
-
+  position: fixed; /* Cambiado de "relative" a "fixed" */
+  top: 0; /* Fijamos el menú en la parte superior */
+  left: 0;
 }
+
 
 .lista-Opciones {
   margin: 100px 0 0 50px;
