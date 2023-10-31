@@ -164,13 +164,15 @@ async function obtenerCodigos() {
         // c.fechadecreado pasar de yyyy-mm-dd a dd/mm/yyyy
 
         let dia = c.fechadecreado.split('-');
-        let diaTurnoCreado = new Date(dia[0], dia[1], dia[2]);
+        let diaTurnoCreado = new Date(dia[0], dia[1] - 1, dia[2]);
 
         let diaActual = new Date();
 
         let asusentimos = "No";
         // restar dos horas
 
+        console.log(diaTurnoCreado.getDate());
+        console.log(diaActual.getDate());
 
         if (diaTurnoCreado.getDate() === diaActual.getDate()) {
             if (c.fechadecreado != null) {
@@ -192,7 +194,7 @@ async function obtenerCodigos() {
                 // Formatea la diferencia en "hh:mm:ss"
 
                 let diferenciaFormateada = `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-
+                console.log(diferenciaFormateada);
                 if (diferenciaFormateada == "NaN:NaN:NaN") {
                     diferenciaFormateada = "00:00:00";
                 }
