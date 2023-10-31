@@ -121,10 +121,17 @@ boton.addEventListener('click', async () => {
     console.log(auxTurnos);
     let turnoAux = [];
 
+    console.log(auxTurnos);
     // Obtener todos los turnos existentes
-    auxTurnos.forEach(element => {
-        turnoAux.push(element.numeroderturno);
-    });
+    if (auxTurnos && auxTurnos.length > 0) {
+        auxTurnos.forEach(element => {
+            turnoAux.push(element.numeroderturno);
+        });
+    } else {
+        console.log("No hay turnos disponibles.");
+        // Aquí puedes manejar la situación en la que no hay turnos disponibles, si es necesario.
+    }
+    
 
     // Función para encontrar el último número asociado a un tipo de turno
     function encontrarUltimoNumero(tipo) {
