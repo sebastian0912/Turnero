@@ -35,7 +35,7 @@ export async function avisoConfirmacion() {
   });
 
   if (resultado.isConfirmed) {
-    await Swal.fire('¡Se confirmo eliminación!', 'Empleados seran eliminados', 'success');
+    await Swal.fire('¡Se confirmo eliminación!', 'Registro sera eliminados', 'success');
   }
 
   return resultado.isConfirmed;

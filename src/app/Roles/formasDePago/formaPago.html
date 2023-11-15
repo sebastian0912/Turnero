@@ -76,6 +76,14 @@
                 </a>
             </li>
 
+            
+            <li id="ausentismos" style="display: none;">
+                <a href="../ausentismos/ausentismos.html">
+                    <img src="../../assets/person.png" alt="logo" class="logo" />
+                    <p> Ausentismo </p>
+                </a>
+            </li>
+
             <li id="logout">
                 <img src="../../assets/cerrar-sesion.png" alt="logo" class="logo" />
                 <p>Cerrar Sesion</p>
@@ -112,52 +120,46 @@
             </div>
         </div>
 
-        <div class="cuadroSlinea" style="margin-right: 200px;">
-            <a href="./editar.html">
-                <div class="cuadro" style="height: 170px; ">
-                    <img src="../../assets/editar-codigo.png" style="width: 40px;        
-            margin-top: 20px;     
-            padding-left: 20px;">
-                    <h3 class="titulo-Opciones" style="margin-bottom: -10px;"> Editar forma de pago </h3>
-                    <h1 id="editar" class="titulo-Opciones" style="margin-top: 25px; "></h1>
-            </a>
-        </div>
-    </div>
+        <div class="cuadroTexto">
+            <div class="valor">
+                <div class="valoresEscribir">
+                    <h1 class="titulo" style="margin-right: 10px;"> Digite el número de identificación del empleado a
+                        validar: </h1>
+                    <input type="text" id="cedula" placeholder="Número de identificación" class="input"
+                        style="margin-left: 50px; margin-top: -20px;" />
 
-    <div class="cuadroTexto">
-        <div class="valor">
-            <div class="valoresEscribir">
-                <h1 class="titulo" style="margin-right: 10px;"> Digite el número de identificación del empleado a
-                    validar: </h1>
-                <input type="text" id="cedula" placeholder="Número de identificación" class="input"
-                    style="margin-left: 50px; margin-top: -20px;" />
+                    <button class="btn2" id="boton" style="margin-top: 15px; margin-left: 50px;">Buscar</button>
 
-                <button class="btn2" id="boton" style="margin-top: 15px; margin-left: 50px;">Buscar</button>
-
+                </div>
             </div>
+            <h1 id="datosPersona" class="titulo" style="float: left; margin-left: 30px"></h1>
+
         </div>
-        <h1 id="datosPersona" class="titulo" style="float: left; margin-left: 30px"></h1>
+
+        <div class="tabla" id="oculto">
+            <table class="tabla-contenido">
+                <thead>
+                    <tr>
+                        <th>Contrato</th>
+                        <th>Cédula</th>
+                        <th>Nombre</th>
+                        <th>Centro de Costo</th>
+                        <th>Concepto</th>
+                        <th>Forma de Pago</th>
+                        <th>Valor</th>
+                        <th>Banco</th>
+                        <th>Fecha de Pago</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="tabla"> </tbody>
+            </table>
+        </div>
 
     </div>
 
-    <div class="tabla" id="oculto">
-        <table class="tabla-contenido">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Contrato</th>
-                    <th>Cédula</th>
-                    <th>Nombre</th>
-                    <th>Centro de Costo</th>
-                    <th>Concepto</th>
-                    <th>Forma de Pago</th>
-                    <th>Banco</th>
-                    <th>Fecha de Pago</th>
-                </tr>
-            </thead>
-            <tbody id="tabla"> </tbody>
-        </table>
-    </div>
+
 
     </div>
 </body>

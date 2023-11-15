@@ -21,6 +21,7 @@ if (perfilLocal == "GERENCIA") {
     publicidad.style.display = "block";
     seleccion.style.display = "block";
     contratacion.style.display = "block";
+    ausentismos.style.display = "block";
 }
 if (usernameLocal == "HEIDY TORRES"){
     formasDePago.style.display = "block";
@@ -109,7 +110,25 @@ boton.addEventListener('click', async () => {
         return;
     }
 
-    let excelData = [['Número de Documento', 'Tipo de Documento', 'Tipo de Turno ID', 'Oficina de Emisión del Turno ID', 'Fecha de Creación', 'Hora de Creación', 'Fecha de Finalización de Atención', 'Hora de Finalización de Atención', 'COMENTARIO', 'Nombre de la Persona', 'Número de Contacto',  'Número de Turno',  'Quien lo Atiende ID']];
+    let excelData = [['Número de Documento', 'Tipo de Documento', 'Tipo de Turno ID', 'Oficina de Emisión del Turno ID', 'Fecha de Creación', 'Hora de Creación',  'Hora de Finalización de Atención', 'COMENTARIO', 'Nombre de la Persona', 'Número de Contacto',  'Número de Turno',  'Quien lo Atiende ID']];
+
+    // ordenar por fecha fechadecreado y horadecreado
+    datosTurnos.turno.sort((a, b) => {
+        if (a.fechadecreado < b.fechadecreado) {
+            return -1;
+        }
+        if (a.fechadecreado > b.fechadecreado) {
+            return 1;
+        }
+        if (a.horadecreado < b.horadecreado) {
+            return -1;
+        }
+        if (a.horadecreado > b.horadecreado) {
+            return 1;
+        }
+        return 0;
+    }
+    );
 
     datosTurnos.turno.forEach((turno) => {
         let nombrePersona = nombre(datos2, turno.quienloatiende_id);
@@ -123,7 +142,6 @@ boton.addEventListener('click', async () => {
             turno.fechadecreado || "",
             turno.horadecreado || "",
 
-            turno.fechadeIniciodeAtencion || "",
             turno.horadeIniciodeAtencion || "",
             turno.comentario || "",
 
