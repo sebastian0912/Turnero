@@ -21,6 +21,7 @@ if (perfilLocal == "GERENCIA") {
     publicidad.style.display = "block";
     seleccion.style.display = "block";
     contratacion.style.display = "block";
+    ausentismos.style.display = "block";
 }
 if (usernameLocal == "HEIDY TORRES") {
     formasDePago.style.display = "block";
@@ -29,7 +30,12 @@ let responseData
 
 let card = document.getElementById('card-container');
 if (card) {
+    let datos = await obtenerDatosPublicaciones();
+    renderCards(datos);
+    
+}
 
+async function obtenerDatosPublicaciones() {
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
     const jwtKey = obj.jwt;
@@ -48,9 +54,8 @@ if (card) {
 
         if (response.ok) {
             responseData = await response.json();
-            renderCards(responseData);  // Llama a la función renderCards con responseData como argumento
-
             console.log(responseData);
+            return responseData;
         } else {
             throw new Error('Error en la petición GET');
         }
@@ -61,6 +66,7 @@ if (card) {
         console.error(error);
         throw error; // Propaga el error para que se pueda manejar fuera de la función
     }
+
 }
 
 async function publicidadId(id) {
@@ -188,7 +194,6 @@ function modificarP(id, nombredelapublicacion, linkdelapublicacion, valores, est
         console.error(error);
     }
 }
-
 
 function renderCards(data) {
     const container = document.getElementById('card-container');
@@ -363,9 +368,9 @@ if (botonEb) {
         let valoresMarcados = '';
 
         /*let checkboxes = document.querySelectorAll('.control-group input[type="checkbox"]');
-
+ 
         // Inicializa una cadena vacía para almacenar los valores marcados
-
+ 
         // Itera sobre las casillas de verificación
         checkboxes.forEach(function (checkbox) {
             if (checkbox.checked) {
@@ -373,7 +378,7 @@ if (botonEb) {
                 valoresMarcados += checkbox.parentNode.textContent.trim() + ', ';
             }
         });
-
+ 
         // Elimina la coma y el espacio finales si existen
         if (valoresMarcados.endsWith(', ')) {
             valoresMarcados = valoresMarcados.slice(0, -2);
@@ -416,7 +421,7 @@ if (botonEb) {
 
         //const redesSocialesSeleccionadas = vacante.redsocial.split(',').map(item => item.trim()); // Divide la cadena y elimina espacios
         /*console.log(redesSocialesSeleccionadas);
-
+ 
         checkboxes.forEach(function (checkbox) {
             if (redesSocialesSeleccionadas.includes(checkbox.parentNode.textContent.trim())) {
                 checkbox.checked = true;

@@ -22,6 +22,7 @@ if (perfilLocal == "GERENCIA") {
     publicidad.style.display = "block";
     seleccion.style.display = "block";
     contratacion.style.display = "block";
+    ausentismos.style.display = "block";
 }
 if (usernameLocal == "HEIDY TORRES"){
     formasDePago.style.display = "block";
