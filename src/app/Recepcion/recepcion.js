@@ -114,7 +114,7 @@ async function obtenerCodigos() {
         // c.fechadecreado pasar de yyyy-mm-dd a dd/mm/yyyy
 
         let dia = c.fechadecreado.split('-');
-        let diaTurnoCreado = new Date(dia[0], dia[1], dia[2]);
+        let diaTurnoCreado = new Date(dia[0], dia[1] - 1, dia[2]);
 
         let diaActual = new Date();
 
