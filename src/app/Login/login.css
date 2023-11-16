@@ -11,7 +11,7 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 90vh;	
+	height: 90vh;
 }
 
 .screen {
@@ -172,4 +172,11 @@ body {
 
 .social-login__icon:hover {
 	transform: scale(1.5);
+}
+
+.bx {
+	font-size: 25px;
+	transform: translateY(-53px);
+	margin-left: 190px;
+	cursor: pointer;
 }

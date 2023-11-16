@@ -3,6 +3,22 @@ import { aviso } from "../Avisos/avisos.js";
 
 const signInform = document.querySelector('#signUp-form');
 
+
+const icon = document.querySelector(".bx"), 
+        pas = document.getElementById("signIn-password")
+icon.addEventListener("click", e => {
+    if(pas.type === "password"){
+        pas.type = "text";
+        icon.classList.remove('bx-show-alt')
+        icon.classList.add("bx-hide")
+    }
+    else{
+        pas.type = "password"
+        icon.classList.remove('bc-hide')
+        icon.classList.add('bx-show-alt')
+    }
+})
+
 signInform.addEventListener('submit', async (e) => {
     e.preventDefault();    
     const values = await fetchData();
@@ -25,9 +41,11 @@ signInform.addEventListener('submit', async (e) => {
 
 
 async function fetchData() {
-    const email = signInform['signIn-email'].value;
+    let email = signInform['signIn-email'].value;
     const password = signInform['signIn-password'].value;
     const urlcompleta = urlBack.url + '/usuarios/ingresar';
+    // quitar espacios en blanco
+    email = email.trim();
 
     try {
         const response = await fetch(urlcompleta, {
