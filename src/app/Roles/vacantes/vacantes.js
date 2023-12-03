@@ -19,8 +19,8 @@ if (perfilLocal == "GERENCIA") {
     estadisticas.style.display = "block";
     vacantes.style.display = "block";
     publicidad.style.display = "block";
-    seleccion.style.display = "block";
-    contratacion.style.display = "block";
+    //seleccion.style.display = "block";
+    //contratacion.style.display = "block";
     ausentismos.style.display = "block";
 }
 if (usernameLocal == "HEIDY TORRES") {

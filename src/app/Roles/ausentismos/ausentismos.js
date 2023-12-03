@@ -20,8 +20,8 @@ if (perfilLocal == "GERENCIA") {
     estadisticas.style.display = "block";
     vacantes.style.display = "block";
     publicidad.style.display = "block";
-    seleccion.style.display = "block";
-    contratacion.style.display = "block";
+    //seleccion.style.display = "block";
+    //contratacion.style.display = "block";
     ausentismos.style.display = "block";
 }
 if (usernameLocal == "HEIDY TORRES") {
@@ -284,45 +284,33 @@ boton.addEventListener('click', async () => {
     cargarYMostrarDatos(cedulaEm);
 });
 
-const claves = ["NroDes", "Contrato", "Cedula", "Nombre", "CentrodeCosto", "Concepto", "FormadePago", "Valor", "Banco", "FECHADEPAGO"];
 
 if (input) {
-    // Agrega un escuchador de eventos al input para detectar cambios
-    input.addEventListener('change', (e) => {
-        const files = e.target.files;
-        if (files.length) {
-            const file = files[0];
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const arrayBuffer = event.target.result;
-                const data = new Uint8Array(arrayBuffer);
-                const workbook = XLSX.read(data, { type: 'array', cellDates: true, cellNF: false, cellText: false });
-                const sheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[sheetName];
+    const file = input.files[0];
+    const reader = new FileReader();
 
-                // Convertir la hoja de trabajo en un arreglo de arreglos
-                const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: false, dateNF: "dd/mm/yyyy" });
+    let datosFinales = [];
 
-                // Procesar cada fila y asignar los valores a las claves correspondientes
-                const modifiedRows = rows.map((row) => {
-                    let modifiedRow = {};
-                    row.forEach((cell, index) => {
-                        if (index < claves.length) {
-                            modifiedRow[claves[index]] = cell !== null ? cell : 'N/A';
-                        }
-                    });
-                    return modifiedRow;
-                });
+    reader.onload = (event) => {
+        const fileContent = event.target.result;
+        const workbook = XLSX.read(fileContent, { type: 'binary' });
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-                console.log(modifiedRows);
-                loader.style.display = "block";
-                over.style.display = "block";
-                // Aquí puedes hacer algo con modifiedRows, como almacenarlo o procesarlo
-                guardarDatos(modifiedRows);
-            };
-            reader.readAsArrayBuffer(file);
+        // Comienza a leer desde la quinta fila
+        for (let i = 0; i < rows.length; i++) {
+            const rowData = rows[i];
+
+            datosFinales.push(rowData);
         }
-    });
+
+        // Llama a la función para procesar los datos (guardarDatos) si es necesario
+        loader.style.display = "block";
+        over.style.display = "block";
+        guardarDatos(datosFinales);
+    };
+
+    reader.readAsBinaryString(file);
 }
 
 
