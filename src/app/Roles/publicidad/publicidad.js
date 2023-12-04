@@ -216,6 +216,7 @@ function renderCards(data) {
         cardBody.innerHTML = `
             <p class="card-text">
                 <strong>Nombre de la Publicación:</strong> ${item.nombredelapublicacion}<br>
+                <strong>ID:</strong> ${item.id}<br>
                 <strong>Quién Publicó el Reporte:</strong> ${item.quienpublicoelreporte}<br>
                 <strong>Fecha de Subida:</strong> ${item.fechadesubida}<br>
                 <strong>Número de Me gusta:</strong> ${item.numerodemegusta}<br>
@@ -362,7 +363,7 @@ if (botonEb) {
 
         // si aux.mensaje es error, mostrar una cadena vacía en su lugar
         if (aux.message == "error") {
-            aviso("No se encontro la vacante", "warning");
+            aviso("No se encontre la publicidad con ese id", "warning");
             return;
         }
         let valoresMarcados = '';

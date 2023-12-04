@@ -70,7 +70,7 @@
                 </a>
             </li>
 
-            
+
             <li id="ausentismos" style="display: none;">
                 <a href="../ausentismos/ausentismos.html">
                     <img src="../../assets/person.png" alt="logo" class="logo" />
@@ -100,55 +100,76 @@
         <div class="cuadroTexto">
             <div class="valor">
                 <div class="valoresEscribir">
-                    <h1 class="titulo" style="margin-right: 10px;"> Dilegencie la siguiente información:
-                    </h1>
+                    <h1 class="titulo" style="margin-right: 10px;"> Dilegencie la siguiente información: </h1>
 
                     <!-- Entradas para imágenes -->
-                    <input type="file" id="foto" class="boton" accept="image/*" placeholder="Foto">
-                    <button class="input" id="boton" style="width: 315px;">Foto</button>
+                    <div class="archivo">
+                        <input type="file" id="foto" class="boton" accept="image/*" placeholder="Foto">
+                        <button class="input" id="boton" style="width: 315px;">Foto</button>
+                    </div>
 
-                    <input type="file" id="firma" class="boton" accept="image/*" placeholder="Firma">
-                    <button class="input" id="boton" style="width: 315px;">Firma</button>
+                    <div class="archivo">
+                        <input type="file" id="firma" class="boton" accept="image/*" placeholder="Firma">
+                        <button class="input" id="boton" style="width: 315px;">Firma</button>
+                    </div>
 
-                    <input type="file" id="huella" class="boton" accept="image/*" placeholder="Huella">
-                    <button class="input" id="boton" style="width: 315px;">Huella</button>
+                    <div class="archivo">
+                        <input type="file" id="huella" class="boton" accept="image/*" placeholder="Huella">
+                        <button class="input" id="boton" style="width: 315px;">Huella</button>
+                    </div>
 
-                    <!-- Otros campos de entrada -->
                     <input type="text" id="sitioContratacion" class="input" placeholder="Sitio que Contratación">
-                    <input type="text" id="personaContrata" class="input" placeholder="Persona que Contrata">
                     <input type="text" id="eps" class="input" placeholder="EPS">
+
                     <input type="text" id="epsTrasladar" class="input" placeholder="EPS a Trasladar">
 
-                    <input type="file" id="afp" class="boton" accept=".pdf" placeholder="AFP (PDF)">
-                    <button class="input" id="boton" style="width: 315px;">AFP</button>
+                    <div class="archivo">
+                        <input type="file" id="afp" class="boton" accept=".pdf" placeholder="AFP (PDF)">
+                        <button class="input" id="boton" style="width: 315px;">AFP</button>
+                    </div>
 
-                    <input type="file" id="afc" class="boton" accept=".pdf" placeholder="AFC (PDF)">
-                    <button class="input" id="boton" style="width: 315px;">AFC</button>
+                    <div class="archivo">
+                        <input type="file" id="afc" class="boton" accept=".pdf" placeholder="AFC (PDF)">
+                        <button class="input" id="boton" style="width: 315px;">AFC</button>
+                    </div>
 
-                    <input type="file" id="verificacionProcuraduria" class="boton" accept=".pdf"
-                        placeholder="Verificación Procuraduría (PDF)">
-                    <button class="input" id="boton" style="width: 315px;">Verificación Procuraduría</button>
+                    <div class="archivo">
+                        <input type="file" id="verificacionProcuraduria" class="boton" accept=".pdf"
+                            placeholder="Verificación Procuraduría (PDF)">
+                        <button class="input" id="boton" style="width: 315px;">Verificación Procuraduría</button>
+                    </div>
 
-                    <input type="file" id="verificacionContraloria" class="boton" accept=".pdf"
-                        placeholder="Verificación Contraloría (PDF)">
-                    <button class="input" id="boton" style="width: 315px;">Verificación Contraloría</button>
+                    <div class="archivo">
+                        <input type="file" id="verificacionContraloria" class="boton" accept=".pdf"
+                            placeholder="Verificación Contraloría (PDF)">
+                        <button class="input" id="boton" style="width: 315px;">Verificación Contraloría</button>
+                    </div>
 
-                    <input type="file" id="ofac" class="boton" accept=".pdf" placeholder="OFAC o Lista Clinton (PDF)">
-                    <button class="input" id="boton" style="width: 315px;">OFAC o Lista Clinton</button>
+                    <div class="archivo">
+                        <input type="file" id="ofac" class="boton" accept=".pdf"
+                            placeholder="OFAC o Lista Clinton (PDF)">
+                        <button class="input" id="boton" style="width: 315px;">OFAC o Lista Clinton</button>
+                    </div>
 
-                    <input type="file" id="policivos" class="boton" accept=".pdf" placeholder="Policivos (PDF)">
-                    <button class="input" id="boton" style="width: 315px;">Policivos</button>
+                    <div class="archivo">
+                        <input type="file" id="policivos" class="boton" accept=".pdf" placeholder="Policivos (PDF)">
+                        <button class="input" id="boton" style="width: 315px;">Policivos</button>
+                    </div>
 
-                    <input type="file" id="adress" class="boton" accept=".pdf" placeholder="Adress (PDF)">
-                    <button class="input" id="boton" style="width: 315px;">Adress</button>
+                    <div class="archivo">
+                        <input type="file" id="adress" class="boton" accept=".pdf" placeholder="Adress (PDF)">
+                        <button class="input" id="boton" style="width: 315px;">Adress</button>
+                    </div>
 
-                    <input type="file" id="sisben" class="boton" accept=".pdf" placeholder="Sisben (PDF)">
-                    <button class="input" id="boton" style="width: 315px;">Sisben</button>
-
-                    <input type="file" id="fondoPension" class="boton" accept=".pdf"
-                        placeholder="Fondo de Pensión (PDF)">
-                    <button class="input" id="boton" style="width: 315px;">Fondo de Pensión</button>
-
+                    <div class="archivo">
+                        <input type="file" id="sisben" class="boton" accept=".pdf" placeholder="Sisben (PDF)">
+                        <button class="input" id="boton" style="width: 315px;">Sisben</button>
+                    </div>
+                    <div class="archivo">
+                        <input type="file" id="fondoPension" class="boton" accept=".pdf"
+                            placeholder="Fondo de Pensión (PDF)">
+                        <button class="input" id="boton" style="width: 315px;">Fondo de Pensión</button>
+                    </div>
 
                     <input type="number" id="semanasCotizadas" class="input" placeholder="Semanas Cotizadas">
                     <input type="text" id="formaPago" class="input" placeholder="Forma de Pago">
@@ -174,12 +195,13 @@
                     <input type="text" id="parentescoReferencia2" class="input" placeholder="Parentesco Referencia 2">
                     <input type="text" id="conoceReferencia2" class="input" placeholder="Hace Cuánto lo Conoce 2">
                     <input type="text" id="refiereReferencia2" class="input" placeholder="Cómo lo Refiere 2">
-                    <input type="text" id="referenciaronLaboral" class="input" placeholder="Referenciaron Laboral">
-                    <label for=" " style="margin-left: 50px; margin-right: 125px;"> Fecha Expedicion</label>
-                    <input type="date" id="validacionFechaExpedicion" class="input"
-                        placeholder="Validación Fecha de Expedición">
-                    <label for=" " style="margin-left: 50px; margin-right: 115px;"> Fecha Nacimiento</label>
+                    <input type="text" id="referenciaronLaboral" class="input" placeholder="Referenciaron Laboral"><br>
 
+                    <label for=" " style="margin-left: 10px; margin-right: 125px;"> Fecha Expedicion</label>
+                    <input type="date" id="validacionFechaExpedicion" class="input"
+                        placeholder="Validación Fecha de Expedición"> <br>
+
+                    <label for=" " style="margin-left: 10px; margin-right: 115px;"> Fecha Nacimiento</label>
                     <input type="date" id="validacionFechaNacimiento" class="input"
                         placeholder="Validación Fecha de Nacimiento">
 
@@ -188,12 +210,10 @@
                     <input type="text" id="primerNombre" class="input" placeholder="Primer Nombre">
                     <input type="text" id="segundoNombre" class="input" placeholder="Segundo Nombre">
 
-
                     <button class=" btn2" id="botonC">Cargar</button>
 
                 </div>
             </div>
-            <h1 id="datosPersona" class="titulo" style="float: left; margin-left: 30px"></h1>
         </div>
 
     </div>

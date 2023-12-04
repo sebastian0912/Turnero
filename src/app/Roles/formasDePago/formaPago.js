@@ -24,10 +24,10 @@ if (perfilLocal == "GERENCIA") {
     //contratacion.style.display = "block";
     ausentismos.style.display = "block";
 }
-if (usernameLocal == "HEIDY TORRES") {
+
+if (usernameLocal == "HEIDY TORRES" || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA") {
     formasDePago.style.display = "block";
 }
-
 
 async function FormasdePago(cedula) {
     var body = localStorage.getItem('key');
@@ -48,7 +48,6 @@ async function FormasdePago(cedula) {
 
         if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
             return responseData;
 
         } else {
@@ -174,65 +173,80 @@ const boton = document.querySelector('#boton');
 
 
 document.getElementById('tabla').addEventListener('click', async function (event) {
-    if (event.target.classList.contains('delete-icon')) {
-        // Obtener el ID almacenado en el atributo data-id
-        const id = event.target.getAttribute('data-id');
-        let aviso = await avisoConfirmacion();
-        if (aviso) {
-            await eliminarformadepago(id);
-            let cedulaEm = document.getElementById("cedula").value;
-            await sleep(100);
-            cargarYMostrarDatos(cedulaEm);
+
+    if (usernameLocal != "HEIDY TORRES") {
+        if (event.target.classList.contains('delete-icon')) {
+            aviso("No tiene permitido realizar esta accion", "error")
+        }
+        if (event.target.classList.contains('editar-icon')) {
+            aviso("No tiene permitido realizar esta accion", "error")
         }
     }
 
-    if (event.target.classList.contains('editar-icon')) {
-        const tr = event.target.closest('tr');
-        const id = event.target.getAttribute('data-id');
+    else {
 
-        // Convertir las celdas en campos de entrada
-        const celdas = tr.querySelectorAll('td');
-        const formadepago = celdas[5].innerText;
-        const valor = celdas[6].innerText;
-        const banco = celdas[7].innerText;
-        const fechadepago = celdas[8].innerText;
+        if (event.target.classList.contains('delete-icon')) {
+            // Obtener el ID almacenado en el atributo data-id
+            const id = event.target.getAttribute('data-id');
+            let aviso = await avisoConfirmacion();
+            if (aviso) {
+                await eliminarformadepago(id);
+                let cedulaEm = document.getElementById("cedula").value;
+                await sleep(100);
+                cargarYMostrarDatos(cedulaEm);
+            }
+        }
 
-        // Establecer estilos para las celdas con campos de entrada
-        celdas[5].innerHTML = `<input type='text' class='input-estetico' value='${formadepago}' />`;
-        celdas[6].innerHTML = `<input type='text' class='input-estetico' value='${valor}' />`;
-        celdas[7].innerHTML = `<input type='text' class='input-estetico' value='${banco}' />`;
-        celdas[8].innerHTML = `<input type='text' class='input-estetico' value='${fechadepago}' />`;
+        if (event.target.classList.contains('editar-icon')) {
+            const tr = event.target.closest('tr');
+            const id = event.target.getAttribute('data-id');
+
+            // Convertir las celdas en campos de entrada
+            const celdas = tr.querySelectorAll('td');
+            const formadepago = celdas[5].innerText;
+            const valor = celdas[6].innerText;
+            const banco = celdas[7].innerText;
+            const fechadepago = celdas[8].innerText;
+
+            // Establecer estilos para las celdas con campos de entrada
+            celdas[5].innerHTML = `<input type='text' class='input-estetico' value='${formadepago}' />`;
+            celdas[6].innerHTML = `<input type='text' class='input-estetico' value='${valor}' />`;
+            celdas[7].innerHTML = `<input type='text' class='input-estetico' value='${banco}' />`;
+            celdas[8].innerHTML = `<input type='text' class='input-estetico' value='${fechadepago}' />`;
 
 
-        // Cambiar el ícono de editar a un botón de guardar
-        event.target.src = '../../assets/disquete.png';
-        event.target.classList.remove('editar-icon');
-        event.target.classList.add('guardar-icon');
-        // Establecer tamaño de 20px de ancho y alto
-        event.target.style.width = '20px'; // Establecer el ancho en 20px
-        event.target.style.height = '20px'; // Establecer la altura en 20px
+            // Cambiar el ícono de editar a un botón de guardar
+            event.target.src = '../../assets/disquete.png';
+            event.target.classList.remove('editar-icon');
+            event.target.classList.add('guardar-icon');
+            // Establecer tamaño de 20px de ancho y alto
+            event.target.style.width = '20px'; // Establecer el ancho en 20px
+            event.target.style.height = '20px'; // Establecer la altura en 20px
+            event.target.style.cursor = "pointer"
 
-    } else if (event.target.classList.contains('guardar-icon')) {
-        const tr = event.target.closest('tr');
-        const id = event.target.getAttribute('data-id');
-        const inputs = tr.querySelectorAll('input');
 
-        const contrato = tr.cells[0].innerText;
-        const cedula = tr.cells[1].innerText;
-        const nombre = tr.cells[2].innerText;
-        const centrodecosto = tr.cells[3].innerText;
-        const concepto = tr.cells[4].innerText;        
-        // Obteniendo los valores actualizados de los inputs
-        const formadepago = inputs[0].value;
-        const valor = inputs[1].value;
-        const banco = inputs[2].value;
-        const fechadepago = inputs[3].value;        
+        } else if (event.target.classList.contains('guardar-icon')) {
+            const tr = event.target.closest('tr');
+            const id = event.target.getAttribute('data-id');
+            const inputs = tr.querySelectorAll('input');
 
-        // Aquí llamas a la función modificarV con los valores actualizados
-        modificarV(id, banco, nombre, centrodecosto, concepto, contrato, fechadepago, formadepago, valor);
-        await sleep(100);
+            const contrato = tr.cells[0].innerText;
+            const cedula = tr.cells[1].innerText;
+            const nombre = tr.cells[2].innerText;
+            const centrodecosto = tr.cells[3].innerText;
+            const concepto = tr.cells[4].innerText;
+            // Obteniendo los valores actualizados de los inputs
+            const formadepago = inputs[0].value;
+            const valor = inputs[1].value;
+            const banco = inputs[2].value;
+            const fechadepago = inputs[3].value;
 
-        cargarYMostrarDatos(cedula);        
+            // Aquí llamas a la función modificarV con los valores actualizados
+            modificarV(id, banco, nombre, centrodecosto, concepto, contrato, fechadepago, formadepago, valor);
+            await sleep(100);
+
+            cargarYMostrarDatos(cedula);
+        }
     }
 });
 
@@ -248,6 +262,7 @@ async function cargarYMostrarDatos(cedulaEm) {
     }
 
     let datosExtraidos = await FormasdePago(cedulaEm);
+
     if (datosExtraidos.message == "No se encontró el número de cédula") {
         aviso("No se encontró el número de cédula en las formas de pago", "warning");
         tabla.innerHTML = '';
@@ -256,11 +271,13 @@ async function cargarYMostrarDatos(cedulaEm) {
     tabla.innerHTML = '';
 
     let formaPago = datosExtraidos.formasdepago;
-    formaPago.sort((a, b) => obtenerNumeroMes(b.concepto) - obtenerNumeroMes(a.concepto));
-    const ultimosCuatroElementos = formaPago.slice(-4);
+    formaPago.reverse();
 
-    ultimosCuatroElementos.forEach(p => {
-        tabla.insertAdjacentHTML('afterbegin', `
+    let contador = 0;
+
+    formaPago.forEach(p => {
+        if (contador < 4) {
+            tabla.insertAdjacentHTML('beforeend', `
             <tr>
                 <td>${p.contrato}</td>
                 <td>${p.cedula}</td>
@@ -275,6 +292,10 @@ async function cargarYMostrarDatos(cedulaEm) {
                 <td> <img src="../../assets/eliminar.png" class="delete-icon" data-id="${p.id}"></td>
             </tr>
         `);
+
+            contador++;
+        }
+
     });
 }
 
@@ -356,9 +377,9 @@ async function guardarDatos(datosFinales) {
                     document.getElementById('successSound').play();
                     over.style.display = "none";
                     loader.style.display = "none";
-                    let aviso = await avisoConfirmado("Datos guardados correctamente", "success");                    
+                    let aviso = await avisoConfirmado("Datos guardados correctamente", "success");
                     //muchas veces mando un mensaje de sucess o algo asi para saber que todo salio bien o mal                    
-                    if (aviso){
+                    if (aviso) {
                         location.reload();
                     }
                     return response.json();

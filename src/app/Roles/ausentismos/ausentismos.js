@@ -298,7 +298,7 @@ if (input) {
         const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
         // Comienza a leer desde la quinta fila
-        for (let i = 0; i < rows.length; i++) {
+        for (let i = 1; i < rows.length; i++) {
             const rowData = rows[i];
 
             datosFinales.push(rowData);
@@ -310,7 +310,7 @@ if (input) {
         guardarDatos(datosFinales);
     };
 
-    reader.readAsBinaryString(file);
+    //reader.readAsBinaryString(file);
 }
 
 

@@ -140,9 +140,9 @@ function crearVacante(Cargovacante_id, CargovacanteOtros, Localizaciondelavacant
         Cargovacante: Cargovacante_id,
         CargovacanteOtros: CargovacanteOtros,
         Localizaciondelavacante: Localizaciondelavacante,
-        zonaquenoesta: zonaquenoesta,
+        zonaquenoestaTrabajador: zonaquenoesta,
         localizacionDeLaPersona: empresaUsuaria,
-        empresausuariaquenoesta: empresausuariaquenoesta,
+        zonaquenoestaPostulante: empresausuariaquenoesta,
         experiencia: experiencia,
         Pruebatecnica: Pruebatecnica,
         fechadePruebatecnica: fechadePruebatecnica,
@@ -330,66 +330,70 @@ function s2ab(s) {
 // si le doy click a descargar, descargar el archivo en excel con los datos de la tabla
 let descargar = document.getElementById("descargar");
 
-descargar.addEventListener('click', async function () {
-    let datosVacantes = await obtenerDatosVacantes(); // Asumiendo que esta función obtiene tus datos
-    let datos2 = await datosUsuarios();
-
-    if (!datosVacantes || datosVacantes.length === 0) {
-        aviso("No se han encontrado datos de vacantes", "warning");
-        return;
-    }
-
-    let excelData = [
-        ['Cargo de la Vacante', 'Id', 'Quien Publicó la Vacante', 'Fecha de Ingreso', 'Fecha de Prueba Técnica', 'Localización de la Vacante', 'Fecha Publicado', 'Localización de la Persona', 'Número de Gente Requerida', 'Prueba Técnica', 'Experiencia', 'Observación Vacante', 'Hora de Prueba Técnica']
-    ];
-
-    datosVacantes.publicacion.forEach((item) => {
-        // Asumiendo que tienes una función para obtener el nombre de la persona
-        let nombrePersona = nombre(datos2, item.quienpublicolavacante);
-        let pruebaTecnica = item.pruebaTecnica ? "Sí" : "No"; // Ajusta según tus datos
-        // si la fecha de ingreso es null, mostrar no aplica
-        if (item.fechadeIngreso == null) {
-            item.fechadeIngreso = "No aplica";
+if (descargar){
+    descargar.addEventListener('click', async function () {
+        let datosVacantes = await obtenerDatosVacantes(); // Asumiendo que esta función obtiene tus datos
+        let datos2 = await datosUsuarios();
+    
+        if (!datosVacantes || datosVacantes.length === 0) {
+            aviso("No se han encontrado datos de vacantes", "warning");
+            return;
         }
-
-        excelData.push([
-            item.Cargovacante_id || "",
-            item.id || "",
-            nombrePersona || "",
-            item.fechaIngreso || "",
-            item.fechadePruebatecnica || "",
-            item.Localizaciondelavacante || "",
-            item.fechaPublicado || "",
-            item.localizacionDeLaPersona || "",
-            item.numeroDeGenteRequerida || "",
-            pruebaTecnica || "",
-            item.experiencia || "",
-            item.observacionVacante || "",
-            item.horadePruebatecnica || ""
-        ]);
+    
+        let excelData = [
+            ['Cargo de la Vacante', 'Id', 'Quien Publicó la Vacante', 'Fecha de Ingreso', 'Fecha de Prueba Técnica', 'Localización de la Vacante', 'Fecha Publicado', 'Localización de la Persona', 'Número de Gente Requerida', 'Prueba Técnica', 'Experiencia', 'Observación Vacante', 'Hora de Prueba Técnica']
+        ];
+    
+        datosVacantes.publicacion.forEach((item) => {
+            // Asumiendo que tienes una función para obtener el nombre de la persona
+            let nombrePersona = nombre(datos2, item.quienpublicolavacante);
+            let pruebaTecnica = item.pruebaTecnica ? "Sí" : "No"; // Ajusta según tus datos
+            // si la fecha de ingreso es null, mostrar no aplica
+            if (item.fechadeIngreso == null) {
+                item.fechadeIngreso = "No aplica";
+            }
+    
+            excelData.push([
+                item.Cargovacante_id || "",
+                item.id || "",
+                nombrePersona || "",
+                item.fechaIngreso || "",
+                item.fechadePruebatecnica || "",
+                item.Localizaciondelavacante || "",
+                item.fechaPublicado || "",
+                item.localizacionDeLaPersona || "",
+                item.numeroDeGenteRequerida || "",
+                pruebaTecnica || "",
+                item.experiencia || "",
+                item.observacionVacante || "",
+                item.horadePruebatecnica || ""
+            ]);
+        });
+    
+        // El resto del código para crear y descargar el Excel es igual
+        const ws = XLSX.utils.aoa_to_sheet(excelData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Datos de Vacantes');
+    
+        const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+    
+        const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+        const url = URL.createObjectURL(blob);
+    
+        const element = document.createElement('a');
+        element.href = url;
+        element.download = 'datosVacantes.xlsx';
+        element.style.display = 'none';
+    
+        document.body.appendChild(element);
+        element.click();
+    
+        document.body.removeChild(element);
+        URL.revokeObjectURL(url);
     });
+    
+}
 
-    // El resto del código para crear y descargar el Excel es igual
-    const ws = XLSX.utils.aoa_to_sheet(excelData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Datos de Vacantes');
-
-    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-
-    const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
-    const url = URL.createObjectURL(blob);
-
-    const element = document.createElement('a');
-    element.href = url;
-    element.download = 'datosVacantes.xlsx';
-    element.style.display = 'none';
-
-    document.body.appendChild(element);
-    element.click();
-
-    document.body.removeChild(element);
-    URL.revokeObjectURL(url);
-});
 
 
 async function renderCards(data) {
