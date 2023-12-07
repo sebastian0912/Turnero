@@ -29,6 +29,10 @@ if (usernameLocal == "HEIDY TORRES" || perfilLocal == "COORDINADOR" || perfilLoc
     formasDePago.style.display = "block";
 }
 
+if (usernameLocal == "HEIDY TORRES"){
+    cargarA.style.display = "block";
+}
+
 async function FormasdePago(cedula) {
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);

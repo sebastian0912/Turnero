@@ -286,31 +286,42 @@ boton.addEventListener('click', async () => {
 
 
 if (input) {
-    const file = input.files[0];
-    const reader = new FileReader();
-
-    let datosFinales = [];
-
-    reader.onload = (event) => {
-        const fileContent = event.target.result;
-        const workbook = XLSX.read(fileContent, { type: 'binary' });
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-
-        // Comienza a leer desde la quinta fila
-        for (let i = 1; i < rows.length; i++) {
-            const rowData = rows[i];
-
-            datosFinales.push(rowData);
-        }
-
-        // Llama a la función para procesar los datos (guardarDatos) si es necesario
-        loader.style.display = "block";
-        over.style.display = "block";
-        guardarDatos(datosFinales);
-    };
-
-    //reader.readAsBinaryString(file);
+    input.addEventListener('change', async () => {
+        const file = input.files[0];
+        const reader = new FileReader();
+    
+        let datosFinales = [];
+    
+        reader.onload = (event) => {
+            const fileContent = event.target.result;
+            const workbook = XLSX.read(fileContent, { type: 'binary' });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    
+            // Obtiene el rango de la hoja
+            const range = XLSX.utils.decode_range(sheet['!ref']);
+    
+            for (let rowNum = 1; rowNum <= range.e.r; rowNum++) {
+                let rowData = [];
+                for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
+                    // Obtiene la celda en la posición actual
+                    const cellRef = XLSX.utils.encode_cell({r: rowNum, c: colNum});
+                    const cell = sheet[cellRef];
+    
+                    // Agrega la celda al array, usando espacio en blanco si la celda está vacía
+                    rowData.push(cell ? cell.v : " ");
+                }
+                datosFinales.push(rowData);
+            }
+    
+            console.log('Datos cargados desde Excel:', datosFinales);
+    
+            guardarDatos(datosFinales);
+        };
+    
+        reader.readAsBinaryString(file);
+    });
+    
+    
 }
 
 
@@ -332,7 +343,7 @@ async function guardarDatos(datosFinales) {
         'Authorization': jwtKey
     };
 
-    const urlcompleta = urlBack.url + '/FormasdePago/crearformasDePago';
+    const urlcompleta = urlBack.url + '/contratacion/subidadeusuariosarchivoexcel';
     try {
         fetch(urlcompleta, {
             method: 'POST',// para el resto de peticiónes HTTP le cambias a GET, POST, PUT, DELETE, etc.
