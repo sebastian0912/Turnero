@@ -221,18 +221,18 @@ document.getElementById('tabla').addEventListener('click', async function (event
         const cedula = tr.cells[1].innerText;
         const nombre = tr.cells[2].innerText;
         const centrodecosto = tr.cells[3].innerText;
-        const concepto = tr.cells[4].innerText;        
+        const concepto = tr.cells[4].innerText;
         // Obteniendo los valores actualizados de los inputs
         const formadepago = inputs[0].value;
         const valor = inputs[1].value;
         const banco = inputs[2].value;
-        const fechadepago = inputs[3].value;        
+        const fechadepago = inputs[3].value;
 
         // Aquí llamas a la función modificarV con los valores actualizados
         modificarV(id, banco, nombre, centrodecosto, concepto, contrato, fechadepago, formadepago, valor);
         await sleep(100);
 
-        cargarYMostrarDatos(cedula);        
+        cargarYMostrarDatos(cedula);
     }
 });
 
@@ -289,39 +289,37 @@ if (input) {
     input.addEventListener('change', async () => {
         const file = input.files[0];
         const reader = new FileReader();
-    
+
         let datosFinales = [];
-    
+
         reader.onload = (event) => {
             const fileContent = event.target.result;
-            const workbook = XLSX.read(fileContent, { type: 'binary' });
+            const workbook = XLSX.read(new Uint8Array(fileContent), { type: 'array' });
             const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    
+
             // Obtiene el rango de la hoja
             const range = XLSX.utils.decode_range(sheet['!ref']);
-    
+
             for (let rowNum = 1; rowNum <= range.e.r; rowNum++) {
                 let rowData = [];
                 for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
                     // Obtiene la celda en la posición actual
-                    const cellRef = XLSX.utils.encode_cell({r: rowNum, c: colNum});
+                    const cellRef = XLSX.utils.encode_cell({ r: rowNum, c: colNum });
                     const cell = sheet[cellRef];
-    
+
                     // Agrega la celda al array, usando espacio en blanco si la celda está vacía
                     rowData.push(cell ? cell.v : " ");
                 }
                 datosFinales.push(rowData);
             }
-    
+
             console.log('Datos cargados desde Excel:', datosFinales);
-    
+
             guardarDatos(datosFinales);
         };
-    
-        reader.readAsBinaryString(file);
+
+        reader.readAsArrayBuffer(file);
     });
-    
-    
 }
 
 
@@ -355,9 +353,9 @@ async function guardarDatos(datosFinales) {
                     document.getElementById('successSound').play();
                     over.style.display = "none";
                     loader.style.display = "none";
-                    let aviso = await avisoConfirmado("Datos guardados correctamente", "success");                    
+                    let aviso = await avisoConfirmado("Datos guardados correctamente", "success");
                     //muchas veces mando un mensaje de sucess o algo asi para saber que todo salio bien o mal                    
-                    if (aviso){
+                    if (aviso) {
                         location.reload();
                     }
                     return response.json();
