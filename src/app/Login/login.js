@@ -4,15 +4,15 @@ import { aviso } from "../Avisos/avisos.js";
 const signInform = document.querySelector('#signUp-form');
 
 
-const icon = document.querySelector(".bx"), 
-        pas = document.getElementById("signIn-password")
+const icon = document.querySelector(".bx"),
+    pas = document.getElementById("signIn-password")
 icon.addEventListener("click", e => {
-    if(pas.type === "password"){
+    if (pas.type === "password") {
         pas.type = "text";
         icon.classList.remove('bx-show-alt')
         icon.classList.add("bx-hide")
     }
-    else{
+    else {
         pas.type = "password"
         icon.classList.remove('bc-hide')
         icon.classList.add('bx-show-alt')
@@ -20,22 +20,27 @@ icon.addEventListener("click", e => {
 })
 
 signInform.addEventListener('submit', async (e) => {
-    e.preventDefault();    
+    e.preventDefault();
     const values = await fetchData();
-    
+
     localStorage.setItem('idUsuario', values.numero_de_documento);
     localStorage.setItem('perfil', values.rol);
     localStorage.setItem('username', values.primer_nombre + ' ' + values.primer_apellido);
     localStorage.setItem('sede', values.sucursalde);
 
-    if (values.rol != 'RECEPCION' && values.numero_de_documento != null && values.primer_nombre !=  'KAREN' && values.primer_apellido != "RIQUETT" )  {           
+    const esKarenRiquett = values.primer_nombre === 'KAREN' && values.primer_apellido === "RIQUETT";
+    const esYeseniaPalacios = values.primer_nombre === 'Yesenia' && values.primer_apellido === "Palacios";
+
+
+    if (values.numero_de_documento != null && !esKarenRiquett && !esYeseniaPalacios) {
         window.location.href = "../Roles/roles.html";
-    } 
-    else if (values.primer_nombre ==  'KAREN' && values.primer_apellido == "RIQUETT" ) {
+    } else if (esKarenRiquett || esYeseniaPalacios) {
         window.location.href = "../Recepcion/recepcion.html";
     } else {
-        aviso('No tienes acceso todavia, comunicate con el administrador', 'error');
+        aviso('No tienes acceso todavía, comunícate con el administrador', 'error');
     }
+
+
 
 });
 

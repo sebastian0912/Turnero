@@ -64,6 +64,36 @@ async function FormasdePago(cedula) {
     }
 }
 
+async function FormasdePagoTodo() {
+    var body = localStorage.getItem('key');
+    const obj = JSON.parse(body);
+    const jwtKey = obj.jwt;
+
+    const headers = {
+        'Authorization': jwtKey
+    };
+
+    const urlcompleta = urlBack.url + '/FormasdePago/traerformasDePago';
+
+    try {
+        const response = await fetch(urlcompleta, {
+            method: 'GET',
+            headers: headers,
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            return responseData;
+
+        } else {
+            throw new Error('Error en la petición GET');
+        }
+    } catch (error) {
+        console.error('Error en la petición HTTP GET');
+        console.error(error);
+        throw error; // Propaga el error para que se pueda manejar fuera de la función
+    }
+}
 
 function modificarV(id, banco, nombre, centrodecosto, concepto, contrato, fechadepago, formadepago, valor) {
 
@@ -348,6 +378,76 @@ if (input) {
             reader.readAsArrayBuffer(file);
         }
     });
+}
+
+
+const descargardoc = document.querySelector('#descargardoc');
+
+descargardoc.addEventListener('click', async () => {
+
+    let datosFormasPago = await FormasdePagoTodo();
+    let aux = datosFormasPago.formasdepago;
+    console.log(aux);
+
+
+    try {
+
+        if (!aux || aux.length === 0) {
+            aviso("No se han encontrado datos de formas de pago", "warning");
+            return;
+        }
+
+        let excelData = [
+            ['NroDes', 'Contrato', 'Cédula', 'Nombre', 'Centro de Costo', 'Concepto', 'Forma de Pago', 'Valor', 'Banco', 'Fecha de Pago']
+        ];
+
+        aux.forEach((formaPago) => {
+            excelData.push([
+                formaPago.NroDes || "",
+                formaPago.contrato || "",
+                formaPago.cedula || "",
+                formaPago.nombre || "",
+                formaPago.centrodecosto || "",
+                formaPago.concepto || "",
+                formaPago.formadepago || "",
+                formaPago.valor || "",
+                formaPago.banco || "",
+                formaPago.fechadepago || "",
+            ]);
+        });
+
+        const ws = XLSX.utils.aoa_to_sheet(excelData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Datos Formas de Pago');
+
+        const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+        const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+        const url = URL.createObjectURL(blob);
+
+        const element = document.createElement('a');
+        element.href = url;
+        element.download = 'datosFormasPago.xlsx';
+        element.style.display = 'none';
+
+        document.body.appendChild(element);
+        element.click();
+
+        document.body.removeChild(element);
+        URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error("Error al generar el archivo Excel", error);
+        // Manejar el error como consideres necesario
+    }
+});
+
+function s2ab(s) {
+    const buf = new ArrayBuffer(s.length);
+    const view = new Uint8Array(buf);
+    for (let i = 0; i < s.length; i++) {
+        view[i] = s.charCodeAt(i) & 0xFF;
+    }
+    return buf;
 }
 
 

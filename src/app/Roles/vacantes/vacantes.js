@@ -56,7 +56,7 @@ async function obtenerDatosVacantes() {
         if (response.ok) {
             responseData = await response.json();
             return responseData;
-            
+
         } else {
             throw new Error('Error en la petición GET');
         }
@@ -139,10 +139,14 @@ function crearVacante(Cargovacante_id, CargovacanteOtros, Localizaciondelavacant
     let x = JSON.stringify({
         Cargovacante: Cargovacante_id,
         CargovacanteOtros: CargovacanteOtros,
+
         Localizaciondelavacante: Localizaciondelavacante,
         zonaquenoestaTrabajador: zonaquenoesta,
+
         localizacionDeLaPersona: empresaUsuaria,
         zonaquenoestaPostulante: empresausuariaquenoesta,
+
+
         experiencia: experiencia,
         Pruebatecnica: Pruebatecnica,
         fechadePruebatecnica: fechadePruebatecnica,
@@ -162,10 +166,12 @@ function crearVacante(Cargovacante_id, CargovacanteOtros, Localizaciondelavacant
                 JSON.stringify({
                     Cargovacante: Cargovacante_id,
                     CargovacanteOtros: CargovacanteOtros,
+
                     Localizaciondelavacante: Localizaciondelavacante,
-                    zonaquenoesta: zonaquenoesta,
+                    zonaquenoestaTrabajador: zonaquenoesta,
+
                     localizacionDeLaPersona: empresaUsuaria,
-                    empresausuariaquenoesta: empresausuariaquenoesta,
+                    zonaquenoestaPostulante: empresausuariaquenoesta,
 
                     experiencia: experiencia,
                     Pruebatecnica: Pruebatecnica,
@@ -203,27 +209,12 @@ function crearVacante(Cargovacante_id, CargovacanteOtros, Localizaciondelavacant
     }
 }
 
-function modificarV(id, Localizaciondelavacante, empresaUsuaria, fechadeIngreso, numeroDeGenteRequerida) {
+function modificarV(id, Cargovacante_id, CargovacanteOtros, Localizaciondelavacante, zonaquenoesta, empresaUsuaria, empresausuariaquenoesta, experiencia, Pruebatecnica, fechadePruebatecnica, horadePruebatecnica, fechadeIngreso, numeroDeGenteRequerida, observacionVacante, empresaQueSolicita_id) {
 
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
     const jwtToken = obj.jwt;
-    console.log(jwtToken);
 
-    let x = JSON.stringify({
-
-        Localizaciondelavacante: Localizaciondelavacante,
-        localizacionDeLaPersona: empresaUsuaria,
-
-        numeroDeGenteRequerida: numeroDeGenteRequerida,
-
-        fechadeIngreso: fechadeIngreso,
-
-        jwt: jwtToken
-    })
-
-    // imprimir el json bonito
-    console.log(JSON.stringify(JSON.parse(x), null, 2));
     const urlcompleta = urlBack.url + '/publicacion/editarVacante/' + id;
     try {
         fetch(urlcompleta, {
@@ -231,11 +222,24 @@ function modificarV(id, Localizaciondelavacante, empresaUsuaria, fechadeIngreso,
             body:
                 JSON.stringify({
 
-                    Localizaciondelavacante: Localizaciondelavacante,
-                    localizacionDeLaPersona: empresaUsuaria,
+                    Cargovacante: Cargovacante_id,
+                    CargovacanteOtros: CargovacanteOtros,
 
+                    Localizaciondelavacante: Localizaciondelavacante,
+                    zonaquenoestaTrabajador: zonaquenoesta,
+
+                    localizacionDeLaPersona: empresaUsuaria,
+                    zonaquenoestaPostulante: empresausuariaquenoesta,
+
+
+                    experiencia: experiencia,
+                    Pruebatecnica: Pruebatecnica,
+                    fechadePruebatecnica: fechadePruebatecnica,
+                    horadepruebatecnica: horadePruebatecnica,
                     numeroDeGenteRequerida: numeroDeGenteRequerida,
-                    fechadeIngreso: fechadeIngreso,
+                    Observaciones: observacionVacante,
+                    empresaQueSolicita: empresaQueSolicita_id,
+                    fechadeingreso: fechadeIngreso,
 
                     jwt: jwtToken
                 })
@@ -330,20 +334,20 @@ function s2ab(s) {
 // si le doy click a descargar, descargar el archivo en excel con los datos de la tabla
 let descargar = document.getElementById("descargar");
 
-if (descargar){
+if (descargar) {
     descargar.addEventListener('click', async function () {
         let datosVacantes = await obtenerDatosVacantes(); // Asumiendo que esta función obtiene tus datos
         let datos2 = await datosUsuarios();
-    
+
         if (!datosVacantes || datosVacantes.length === 0) {
             aviso("No se han encontrado datos de vacantes", "warning");
             return;
         }
-    
+
         let excelData = [
             ['Cargo de la Vacante', 'Id', 'Quien Publicó la Vacante', 'Fecha de Ingreso', 'Fecha de Prueba Técnica', 'Localización de la Vacante', 'Fecha Publicado', 'Localización de la Persona', 'Número de Gente Requerida', 'Prueba Técnica', 'Experiencia', 'Observación Vacante', 'Hora de Prueba Técnica']
         ];
-    
+
         datosVacantes.publicacion.forEach((item) => {
             // Asumiendo que tienes una función para obtener el nombre de la persona
             let nombrePersona = nombre(datos2, item.quienpublicolavacante);
@@ -352,7 +356,7 @@ if (descargar){
             if (item.fechadeIngreso == null) {
                 item.fechadeIngreso = "No aplica";
             }
-    
+
             excelData.push([
                 item.Cargovacante_id || "",
                 item.id || "",
@@ -369,31 +373,30 @@ if (descargar){
                 item.horadePruebatecnica || ""
             ]);
         });
-    
+
         // El resto del código para crear y descargar el Excel es igual
         const ws = XLSX.utils.aoa_to_sheet(excelData);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Datos de Vacantes');
-    
+
         const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-    
+
         const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
         const url = URL.createObjectURL(blob);
-    
+
         const element = document.createElement('a');
         element.href = url;
         element.download = 'datosVacantes.xlsx';
         element.style.display = 'none';
-    
+
         document.body.appendChild(element);
         element.click();
-    
+
         document.body.removeChild(element);
         URL.revokeObjectURL(url);
     });
-    
-}
 
+}
 
 
 async function renderCards(data) {
@@ -425,7 +428,7 @@ async function renderCards(data) {
             fechaIngreso = "No aplica";
         }
         // si es false, mostrar no
-        if (pruebaTecnica == false) {
+        if (pruebaTecnica == null) {
             pruebaTecnica = "No";
         }
 
@@ -436,14 +439,15 @@ async function renderCards(data) {
 
         const cardBody = document.createElement('div');
         cardBody.classList.add('card-body');
-
+        console.log(item);
         cardBody.innerHTML = `
             <p class="card-text">
                 <strong>Cargo de la vacante:</strong> ${item.Cargovacante_id}<br>
                 <strong>Id:</strong> ${item.id}<br>
-                <strong>Quien publicó la vacante:</strong> ${nombrePersona}<br>
+                <strong>Quien publicó la vacante:</strong> ${item.quienpublicolavacante}<br>
                 <strong>Fecha de ingreso :</strong> ${fechaIngreso}<br>
                 <strong>Fecha de Prueba Técnica:</strong> ${item.fechadePruebatecnica}<br>
+                <strong>Hora de Prueba Técnica:</strong> ${item.horadePruebatecnica}<br>            
                 <strong>Localización de la vacante:</strong> ${item.Localizaciondelavacante}<br>
                 <strong>Fecha Publicado:</strong> ${item.fechaPublicado}<br>
                 <strong>Localización de la Persona:</strong> ${item.localizacionDeLaPersona}<br>
@@ -451,7 +455,6 @@ async function renderCards(data) {
                 <strong>Prueba Técnica:</strong> ${pruebaTecnica}<br>
                 <strong>Experiencia:</strong> ${item.experiencia}<br>
                 <strong>Observación Vacante:</strong> ${item.observacionVacante}<br>
-                <strong>Hora de Prueba Técnica:</strong> ${item.horadePruebatecnica}<br>            
             </p>
         `;
         card.appendChild(cardBody);
@@ -814,26 +817,6 @@ if (select && botonC) {
         }
 
 
-        console.log("Empresa que solicita: " + empresaS.value);
-        console.log("Cargo que necesita: " + inputCargo.value);
-        console.log("Otro Cargo: " + otroCargo.value);
-        console.log("Empresa usuaria: " + inputEmpresa.value);
-        console.log("Otra Empresa: " + otraEmpresa.value);
-        // Para los checkboxes, necesitarás iterar sobre ellos si quieres obtener sus valores
-        console.log("Oficina quien puede contratar: " + obtenerValoresCheckboxes());
-        console.log("Otra Zona: " + otraZona.value);
-        console.log("Prueba técnica: " + pruebaT.value);
-        console.log("Fecha prueba técnica: " + fechaPrueba.value);
-        console.log("Hora prueba técnica: " + horaPrueba.value);
-        console.log("Tiene fecha de Ingreso: " + FechaIngreso.value);
-        console.log("Fecha de Ingreso: " + fechaIngresoHello.value);
-        console.log("Requiere Experiencia: " + experiencia.value);
-        console.log("Número de Personas: " + numPersonas.value);
-        console.log("Observaciones: " + observaciones.value);
-
-        console.log("Prueba aux: " + auxPruebaT);
-
-
         crearVacante(inputCargo.value, otroCargo.value, obtenerValoresCheckboxes(), otraZona.value, inputEmpresa.value, otraEmpresa.value, experiencia.value, auxPruebaT, fechaPrueba.value, horaPrueba.value, auxFechaI, numPersonas.value, observaciones.value, empresaS.value);
 
         let confirmacion = await avisoConfirmado("Se ha creado la vacante exitosamente", "success");
@@ -845,6 +828,163 @@ if (select && botonC) {
 }
 
 let botonEb = document.getElementById("botonEb");
+
+const empresas = [
+    "Empresa Usuaria",
+    "7100 (YUNDAMA)",
+    "7200 ARANDANOS (VALMAR)",
+    "7210 (VALMAR)",
+    "7211 (VALMAR)",
+    "7219 (COMERCIAL/VALMAR)",
+    "7220 (CURUBITAL)",
+    "7243 (CURUBITAL)",
+    "7300 (VALMAR)",
+    "7312 (VALMAR)",
+    "7315 GENÉTICA",
+    "7930 (VALMAR)",
+    "ADMINISTRACION CENTRAL",
+    "ADMINISTRATIVO",
+    "AGRÍCOLA CARDENAL",
+    "AGRÍCOLA CARDENAL ROSAL",
+    "ALEJANDRA",
+    "AMANCAY",
+    "APOYO FINCAS",
+    "APOYO LABORAL TS",
+    "APOYO POSTCOSECHAS",
+    "BELCHITE 2, VIA NEMOCON",
+    "BELCHITE II - VIA NEMOCON",
+    "BIOCONTROLADORES",
+    "BOUQUETS MIXTO",
+    "CALAFATE",
+    "CARNATION",
+    "CASA DENTAL EDUARDO DAZA",
+    "CHUSACA E.U.",
+    "CFC CAFARCOL",
+    "CIRCASIA",
+    "COMERCIALIZADORA",
+    "COMERCIALIZADORA TS",
+    "DANIELA LEON MACHICADO",
+    "DESARROLLO INVESTIGACIÓN DIVERSIFICADOS (DID)",
+    "DISTRIHROM",
+    "EL COLEGIO",
+    "EL HATO",
+    "EL RESPIRO",
+    "EL ROSAL",
+    "EL REBAÑO",
+    "ELITE GERBERAS",
+    "EMBOTELLADORA DE AGUA POTABLE",
+    "ENVIOS LOS REYES SAS",
+    "ESTADISTICA",
+    "ESTADISTICA MERCEDES",
+    "ESTADISTICA VALENTINO",
+    "ESTUDIO ECOTECH S.A.S",
+    "EXCELLENCE BELCHITE, VIA NEMOCON",
+    "EXCELLENCE ESTADISTICA",
+    "EXCELLENCE FLOWERS POZO AZUL",
+    "EXPOWONDER VEREDA SAN RAFAEL, FINCA EL CEREZO",
+    "FANTASY CULTIVO",
+    "FANTASY ESTADISTICA",
+    "FANTASY GESTION HUMANA",
+    "FLOREX",
+    "FLOREX 1",
+    "FLOREX 2",
+    "FLOREX 3",
+    "FLORES DE LOS ANDES",
+    "FLORES DEL RIO",
+    "FRUITSFULL",
+    "FUNDACION FERNANDO BORRERO CAICEDO",
+    "GUACARI",
+    "GUAYMARAL 'N-O'",
+    "GUAYMARAL 'PRINCIPAL'",
+    "GUENSUCA",
+    "GYPSOPHILA",
+    "HMVE",
+    "JARDINES DE COLOMBIA",
+    "JARDINES DE LOS ANDES",
+    "LABORATORIO",
+    "LABORATORIO INVITRO PROPAGACIÓN",
+    "LA ALBORADA",
+    "LA ESMERALDA",
+    "LA MACARENA",
+    "LA MONTAÑA",
+    "LA NENA",
+    "LA VALENTINA",
+    "LAS DELICIAS",
+    "LAS MARGARITAS",
+    "LAS MERCEDES",
+    "LAS PALMAS",
+    "LUZAMA",
+    "MANTENIMIENTO",
+    "MANTENIMIENTO PSV",
+    "MANTENIMIENTO SAN VALENTINO",
+    "MARIBEL BALLESTEROS",
+    "MARLY",
+    "MARLY 1",
+    "MIPE SALAS",
+    "MONTEVERDE",
+    "MORADO",
+    "NORMANDIA",
+    "NUEVO MANTENIMIENTO",
+    "NUEVO MANTENIMIENTO DIVERSIFICADOS",
+    "ORNATOS",
+    "PALMAS",
+    "POMPOM",
+    "POSTCOSECHA ASTROMELIA",
+    "POSTCOSECHA CARNATION",
+    "POSTCOSECHA EL ROSAL",
+    "POSTCOSECHA EXCELLENCE",
+    "POSTCOSECHA FANTASY",
+    "POSTCOSECHA FLOREX",
+    "POSTCOSECHA GERBERAS",
+    "POSTCOSECHA GUACARI",
+    "POSTCOSECHA GYPSOPHILA",
+    "POSTCOSECHA JARDINES",
+    "POSTCOSECHA LAS MARGARITAS",
+    "POSTCOSECHA LAS PALMAS",
+    "POSTCOSECHA MORADO",
+    "POSTCOSECHA ROSAS COLOMBIANAS",
+    "POSTCOSECHA SANTA CATALINA",
+    "POSTCOSECHA SANTA MARIA",
+    "POSTCOSECHA SANTA MARIA SIGNATURE",
+    "POSTCOSECHA VALDAYA",
+    "POSTCOSECHA VISTA FARMS",
+    "PROPAGADORA ALSTROEMERIA",
+    "PROPAGADORA CARNATION",
+    "PROPAGADORA CONFINAMIENTO POMPOM",
+    "PROPAGADORA HYPERPHHBAN",
+    "PROPAGADORA JARDINES",
+    "PROPAGADORA PLANTAS MADRE CLAVEL",
+    "PROPAGADORA PLANTAS ROSA FLOREX",
+    "PUNTO LA PAZ",
+    "ROSAS COLOMBIANAS",
+    "SAN CARLOS",
+    "SAN JUAN",
+    "SAN MATEO",
+    "SAN PEDRO",
+    "SAN PEDRO1",
+    "SAN VALENTINO",
+    "SEVILLA",
+    "SÁGARO",
+    "SANTA MARIA",
+    "TINZUQUE",
+    "TIKIYA",
+    "TESORO",
+    "TITANIUM CHIA",
+    "TITANIUM MADRID",
+    "TRABAJO SUELOS",
+    "TURFLOR MOSQUERA",
+    "TU AFILIACIÓN",
+    "TU ALIANZA",
+    "ULTRASEGUROS",
+    "VALDAYA",
+    "VALENTINO ADMINISTRACION CENT",
+    "VALMAR",
+    "VENTAS",
+    "VISTA FARMS",
+    "WAYUU GUASCA, CUNDINAMARCA",
+    "WAYUU SUESCA, CUNDINAMARCA",
+    "OTRO"
+];
 
 if (botonEb) {
 
@@ -861,103 +1001,267 @@ if (botonEb) {
         }
 
         let Lcargos = await cargos();
-
-        // Variables para los elementos con sus respectivos id
-
+        let empresaS = document.getElementById("empresaS");
+        let tipoCargo = document.getElementById("tipoCargo");
+        let inputCargo = document.getElementById("inputCargo");
+        let otroCargo = document.getElementById("otroCargo");
+        let inputEmpresa = document.getElementById("inputEmpresa");
         let empresaUsuaria = document.getElementById("empresaUsuaria");
         let otraEmpresa = document.getElementById("otraEmpresa");
-
-        let zonaReq = document.getElementById("zonaReq");
+        let checkboxesContainer = document.getElementById("checkboxesContainer");
         let otraZona = document.getElementById("otraZona");
-
+        let pruebaT = document.getElementById("pruebaT");
+        let fechaPrueba = document.getElementById("fechaPrueba");
+        let horaPrueba = document.getElementById("horaPrueba");
         let FechaIngreso = document.getElementById("FechaIngreso");
-        let fechaIngreso = document.getElementById("fechaIngreso");
+        let fechaIngresoHello = document.getElementById("fechaIngresoHello");
+        let experiencia = document.getElementById("experiencia");
         let numPersonas = document.getElementById("numPersonas");
+        let observaciones = document.getElementById("observaciones");
 
+
+        // Variables para los elementos con sus respectivos id
         let aux2L = Lcargos.publicacion;
         console.log(aux2L);
 
         // PONER VISIBILIDAD DE BOTONES
         botonEb.style.display = "none";
         botonE.style.display = "inline-block";
+        empresaS.style.display = "inline-block";
+
+        // aparecer el datalsist de cargos
+
+        tipoCargo.style.display = "inline-block";
+        inputCargo.style.display = "inline-block";
+
+
+        inputEmpresa.style.display = "inline-block";
         empresaUsuaria.style.display = "inline-block";
-        zonaReq.style.display = "inline-block";
+        checkboxesContainer.style.display = "inline-block";
+        //otraZona.style.display = "inline-block";
+        pruebaT.style.display = "inline-block";
+        fechaPrueba.style.display = "inline-block";
+        horaPrueba.style.display = "inline-block";
+        FechaIngreso.style.display = "inline-block";
+        fechaIngresoHello.style.display = "inline-block";
+        experiencia.style.display = "inline-block";
         numPersonas.style.display = "inline-block";
+        observaciones.style.display = "inline-block";
 
-        if (vacante.fechadeIngreso != "No aplica") {
-            fechaIngreso.style.display = "inline-block";
-            fechaIngreso.value = vacante.fechadeIngreso;
-            FechaIngreso.value = "Si";
-        }
-        else {
-            fechaIngreso.value = "No";
-        }
+        const opciones = [
+            { value: "FACA_PRINCIPAL", label: "FACATATIVA" },
+            { value: "ROSAL", label: "ROSAL" },
+            { value: "CARTAGENITA", label: "CARTAGENITA" },
+            { value: "MADRID", label: "MADRID" },
+            { value: "FUNZA", label: "FUNZA" },
+            { value: "SOACHA", label: "SOACHA" },
+            { value: "FONTIBÓN", label: "FONTIBÓN" },
+            { value: "SUBA", label: "SUBA" },
+            { value: "TOCANCIPÁ", label: "TOCANCIPÁ" },
+            { value: "BOSA", label: "BOSA" },
+            { value: "BOGOTÁ", label: "BOGOTÁ" },
+            { value: "OTRO", label: "OTRA" }
+        ];
 
-        // if select otro, mostrar input y borrando el valor del select
-        empresaUsuaria.addEventListener('change', function () {
-            if (empresaUsuaria.value == "OTRO") {
-                otraEmpresa.style.display = "inline-block";
+        const zonaReq = document.getElementById('checkboxesContainer');
+
+        // Limpiar opciones existentes en el datalist
+        while (tipoCargo.firstChild) {
+            tipoCargo.removeChild(tipoCargo.firstChild);
+        }
+        // Llenar el datalist con nuevas opciones
+        aux2L.forEach(item => {
+            let option = document.createElement('option');
+            option.value = item.nombredelavacante; // Reemplaza 'nombreCargo' con la clave real de tu objeto
+            tipoCargo.appendChild(option);
+        });
+        // position absolute para que no se mueva
+        tipoCargo.style.position = "absolute";
+        // Añadir otro a select
+        let option = document.createElement("option");
+        option.text = "OTRO";
+        option.value = "OTRO";
+        select.appendChild(option);
+        // si select es OTRO, mostrar input y borrando el valor del select
+        inputCargo.addEventListener('input', function () {
+            if (inputCargo.value === 'OTRO') {
+                otroCargo.style.display = 'inline-block';
             } else {
-                otraEmpresa.style.display = "none";
-                otraEmpresa.value = "";
+                otroCargo.style.display = 'none';
             }
         });
+
+
+        // empresa usuaria
+        empresas.forEach(empresa => {
+            const option = document.createElement('option');
+            option.value = empresa;
+            empresaUsuaria.appendChild(option);
+        });
+        // posicion absolute para que no se mueva
+        empresaUsuaria.style.position = "absolute";
+
+
+        // Limpia los checkboxes existentes
+        while (checkboxesContainer.firstChild) {
+            checkboxesContainer.removeChild(checkboxesContainer.firstChild);
+        }
+        // zonas 
+        opciones.forEach(opcion => {
+            const label = document.createElement('label');
+            label.classList.add('control', 'control-checkbox');
+            label.style.maxWidth = '250px';
+            label.textContent = opcion.label;
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = opcion.value;
+
+            // Agregar un controlador de eventos para cada checkbox
+            checkbox.addEventListener('change', () => {
+                // Verificar si el checkbox seleccionado es "Otro"
+                if (checkbox.value === 'OTRA' && checkbox.checked) {
+                    // Mostrar el campo otraZona
+                    otraZona.style.display = 'inline-block';
+                } else if (checkbox.value === 'OTRA' && !checkbox.checked) {
+                    // Esconder el campo otraZona
+                    otraZona.style.display = 'none';
+                }
+            });
+
+            const indicator = document.createElement('div');
+            indicator.classList.add('control_indicator');
+
+            label.appendChild(checkbox);
+            label.appendChild(indicator);
+
+            zonaReq.appendChild(label);
+        });
+        // margin top 20 
+        zonaReq.style.marginTop = "20px";
+        pruebaT.style.marginTop = "20px";
+
+
 
         // si selecciona si, mostrar fecha prueba y hora prueba
         FechaIngreso.addEventListener('change', function () {
             if (FechaIngreso.value == "Si") {
-                fechaIngreso.style.display = "inline-block";
+                fechaIngresoHello.style.display = "inline-block";
             } else {
-                fechaIngreso.style.display = "none";
-                fechaIngreso.value = "";
+                fechaIngresoHello.style.display = "none";
+                fechaIngresoHello.value = "";
             }
         });
 
-        // Si OTRO, mostrar input
-        zonaReq.addEventListener('change', function () {
-            if (zonaReq.value == "OTRO") {
-                otraZona.style.display = "inline-block";
+
+
+        // SI PRUEBA TECNICA, mostrar fecha prueba y hora prueba
+        pruebaT.addEventListener('change', function () {
+            if (pruebaT.value == "Si") {
+                fechaPrueba.style.display = "block";
+                horaPrueba.style.display = "block";
+                tite.style.display = "block";
             } else {
-                otraZona.style.display = "none";
-                otraZona.value = "";
+                fechaPrueba.style.display = "none";
+                horaPrueba.style.display = "none";
+                tite.style.display = "none";
+                fechaPrueba.value = "";
+                horaPrueba.value = "";
             }
-        }
-        );
+        });
 
-        let auxFechaI;
 
-        // si selecciona no en FechaIngreso, borrar fecha
-        if (FechaIngreso.value == "No") {
-            auxFechaI = "No";
+
+        // PONER VALORES DE LA VACANTE
+        empresaS.value = vacante.empresaQueSolicita_id;
+        observaciones.value = vacante.observacionVacante;
+        experiencia.value = vacante.experiencia;
+        numPersonas.value = vacante.numeroDeGenteRequerida;
+        inputCargo.value = vacante.Cargovacante_id;
+        inputEmpresa.value = vacante.localizacionDeLaPersona;
+
+        if (vacante.fechadePruebatecnica == "") {
+            pruebaT.value = "No";
+            fechaPrueba.style.display = "none";
+            horaPrueba.style.display = "none";
         }
         else {
-            auxFechaI = vacante.fechadeIngreso;
+            pruebaT.value = "Si";
+            fechaPrueba.style.display = "block";
+            horaPrueba.style.display = "block";
+            fechaPrueba.value = vacante.fechadePruebatecnica;
+            horaPrueba.value = vacante.horadePruebatecnica;
         }
 
+        if (vacante.fechadeIngreso === null || vacante.fechadeIngreso  == "") {
+            FechaIngreso.value = "No";
+            fechaIngresoHello.style.display = "none";
+        }
+        else {
+            fechaIngresoHello.value = vacante.fechadeIngreso;
+            FechaIngreso.value = "Si";
+        }
 
-        // LLENAR PLACEHOLDER CON AUX segun el id
-        numPersonas.value = vacante.numeroDeGenteRequerida;
-        zonaReq.value = vacante.localizacionDeLaPersona;
-        empresaUsuaria.value = vacante.Localizaciondelavacante;
-        fechaIngreso.value = vacante.fechadeIngreso;
+        // marcar los checkboxes que estan en la vacante
 
-        console.log("empresaUsuaria: " + empresaUsuaria.value);
-        console.log("zonaReq: " + zonaReq.value);
-        console.log("FechaIngreso: " + auxFechaI);
-        console.log("Fecha ingreso 2: " + fechaIngreso.value);
-        console.log("numPersonas: " + numPersonas.value);
+        let auxZonas = vacante.Localizaciondelavacante.split(", ");
 
-
+        auxZonas.forEach(zona => {
+            let checkboxes = checkboxesContainer.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                if (checkbox.value == zona) {
+                    checkbox.checked = true;
+                }
+            });
+        });
 
         botonE.addEventListener('click', async function () {
-            modificarV(id.value, zonaReq.value, empresaUsuaria.value, auxFechaI, numPersonas.value);
+            console.log("hola");
+            console.log(id.value);
+            console.log(inputCargo.value);
+            console.log(otroCargo.value);
+            console.log(obtenerValoresCheckboxes());
+            console.log(otraZona.value);
+            console.log(inputEmpresa.value);
+            console.log(otraEmpresa.value);
+            console.log(experiencia.value);
+            console.log(fechaPrueba.value);
+            console.log(horaPrueba.value);
+            console.log(numPersonas.value);
+            console.log(observaciones.value);
+            console.log(empresaS.value);
+
+
+            let auxFechaI;
+            // si selecciona no en FechaIngreso, borrar fecha
+            if (FechaIngreso.value == "No") {
+                auxFechaI = "No aplica";
+            }
+            else {
+                auxFechaI = fechaIngresoHello.value;
+            }
+
+
+            console.log(auxFechaI);
+
+            let auxPruebaT;
+            if (pruebaT == "Si") {
+                auxPruebaT = true;
+            }
+            else {
+                auxPruebaT = false;
+            }
+
+
+            modificarV(id.value, inputCargo.value, otroCargo.value, obtenerValoresCheckboxes(), otraZona.value, inputEmpresa.value, otraEmpresa.value, experiencia.value, auxPruebaT, fechaPrueba.value, horaPrueba.value, auxFechaI, numPersonas.value, observaciones.value, empresaS.value);
+
             let confirmacion = await avisoConfirmado("Se ha modificado la vacante exitosamente", "success");
             if (confirmacion) {
                 // retornar a la pagina de vacantes
                 window.location.href = "vacantes.html";
             }
-        }
-        );
+
+        });
 
 
 

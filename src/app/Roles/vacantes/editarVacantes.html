@@ -70,7 +70,7 @@
                 </a>
             </li>
 
-            
+
             <li id="ausentismos" style="display: none;">
                 <a href="../ausentismos/ausentismos.html">
                     <img src="../../assets/person.png" alt="logo" class="logo" />
@@ -106,43 +106,48 @@
                     <input type="text" id="id" placeholder="Escribir el id" class="input" />
                     <button class="btn2" id="botonEb"> Buscar </button>
 
-                    <input type="text" id="otroCargo" placeholder="Otro Cargo" class="input" style="display: none;"/>
-
-                    <select name="" id="empresaUsuaria" class="input" style="width: 313px; display: none;" >
-                        <option value="0">Localizacion Vacante</option>                        <option value="FACA_PRINCIPAL">FACATATIVA</option>
-                        <option value="ROSAL">ROSAL</option>
-                        <option value="CARTAGENITA">CARTAGENITA</option>
-                        <option value="MADRID">MADRID</option>
-                        <option value="FUNZA">FUNZA</option>
-                        <option value="SOACHA">SOACHA</option>
-                        <option value="FONTIBÓN">FONTIBÓN</option>
-                        <option value="SUBA">SUBA</option>
-                        <option value="TOCANCIPÁ">TOCANCIPÁ</option>
-                        <option value="BOSA">BOSA</option>
-                        <option value="BOGOTÁ">BOGOTÁ</option>
-                        <option value="OTRO">OTRA</option>
+                    <select name="" id="empresaS" class="input" style="width: 313px; display: none;">
+                        <option value="0">Empresa que solicita</option>
+                        <option value="TU ALIANZA SAS">TU ALIANZA SAS</option>
+                        <option value="APOYO LABORAL TS SAS">APOYO LABORAL</option>
                     </select>
 
-                    <input type="text" id="otraEmpresa" placeholder="Otra Empresa" class="input" style="display: none;"/>
+                    <input list="tipoCargo" name="Cargo" id="inputCargo" class="input"
+                        placeholder="Cargo que necesita ..." style="display: none;">
+                    <datalist id="tipoCargo">
+                    </datalist>
 
-                    <select name="" id="zonaReq" class="input" style="width: 313px; display: none;">
-                        <option value="0">Empresa Usuaria</option>
-                        <option value="FACA_PRINCIPAL">FACATATIVA</option>
-                        <option value="ROSAL">ROSAL</option>
-                        <option value="CARTAGENITA">CARTAGENITA</option>
-                        <option value="MADRID">MADRID</option>
-                        <option value="FUNZA">FUNZA</option>
-                        <option value="SOACHA">SOACHA</option>
-                        <option value="FONTIBÓN">FONTIBÓN</option>
-                        <option value="SUBA">SUBA</option>
-                        <option value="TOCANCIPÁ">TOCANCIPÁ</option>
-                        <option value="BOSA">BOSA</option>
-                        <option value="BOGOTÁ">BOGOTÁ</option>
-                        <option value="OTRO">OTRA</option>
+                    <input type="text" id="otroCargo" placeholder="Otro Cargo" class="input" style="display: none;" />
+
+                    <input list="empresaUsuaria" name="empresa" id="inputEmpresa" class="input"
+                        placeholder="Empresa usuaria ..." style="display: none;">
+                    <datalist id="empresaUsuaria"> </datalist>
+
+                    <input type="text" id="otraEmpresa" placeholder="Otra Empresa" class="input"
+                        style="display: none; margin-top: 20px;" style="display: none;"/>
+
+                    <p style="margin-left: 50px; margin-bottom: 10px; font-size: 14pt; margin-top: 20px; display: none;">Oficina quien
+                        puede contratar</p>
+
+                    <div id="checkboxesContainer"
+                        style="margin-left: 50px; float: left; width: 320px; margin-bottom: 10px; display: none;"></div>
+
+                    <input type="text" id="otraZona" placeholder="Otra Empresa" class="input" style="display: none;" />
+
+                    <select name="" id="pruebaT" class="input" style="width: 313px; display: none;" >
+                        <option value="0">Prueba tecnica?</option>
+                        <option value="Si">SI</option>
+                        <option value="No">NO</option>
                     </select>
 
-                    <input type="text" id="otraZona" placeholder="Otra Empresa" class="input" style="display: none;"/>
-
+                    <p style="margin-left: 420px; margin-bottom: 15px; font-size: 14pt; display: none;" id="tite">Fecha
+                        prueba Tecnica</p>
+                    <!-- FECHA -->
+                    <input type="date" id="fechaPrueba" placeholder="Fecha" class="input"
+                        style="margin-bottom: 20px; display: none; margin-left: 420px;"  />
+                    <!-- Hora -->
+                    <input type="time" id="horaPrueba" placeholder="Hora" class="input"
+                        style="margin-bottom: 20px; margin-left: 420px; display: none;" />
 
                     <select name="" id="FechaIngreso" class="input" style="width: 313px; display: none;">
                         <option value="0">Tiene fecha de Ingreso?</option>
@@ -151,9 +156,20 @@
                     </select>
 
                     <!-- FECHA -->
-                    <input type="date" id="fechaIngreso" placeholder="Fecha" class="input" style="margin-bottom: 20px; display: none;"/>
+                    <input type="date" id="fechaIngresoHello" placeholder="Fecha" class="input"
+                        style="margin-bottom: 20px; display: none;" />
 
-                    <input type="text" id="numPersonas" placeholder="Numero de Personas" class="input" style="display: none;"/>
+                    <select name="" id="experiencia" class="input" style="width: 313px; display: none;">
+                        <option value="0">Requiere Experiencia?</option>
+                        <option value="Si">SI</option>
+                        <option value="No">NO</option>
+                        <option value="Ambas">Ambas</option>
+                    </select>
+
+                    <input type="text" id="numPersonas" placeholder="Numero de Personas" class="input" style="display: none;" />
+                    <input type="text" id="observaciones" placeholder="Observaciones" class="input"
+                        style="margin-top: 20px; display: none;" />
+
                     <button class="btn2" id="botonE" style="display: none;">Editar</button>
 
                 </div>

@@ -90,7 +90,7 @@ function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelaperson
                 console.log('Respuesta:', responseData);
             })
             .catch(error => {
-                aviso("warning", "Por favor vuelva a pedir un turno");
+                aviso("Por favor vuelva a pedir un turno", "error");
                 console.error('Error:', error);
             });
 
@@ -103,78 +103,84 @@ function crearTurno(numerT, tipoDoc, cedula, tipoT, comentario, nombredelaperson
 // Recupera la cadena JSON desde localStorage
 const turnosJSON = localStorage.getItem('turnos');
 
-boton.addEventListener('click', async () => {
-    let cedula = document.querySelector('#cedula').value;
-    let nombre = document.querySelector('#nombre').value;
-    let tipo = document.querySelector('#tipo').value;
-    let numeroCeluar = document.querySelector('#numeroCelular').value;
-    let tipoDoc = document.querySelector('#tipoDoc').value;
-    let whatsapp = document.querySelector('#whatsapp').value;
+const TIPOS_DE_TURNO = {
+    "SELECCION": "S",
+    "CONTRATACION": "C",
+    "AFILIACIONES": "A",
+    "TESORERIA": "T",
+    "RECURSOS-HUMANOS": "RH",
+    "GERENCIA": "G",
+    "SST": "SST",
+    "COORDINADOR": "CO"
+};
 
-    if (cedula == "" || nombre == "" || tipo == "" || numeroCeluar == "") {
-        aviso("warning", "Por favor llene todos los campos");
+function obtenerValorDelElemento(selector) {
+    return document.querySelector(selector).value.trim();
+}
+
+function mostrarAviso(tipo, mensaje) {
+    // Reemplaza esta función con tu lógica para mostrar avisos
+    console.log(`${tipo}: ${mensaje}`);
+}
+
+async function obtenerTurnos() {
+    try {
+        let turnos = await datosTTurnos();
+        return turnos.turno || [];
+    } catch (error) {
+        console.error("Error al obtener los turnos:", error);
+        mostrarAviso("error", "Error al cargar los turnos.");
+        return [];
+    }
+}
+
+function obtenerFechaActual() {
+    const hoy = new Date();
+    return hoy.toISOString().split('T')[0];
+}
+
+function encontrarUltimoNumero(tipo, auxTurnos) {
+    const fechaActual = obtenerFechaActual();
+    const numeros = auxTurnos
+        .filter(turno => turno.numeroderturno.startsWith(tipo) && turno.fechadecreado === fechaActual)
+        .map(turno => parseInt(turno.numeroderturno.slice(tipo.length)) || 0);
+
+    return numeros.length > 0 ? Math.max(...numeros) : 0;
+}
+
+boton.addEventListener('click', async () => {
+    
+    let cedula = obtenerValorDelElemento('#cedula');
+    let nombre = obtenerValorDelElemento('#nombre');
+    let tipo = obtenerValorDelElemento('#tipo');
+    let numeroCeluar = obtenerValorDelElemento('#numeroCelular');
+    let tipoDoc = obtenerValorDelElemento('#tipoDoc');
+    let whatsapp = obtenerValorDelElemento('#whatsapp');
+
+    if (!cedula || !nombre || !tipo || !numeroCeluar || !tipoDoc || !whatsapp) {
+        aviso ("Por favor ingrese todos los datos", "error");
         return;
     }
 
-    let turnos = await datosTTurnos();
-    let auxTurnos = turnos.turno;
-    console.log(auxTurnos);
-    let turnoAux = [];
+    let auxTurnos = await obtenerTurnos();
+    // filtrar por sede
+    auxTurnos = auxTurnos.filter(turno => turno.oficinaemisiradelturno_id === sede);
 
     console.log(auxTurnos);
-    // Obtener todos los turnos existentes
-    if (auxTurnos && auxTurnos.length > 0) {
-        auxTurnos.forEach(element => {
-            turnoAux.push(element.numeroderturno);
-        });
-    } else {
-        console.log("No hay turnos disponibles.");
-        // Aquí puedes manejar la situación en la que no hay turnos disponibles, si es necesario.
-    }
-    
 
-    // Función para encontrar el último número asociado a un tipo de turno
-    function encontrarUltimoNumero(tipo) {
-        const numeros = turnoAux
-            .filter(turno => turno.startsWith(tipo))
-            .map(turno => parseInt(turno.slice(tipo.length)));
+    let prefijo = TIPOS_DE_TURNO[tipo];
+    let numeroTurno = encontrarUltimoNumero(prefijo, auxTurnos) + 1;
+    let inicial = prefijo + numeroTurno;
 
-        return Math.max(...numeros, 0);
-    }
-
-    let inicial;
-
-    if (tipo == "SELECCION") {
-        inicial = "S" + (encontrarUltimoNumero("S") + 1);
-    }
-    if (tipo == "CONTRATACION") {
-        inicial = "C" + (encontrarUltimoNumero("C") + 1);
-    }
-    if (tipo == "AFILIACIONES") {
-        inicial = "A" + (encontrarUltimoNumero("A") + 1);
-    }
-    if (tipo == "TESORERIA") {
-        inicial = "T" + (encontrarUltimoNumero("T") + 1);
-    }
-    if (tipo == "RECURSOS-HUMANOS") {
-        inicial = "RH" + (encontrarUltimoNumero("RH") + 1);
-    }
-    if (tipo == "GERENCIA") {
-        inicial = "G" + (encontrarUltimoNumero("G") + 1);
-    }
-    if (tipo == "SST") {
-        inicial = "SST" + (encontrarUltimoNumero("SST") + 1);
-    }
-    if (tipo == "COORDINADOR") {
-        inicial = "CO" + (encontrarUltimoNumero("CO") + 1);
-    }
-
-    crearTurno(inicial, tipoDoc, cedula, tipo, "", nombre, numeroCeluar, whatsapp);
-
-    let avisoTurno = await avisoConfirmado("Su turno es: " + inicial, "success");
-
-    if (avisoTurno == true) {
-        location.reload();
+    try {
+        await crearTurno(inicial, tipoDoc, cedula, tipo, "", nombre, numeroCeluar, whatsapp);
+        let avisoTurno = await avisoConfirmado("Su turno es: " + inicial, "success");
+        if (avisoTurno) {
+            location.reload();
+        }
+    } catch (error) {
+        console.error("Error al crear el turno:", error);
+        aviso ("Por favor vuelva a pedir un turno", "error");
     }
 
 });
