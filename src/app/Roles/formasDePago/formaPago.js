@@ -29,7 +29,7 @@ if (usernameLocal == "HEIDY TORRES" || perfilLocal == "COORDINADOR" || perfilLoc
     formasDePago.style.display = "block";
 }
 
-if (usernameLocal == "HEIDY TORRES"){
+if (usernameLocal == "HEIDY TORRES" || usernameLocal == "MAYRA HUAMANI"){
     cargarA.style.display = "block";
 }
 

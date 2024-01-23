@@ -24,7 +24,7 @@ if (perfilLocal == "GERENCIA") {
     //contratacion.style.display = "block";
     ausentismos.style.display = "block";
 }
-if (usernameLocal == "HEIDY TORRES") {
+if (usernameLocal == "HEIDY TORRES" || usernameLocal == "MAYRA HUAMANI" || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {
     formasDePago.style.display = "block";
 }
 

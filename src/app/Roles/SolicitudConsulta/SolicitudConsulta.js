@@ -25,10 +25,9 @@ if (perfilLocal == "GERENCIA") {
     ausentismos.style.display = "block";
 }
 
-if (usernameLocal == "HEIDY TORRES" || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" || usernameLocal == "MAYRA HUAMANI" ) {
+if (usernameLocal == "HEIDY TORRES" || usernameLocal == "MAYRA HUAMANI" || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {
     formasDePago.style.display = "block";
 }
-
 
 async function FormasdePago(cedula) {
     var body = localStorage.getItem('key');

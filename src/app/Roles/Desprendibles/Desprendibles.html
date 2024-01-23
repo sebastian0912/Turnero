@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../reset.css" />
-    <link rel="stylesheet" href="SolicitudConsulta.css" />
+    <link rel="stylesheet" href="Desprendibles.css" />
 
     <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal@4/minimal.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
     <script defer src="../../logOut2.js" type="module"></script>
-    <script defer src="SolicitudConsulta.js" type="module"></script>
+    <script defer src="Desprendibles.js" type="module"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
 
 </head>
@@ -85,9 +85,16 @@
             </li>
 
             <li>
-                <a href="./SolicitudConsulta.html">
+                <a href="../SolicitudConsulta/SolicitudConsulta.html">
                     <img src="../../assets/consulta.png" alt="logo" class="logo" />
                     <p> Solicitud Consulta </p>
+                </a>
+            </li>
+
+            <li>
+                <a href="./Desprendibles.html">
+                    <img src="../../assets/marcador.png" alt="logo" class="logo" />
+                    <p> Desprendibles de pago </p>
                 </a>
             </li>
 
@@ -115,7 +122,7 @@
             <div class="custom-loader"></div>
         </div>
 
-        <div class="cuadroPlInea"  id="descargar" style="cursor: pointer;">
+        <div class="cuadroPlInea" id="descargar" style="cursor: pointer;">
             <div class="cuadro">
                 <img src="../../assets/templates.png" style="width: 40px;        
             margin-top: 20px;     
@@ -130,7 +137,7 @@
                 <img src="../../assets/empleado.png" style="width: 40px;        
             margin-top: 20px;     
             padding-left: 20px;">
-                <h3 class="titulo-Opciones"> 2. Cargar cedulas </h3>
+                <h3 class="titulo-Opciones"> 2. Cargar desprendibles </h3>
                 <h1 id="cargar" class="titulo-Opciones"></h1>
                 <input type="file" accept=".xlsx" id="archivoInput" class="boton" />
 
@@ -158,50 +165,24 @@
             <table class="tabla-contenido">
                 <thead>
                     <tr>
-                        <th class="conjunto1">id</th>
-                        <th class="conjunto1">tipo_documento</th>
-                        <th class="conjunto2">fecha</th>
-                        <th class="conjunto2">hora</th>
-
-                        <th class="conjunto3">Estado_Policivo</th>
-                        <th class="conjunto3">Anotacion_Policivo</th>
-                        <th class="conjunto3">PDF_Policivo</th>
-                        
-                        <th class="conjunto4">Estado_Procuraduria</th>
-                        <th class="conjunto4">Anotacion_Procuraduria</th>
-                        <th class="conjunto4">PDF_Procuraduria</th>
-
-                        <th class="conjunto5">Apellido_Adress</th>
-                        <th class="conjunto5">Entidad_Adress</th>
-                        <th class="conjunto5">PDF_Adress</th>
-                        <th class="conjunto5">Estado_Adress</th>
-                        <th class="conjunto5">Fecha_Adress</th>
-
-                        <th class="conjunto6">Estado_OFAC</th>
-                        <th class="conjunto6">Anotacion_OFAC</th>
-                        <th class="conjunto6">PDF_OFAC</th>
-
-                        <th class="conjunto7">Estado_Contraloria</th>
-                        <th class="conjunto7">Anotacion_Contraloria</th>
-                        <th class="conjunto7">PDF_Contraloria</th>
-
-                        <th class="conjunto8">Estado_Sisben</th>
-                        <th class="conjunto8">Tipo_Sisben</th>
-                        <th class="conjunto8">PDF_Sisben</th>
-                        <th class="conjunto8">Fecha_Sisben</th>
-
-                        <th class="conjunto9">Estado_FondoPension</th>
-                        <th class="conjunto9">Entidad_FondoPension</th>
-                        <th class="conjunto9">PDF_FondoPension</th>
-                        <th class="conjunto9">Fecha_FondoPension</th>
-
-                        <th class="conjunto10">Estado_Union</th>
-                        <th class="conjunto10">Union_PDF</th>
-                        <th class="conjunto10">Fecha_UnionPDF</th>
-                        
+                        <th>No</th>
+                        <th>Cedula</th>
+                        <th>Nombre</th>
+                        <th>Ingreso</th>
+                        <th>Retiro</th>
+                        <th>Finca</th>
+                        <th>Telefono</th>
+                        <th>CONCEPTO</th>
+                        <th>Desprendibles</th>
+                        <th>Certificaciones</th>
+                        <th>cartas de retiro</th>
+                        <th>carta de cesantias</th>
+                        <th>entrevista de retiro</th>
+                        <th>Correo</th>
+                        <th>Confirmacion Envio</th>
                     </tr>
-                </thead>
-                
+                </thead>                
+
                 <tbody id="tabla"> </tbody>
             </table>
         </div>

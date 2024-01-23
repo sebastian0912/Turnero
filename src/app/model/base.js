@@ -1,6 +1,6 @@
 export let urlBack = {
-    //url: 'http://10.10.10.60:4545'
-    url: 'http://127.0.0.1:8000'
+    url: 'http://10.10.10.60:4545'
+    //url: 'http://127.0.0.1:8000'
 }
 
 export let usuarioR = {
