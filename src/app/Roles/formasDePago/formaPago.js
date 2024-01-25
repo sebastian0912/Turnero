@@ -208,7 +208,7 @@ const boton = document.querySelector('#boton');
 
 document.getElementById('tabla').addEventListener('click', async function (event) {
 
-    if (usernameLocal != "HEIDY TORRES") {
+    if (usernameLocal != "HEIDY TORRES" || usernameLocal == "MAYRA HUAMANI") {
         if (event.target.classList.contains('delete-icon')) {
             aviso("No tiene permitido realizar esta accion", "error")
         }

@@ -191,6 +191,57 @@ if (input) {
     });
 }
 
+async function guardarDatos(datosFinales) {
+    const batchSize = 10000; // Número máximo de registros por lote
+
+    const chunks = [];
+    for (let i = 0; i < datosFinales.length; i += batchSize) {
+        chunks.push(datosFinales.slice(i, i + batchSize));
+    }
+
+    const body = localStorage.getItem('key');
+    const obj = JSON.parse(body);
+    const jwtKey = obj.jwt;
+
+    for (const chunk of chunks) {
+        const bodyData = {
+            jwt: jwtKey,
+            mensaje: "muchos",
+            datos: chunk
+        };
+
+        const headers = {
+            'Authorization': jwtKey
+        };
+
+        const urlcompleta = urlBack.url + '/Desprendibles/crear_desprendibles';
+        try {
+            const response = await fetch(urlcompleta, {
+                method: 'POST',
+                body: JSON.stringify(bodyData),
+            });
+
+            if (response.ok) {
+                document.getElementById('successSound').play();
+                // Procesar la respuesta si es necesario
+            } else {
+                document.getElementById('errorSound').play();
+                aviso("Error al guardar los datos", "error");
+                console.error('Error en la petición POST');
+                console.error(response.statusText);
+            }
+        } catch (error) {
+            document.getElementById('errorSound').play();
+            aviso("Error al guardar los datos", "error");
+            console.error('Error en la petición HTTP POST');
+            console.error(error);
+        }
+    }
+
+    over.style.display = "none";
+    loader.style.display = "none";
+}
+
 
 const descargardoc = document.querySelector('#descargardoc');
 
@@ -224,66 +275,7 @@ descargar.addEventListener('click', async () => {
 });
 
 
-async function guardarDatos(datosFinales) {
 
-    var body = localStorage.getItem('key');
-    const obj = JSON.parse(body);
-    const jwtKey = obj.jwt;
-
-
-    const bodyData = {
-        jwt: jwtKey,
-        mensaje: "muchos",
-        datos: datosFinales
-    };
-
-    const headers = {
-        'Authorization': jwtKey
-    };
-
-    const urlcompleta = urlBack.url + '/Desprendibles/crear_desprendibles';
-    try {
-        fetch(urlcompleta, {
-            method: 'POST',// para el resto de peticiónes HTTP le cambias a GET, POST, PUT, DELETE, etc.
-            body: JSON.stringify(bodyData),// Aquí va el body de tu petición tiene que ser asi en json para que el back lo pueda leer y procesar y hay algun problema me dices
-
-        })
-            .then(async response => {
-                if (response.ok) {
-                    document.getElementById('successSound').play();
-                    over.style.display = "none";
-                    loader.style.display = "none";
-                    let aviso = await avisoConfirmado("Datos guardados correctamente", "success");
-                    //muchas veces mando un mensaje de sucess o algo asi para saber que todo salio bien o mal                    
-                    if (aviso) {
-                        location.reload();
-                    }
-                    return response.json();
-                } else {
-                    document.getElementById('errorSound').play();
-                    over.style.display = "none";
-                    loader.style.display = "none";
-                    aviso("Error al guardar los datos", "error");
-
-                    throw new Error('Error en la petición POST');
-                }
-            })
-            .then(responseData => {
-            })
-            .catch(error => {
-                over.style.display = "none";
-                loader.style.display = "none";
-                document.getElementById('errorSound').play();
-            });
-    } catch (error) {
-        over.style.display = "none";
-        loader.style.display = "none";
-        console.error('Error en la petición HTTP PUT');
-        console.error(error);
-    }
-
-
-}
 
 
 
