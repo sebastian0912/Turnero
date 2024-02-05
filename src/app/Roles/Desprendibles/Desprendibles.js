@@ -29,6 +29,15 @@ if (usernameLocal == "HEIDY TORRES" || usernameLocal == "MAYRA HUAMANI" || perfi
     formasDePago.style.display = "block";
 }
 
+const correo = localStorage.getItem("correo_electronico");
+console.log(correo)
+
+if (correo == "nominacentral4@gmail.com") {
+    descargar.style.display = "block"
+    cargarA.style.display = "block"
+}
+
+
 
 async function FormasdePago(cedula) {
     var body = localStorage.getItem('key');
@@ -148,6 +157,8 @@ async function cargarYMostrarDatos(cedulaEm) {
 
 boton.addEventListener('click', async () => {
     let cedulaEm = document.getElementById("cedula").value;
+    cedulaEm = cedulaEm.replace(/\s/g, '').replace(/\./g, '');
+
     cargarYMostrarDatos(cedulaEm);
 });
 

@@ -27,6 +27,8 @@ signInform.addEventListener('submit', async (e) => {
     localStorage.setItem('perfil', values.rol);
     localStorage.setItem('username', values.primer_nombre + ' ' + values.primer_apellido);
     localStorage.setItem('sede', values.sucursalde);
+    localStorage.setItem('correo_electronico', values.correo_electronico);
+
 
     const esKarenRiquett = values.primer_nombre === 'KAREN' && values.primer_apellido === "RIQUETT";
     const esYeseniaPalacios = values.primer_nombre === 'Yesenia' && values.primer_apellido === "Palacios";

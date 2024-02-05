@@ -29,7 +29,7 @@ if (usernameLocal == "HEIDY TORRES" || usernameLocal == "MAYRA HUAMANI" || perfi
 }
 
 
-async function FormasdePago(cedula) {
+async function traerAusentimosCedual(cedula) {
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
     const jwtKey = obj.jwt;
@@ -38,7 +38,7 @@ async function FormasdePago(cedula) {
         'Authorization': jwtKey
     };
 
-    const urlcompleta = urlBack.url + '/FormasdePago/traerformasDePago/' + cedula;
+    const urlcompleta = urlBack.url + '/Ausentismos/traerAusentismos/' + cedula;
 
     try {
         const response = await fetch(urlcompleta, {
@@ -60,7 +60,6 @@ async function FormasdePago(cedula) {
         throw error; // Propaga el error para que se pueda manejar fuera de la función
     }
 }
-
 
 function modificarV(id, banco, nombre, centrodecosto, concepto, contrato, fechadepago, formadepago, valor) {
 
@@ -117,23 +116,6 @@ function modificarV(id, banco, nombre, centrodecosto, concepto, contrato, fechad
         console.error('Error en la petición HTTP POST');
         console.error(error);
     }
-}
-
-// Función para obtener el número del mes a partir de una cadena como "Nom. 16 al 30 de Agosto de 2023"
-function obtenerNumeroMes(cadena) {
-    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-
-    const matches = cadena.match(/(\w+)\s+(\d+)\s+al\s+(\d+)/);
-    if (matches && matches.length === 4) {
-        const nombreMes = matches[1];
-        const indiceMes = meses.indexOf(nombreMes);
-
-        if (indiceMes !== -1) {
-            return indiceMes + 1; // Sumar 1 porque los índices de los meses comienzan desde 1
-        }
-    }
-
-    return 0; // Valor predeterminado si no se puede obtener el mes
 }
 
 async function eliminarformadepago(id) {
@@ -247,30 +229,23 @@ async function cargarYMostrarDatos(cedulaEm) {
         return;
     }
 
-    let datosExtraidos = await FormasdePago(cedulaEm);
-    if (datosExtraidos.message == "No se encontró el número de cédula") {
-        aviso("No se encontró el número de cédula en las formas de pago", "warning");
+    let datosExtraidos = await traerAusentimosCedual(cedulaEm);
+    
+    if (datosExtraidos.Ausentismos == "error no se encontraron datos") {
+        aviso("No se encontró a la persona verifica que este bien escrito", "error");
         tabla.innerHTML = '';
         return;
     }
     tabla.innerHTML = '';
 
-    let formaPago = datosExtraidos.formasdepago;
-    formaPago.sort((a, b) => obtenerNumeroMes(b.concepto) - obtenerNumeroMes(a.concepto));
-    const ultimosCuatroElementos = formaPago.slice(-4);
-
-    ultimosCuatroElementos.forEach(p => {
+    let Ausentismos = datosExtraidos.Ausentismos;
+    Ausentismos.forEach(p => {
         tabla.insertAdjacentHTML('afterbegin', `
             <tr>
-                <td>${p.contrato}</td>
-                <td>${p.cedula}</td>
-                <td>${p.nombre}</td>
-                <td>${p.centrodecosto}</td>
-                <td>${p.concepto}</td>
-                <td>${p.formadepago}</td>
-                <td>${p.valor}</td>
-                <td>${p.banco}</td>
-                <td>${p.fechadepago}</td>
+                <td>${p.numerodeceduladepersona}</td>
+                <td>${p.primer_nombre} ${p.segundo_nombre} ${p.primer_apellido} ${p.segundo_apellido}</td>
+                <td>${p.primercorreoelectronico}</td>
+                <td>${p.numero_pagos}</td>
                 <td> <img src="../../assets/editar.png" class="editar-icon" data-id="${p.id}" ></td>
                 <td> <img src="../../assets/eliminar.png" class="delete-icon" data-id="${p.id}"></td>
             </tr>
@@ -281,6 +256,7 @@ async function cargarYMostrarDatos(cedulaEm) {
 
 boton.addEventListener('click', async () => {
     let cedulaEm = document.getElementById("cedula").value;
+    cedulaEm = cedulaEm.replace(/\s/g, '').replace(/\./g, '');
     cargarYMostrarDatos(cedulaEm);
 });
 
@@ -300,7 +276,7 @@ if (input) {
             // Obtiene el rango de la hoja
             const range = XLSX.utils.decode_range(sheet['!ref']);
 
-            for (let rowNum = 1; rowNum <= range.e.r; rowNum++) {
+            for (let rowNum = 2; rowNum <= range.e.r; rowNum++) {
                 let rowData = [];
                 for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
                     // Obtiene la celda en la posición actual
@@ -321,8 +297,6 @@ if (input) {
         reader.readAsArrayBuffer(file);
     });
 }
-
-
 
 async function guardarDatos(datosFinales) {
 

@@ -148,6 +148,7 @@ async function cargarYMostrarDatos(cedulaEm) {
 
 boton.addEventListener('click', async () => {
     let cedulaEm = document.getElementById("cedula").value;
+    cedulaEm = cedulaEm.replace(/\s/g, '').replace(/\./g, '');
     cargarYMostrarDatos(cedulaEm);
 });
 

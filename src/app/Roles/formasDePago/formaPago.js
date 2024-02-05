@@ -152,23 +152,6 @@ function modificarV(id, banco, nombre, centrodecosto, concepto, contrato, fechad
     }
 }
 
-// Función para obtener el número del mes a partir de una cadena como "Nom. 16 al 30 de Agosto de 2023"
-function obtenerNumeroMes(cadena) {
-    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-
-    const matches = cadena.match(/(\w+)\s+(\d+)\s+al\s+(\d+)/);
-    if (matches && matches.length === 4) {
-        const nombreMes = matches[1];
-        const indiceMes = meses.indexOf(nombreMes);
-
-        if (indiceMes !== -1) {
-            return indiceMes + 1; // Sumar 1 porque los índices de los meses comienzan desde 1
-        }
-    }
-
-    return 0; // Valor predeterminado si no se puede obtener el mes
-}
-
 async function eliminarformadepago(id) {
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
@@ -336,6 +319,8 @@ async function cargarYMostrarDatos(cedulaEm) {
 
 boton.addEventListener('click', async () => {
     let cedulaEm = document.getElementById("cedula").value;
+    cedulaEm = cedulaEm.replace(/\s/g, '').replace(/\./g, '');
+
     cargarYMostrarDatos(cedulaEm);
 });
 
