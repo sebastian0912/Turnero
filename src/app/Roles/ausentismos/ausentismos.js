@@ -48,7 +48,6 @@ async function traerAusentimosCedual(cedula) {
 
         if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
             return responseData;
 
         } else {
@@ -61,38 +60,20 @@ async function traerAusentimosCedual(cedula) {
     }
 }
 
-function modificarV(id, banco, nombre, centrodecosto, concepto, contrato, fechadepago, formadepago, valor) {
-
-    console.log("id: " + id);
-    console.log("banco: " + banco);
-    console.log("nombre: " + nombre);
-    console.log("centrodecosto: " + centrodecosto);
-    console.log("concepto: " + concepto);
-    console.log("contrato: " + contrato);
-    console.log("fechadepago: " + fechadepago);
-    console.log("formadepago: " + formadepago);
-    console.log("valor: " + valor);
+function modificarV(id, numero_pagos, primercorreoelectronico) {
 
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
     const jwtToken = obj.jwt;
-    console.log(jwtToken);
 
-    const urlcompleta = urlBack.url + '/FormasdePago/editarFormasdepago/' + id;
+    const urlcompleta = urlBack.url + '/Ausentismos/editarAusentismosCED_DAVI/' + id;
     try {
         fetch(urlcompleta, {
             method: 'POST',
             body:
                 JSON.stringify({
-                    banco: banco,
-                    nombre: nombre,
-                    centrodecosto: centrodecosto,
-                    concepto: concepto,
-                    contrato: contrato,
-                    fechadepago: fechadepago,
-                    formadepago: formadepago,
-                    valor: valor,
-
+                    numero_pagos: numero_pagos,
+                    primercorreoelectronico: primercorreoelectronico,
                     jwt: jwtToken
                 })
         })
@@ -108,7 +89,6 @@ function modificarV(id, banco, nombre, centrodecosto, concepto, contrato, fechad
                 console.log('Respuesta:', responseData);
             })
             .catch(error => {
-                aviso("warning", "Por favor vuelva a pedir un turno");
                 console.error('Error:', error);
             });
 
@@ -123,7 +103,7 @@ async function eliminarformadepago(id) {
     const obj = JSON.parse(body);
     const jwtToken = obj.jwt;
 
-    const urlcompleta = urlBack.url + '/FormasdePago/eliminarformadepago/' + id;
+    const urlcompleta = urlBack.url + '/Ausentismos/eliminarAusentismosREAL/' + id;
     try {
         fetch(urlcompleta, {
             method: 'DELETE',
@@ -174,17 +154,12 @@ document.getElementById('tabla').addEventListener('click', async function (event
 
         // Convertir las celdas en campos de entrada
         const celdas = tr.querySelectorAll('td');
-        const formadepago = celdas[5].innerText;
-        const valor = celdas[6].innerText;
-        const banco = celdas[7].innerText;
-        const fechadepago = celdas[8].innerText;
+        const correo = celdas[2].innerText;
+        const daviplata = celdas[3].innerText;
 
         // Establecer estilos para las celdas con campos de entrada
-        celdas[5].innerHTML = `<input type='text' class='input-estetico' value='${formadepago}' />`;
-        celdas[6].innerHTML = `<input type='text' class='input-estetico' value='${valor}' />`;
-        celdas[7].innerHTML = `<input type='text' class='input-estetico' value='${banco}' />`;
-        celdas[8].innerHTML = `<input type='text' class='input-estetico' value='${fechadepago}' />`;
-
+        celdas[2].innerHTML = `<input type='text' class='input-estetico' value='${correo}' />`;
+        celdas[3].innerHTML = `<input type='text' class='input-estetico' value='${daviplata}' />`;
 
         // Cambiar el ícono de editar a un botón de guardar
         event.target.src = '../../assets/disquete.png';
@@ -199,22 +174,15 @@ document.getElementById('tabla').addEventListener('click', async function (event
         const id = event.target.getAttribute('data-id');
         const inputs = tr.querySelectorAll('input');
 
-        const contrato = tr.cells[0].innerText;
-        const cedula = tr.cells[1].innerText;
-        const nombre = tr.cells[2].innerText;
-        const centrodecosto = tr.cells[3].innerText;
-        const concepto = tr.cells[4].innerText;
         // Obteniendo los valores actualizados de los inputs
-        const formadepago = inputs[0].value;
-        const valor = inputs[1].value;
-        const banco = inputs[2].value;
-        const fechadepago = inputs[3].value;
+        const correo = inputs[0].value;
+        const daviplata = inputs[1].value;
 
         // Aquí llamas a la función modificarV con los valores actualizados
-        modificarV(id, banco, nombre, centrodecosto, concepto, contrato, fechadepago, formadepago, valor);
-        await sleep(100);
+        modificarV(id, daviplata, correo);
+        await sleep(700);
 
-        cargarYMostrarDatos(cedula);
+        cargarYMostrarDatos(id);
     }
 });
 
@@ -231,7 +199,7 @@ async function cargarYMostrarDatos(cedulaEm) {
 
     let datosExtraidos = await traerAusentimosCedual(cedulaEm);
     
-    if (datosExtraidos.Ausentismos == "error no se encontraron datos") {
+    if (datosExtraidos.Ausentismos == "Error no se encontraron datos") {
         aviso("No se encontró a la persona verifica que este bien escrito", "error");
         tabla.innerHTML = '';
         return;
@@ -239,15 +207,18 @@ async function cargarYMostrarDatos(cedulaEm) {
     tabla.innerHTML = '';
 
     let Ausentismos = datosExtraidos.Ausentismos;
+    let ausentismos2 = datosExtraidos.ProcesoContratacion
+    let auxNumeropagos = ausentismos2[0].numero_pagos
+
     Ausentismos.forEach(p => {
         tabla.insertAdjacentHTML('afterbegin', `
             <tr>
                 <td>${p.numerodeceduladepersona}</td>
                 <td>${p.primer_nombre} ${p.segundo_nombre} ${p.primer_apellido} ${p.segundo_apellido}</td>
                 <td>${p.primercorreoelectronico}</td>
-                <td>${p.numero_pagos}</td>
-                <td> <img src="../../assets/editar.png" class="editar-icon" data-id="${p.id}" ></td>
-                <td> <img src="../../assets/eliminar.png" class="delete-icon" data-id="${p.id}"></td>
+                <td>${auxNumeropagos}</td>
+                <td> <img src="../../assets/editar.png" class="editar-icon" data-id="${p.numerodeceduladepersona}" ></td>
+                <td> <img src="../../assets/eliminar.png" class="delete-icon" data-id="${p.numerodeceduladepersona}"></td>
             </tr>
         `);
     });

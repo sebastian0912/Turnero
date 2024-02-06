@@ -11,11 +11,7 @@ const createWindow = () => {
     const win = new BrowserWindow({
         width: 1300,
         height: 900,
-        webPreferences: {
-            nodeIntegration: false,
-            contextIsolation: true,
-            preload: path.join(__dirname, 'preload.js'), // Si estás utilizando un script de precarga
-        },
+
     })
 
     //win.setMenu(null)
@@ -53,24 +49,6 @@ autoUpdater.on("error", (error) => {
     console.error("Hubo un error con la actualización:", error);
 });
 
-
-
-app.whenReady().then(() => {
-    // Añade la etiqueta CSP meta al head del archivo HTML
-    createWindow().webContents.on('dom-ready', () => {
-        createWindow().webContents.executeJavaScript(`
-            const head = document.head || document.getElementsByTagName('head')[0];
-            const meta = document.createElement('meta');
-            meta.httpEquiv = 'Content-Security-Policy';
-            meta.content = 'default-src 'self'; script-src 'self'';
-            head.appendChild(meta);
-        `);
-    });
-});
-
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') app.quit();
-});
 
 app.whenReady().then(() => {
     createWindow();
