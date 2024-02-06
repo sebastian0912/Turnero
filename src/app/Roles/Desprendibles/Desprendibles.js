@@ -32,8 +32,10 @@ if (usernameLocal == "HEIDY TORRES" || usernameLocal == "MAYRA HUAMANI" || perfi
 const correo = localStorage.getItem("correo_electronico");
 console.log(correo)
 
+const descargar2 = document.querySelector('#descargar');
+
 if (correo == "nominacentral4@gmail.com") {
-    descargar.style.display = "block"
+    descargar2.style.display = "block"
     cargarA.style.display = "block"
 }
 
