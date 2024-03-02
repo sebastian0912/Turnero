@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
     <script defer src="../../logOut2.js" type="module"></script>
-    <script defer src="seleccion.js" type="module"></script>
+    <script defer src="./seleccion.js" type="module"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
 
 </head>
@@ -104,6 +104,57 @@
                     <h1 class="titulo" style="margin-right: 10px;"> Dilegencie la siguiente información:
                     </h1>
 
+                    <h2 class="tituloSeccion">Verificaciones y Área de Aplicación</h2>
+                    <div class="seccion" id="verificaciones"  style="display:none;">
+                        <input type="text" id="eps" placeholder="EPS" class="input">
+                        <input type="text" id="afp" placeholder="AFP" class="input">
+                        <input type="text" id="policivos" placeholder="POLICIVOS" class="input">
+                        <input type="text" id="procuraduria" placeholder="PROCURADURIA" class="input">
+                        <input type="text" id="contraloria" placeholder="CONTRALORIA" class="input">
+                        <input type="text" id="ramaJudicial" placeholder="RAMA JUDICIAL" class="input">
+                        <input type="text" id="medidasCorrectivas" placeholder="MEDIDAS CORRECTIVAS" class="input">
+                        <input type="text" id="areaAplica" placeholder="Área para la que aplica" class="input">
+                        <button class="btn2" id="botonC">Cargar</button>
+
+                    </div>
+
+                    <h2 class="tituloSeccion">Entrevista o Prueba Técnica</h2>
+                    <div class="seccion" id="entrevistaPrueba" style="display:none;">
+                        <input type="text" id="centroCosto" placeholder="CENTRO DE COSTO ENTREVISTA O PRUEBA TECNICA" class="input">
+                        <input type="text" id="cargo" placeholder="CARGO" class="input">
+                        <input type="text" id="areaEntrevista" placeholder="ÁREA EN LA QUE PRESENTARA LA ENTREVISTA" class="input">
+                        <input type="date" id="fechaPruebaEntrevista" class="input">
+                        <input type="time" id="horaPruebaEntrevista" class="input">
+                        <input type="text" id="direccionEmpresa" placeholder="DIRECCION O INDICACION PARA LLEGAR A LA EMPRESA" class="input">
+                        <button class="btn2" id="botonC">Cargar</button>
+
+                    </div>
+                    
+                    <h2  class="tituloSeccion">Examen de Salud Ocupacional</h2>
+                    <div class="seccion" id="saludOcupacional" style="display:none;">
+                        <input type="text" id="examenSaludOcupacional" placeholder="Examen Salud Ocupacional" class="input">
+                        <input type="text" id="ips" placeholder="IPS" class="input">
+                        <input type="text" id="laboratorios" placeholder="Laboratorios" class="input">
+                        <input type="text" id="ipsLab" placeholder="IPSLAB" class="input">
+                        <input type="text" id="aptoCargo" placeholder="APTO PARA EL CARGO SI/NO" class="input">
+                        <button class="btn2" id="botonC">Cargar</button>
+
+                    </div>
+
+                    <h2  class="tituloSeccion">Contratación</h2>
+                    <div class="seccion" id="contratacion" style="display:none;">
+                        <input type="text" id="empresaUsuaria" placeholder="EMPRESA USUARIA" class="input">
+                        <input type="date" id="fechaIngreso" class="input">
+                        <input type="text" id="salario" placeholder="SALARIO" class="input">
+                        <input type="text" id="auxTransporte" placeholder="AUXTRANSPORTE" class="input">
+                        <input type="text" id="rodamiento" placeholder="RODAMIENTO" class="input">
+                        <input type="text" id="auxMovilidad" placeholder="AUX MOVILIDAD" class="input">
+                        <input type="text" id="bonificacion" placeholder="BONIFICACION" class="input">
+                        <button class="btn2" id="botonC">Cargar</button>
+                    </div>
+                    
+                    
+                    <!-- 
                     <input type="text" id="nombreEvaluador" placeholder="NOMBRE DEL EVALUADOR" class="input">
                     <input type="text" id="validacionCedula" placeholder="Validacion de la cedula frente a la temporal"
                         class="input">
@@ -177,8 +228,7 @@
                     <input type="text" id="rodamiento" placeholder="RODAMIENTO" class="input">
                     <input type="text" id="auxMovilidad" placeholder="AUX MOVILIDAD" class="input">
                     <input type="text" id="bonificacion" placeholder="BONIFICACION" class="input">
-
-                    <button class="btn2" id="botonC">Cargar</button>
+                    -->
 
                 </div>
             </div>

@@ -29,18 +29,29 @@ if (usernameLocal == "HEIDY TORRES" || usernameLocal == "MAYRA HUAMANI" || perfi
 }
 
 
-document.getElementById('mes').addEventListener('change', function() {
-    var selectedMonth = this.value;
-    var daysDropdown = document.getElementById('dia');
-    daysDropdown.innerHTML = ''; // Borra las opciones anteriores
 
-    var daysInMonth = new Date(2023, selectedMonth, 0).getDate(); // Obtiene el número de días en el mes
-
-    for (var i = 1; i <= daysInMonth; i++) {
-        var day = i.toString().padStart(2, '0'); // Agrega un 0 si es un solo dígito
-        var option = document.createElement('option');
-        option.value = day;
-        option.textContent = day;
-        daysDropdown.appendChild(option);
+function toggleSeccion(id) {
+    var seccion = document.getElementById(id);
+    if (seccion.style.display === 'none') {
+        seccion.style.display = 'block';
+    } else {
+        seccion.style.display = 'none';
     }
+}
+document.addEventListener("DOMContentLoaded", function() {
+    // Selecciona todos los títulos de sección
+    var titulos = document.querySelectorAll('.tituloSeccion');
+
+    // Asigna un event listener a cada título
+    titulos.forEach(function(titulo) {
+        titulo.addEventListener('click', function() {
+            // Encuentra el próximo elemento hermano (la sección que sigue al título) y alterna su visibilidad
+            var seccion = this.nextElementSibling;
+            if (seccion.style.display === 'none' || seccion.style.display === '') {
+                seccion.style.display = 'block';
+            } else {
+                seccion.style.display = 'none';
+            }
+        });
+    });
 });

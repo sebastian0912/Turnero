@@ -438,60 +438,90 @@ function s2ab(s) {
 
 
 async function guardarDatos(datosFinales) {
-
-    var body = localStorage.getItem('key');
-    const obj = JSON.parse(body);
-    const jwtKey = obj.jwt;
-
-
-    const bodyData = {
-        jwt: jwtKey,
-        mensaje: "muchos",
-        datos: datosFinales
-    };
-
-    const headers = {
-        'Authorization': jwtKey
-    };
-
-    const urlcompleta = urlBack.url + '/FormasdePago/crearformasDePago';
-    try {
-        fetch(urlcompleta, {
-            method: 'POST',// para el resto de peticiónes HTTP le cambias a GET, POST, PUT, DELETE, etc.
-            body: JSON.stringify(bodyData),// Aquí va el body de tu petición tiene que ser asi en json para que el back lo pueda leer y procesar y hay algun problema me dices
-
-        })
-            .then(async response => {
-                if (response.ok) {
-                    document.getElementById('successSound').play();
-                    over.style.display = "none";
-                    loader.style.display = "none";
-                    let aviso = await avisoConfirmado("Datos guardados correctamente", "success");
-                    //muchas veces mando un mensaje de sucess o algo asi para saber que todo salio bien o mal                    
-                    if (aviso) {
-                        location.reload();
-                    }
-                    return response.json();
-                } else {
-                    document.getElementById('errorSound').play();
-                    aviso("Error al guardar los datos", "error");
-                    throw new Error('Error en la petición POST');
+    console.log("guardando")
+        var body = localStorage.getItem('key');
+        const obj = JSON.parse(body);
+        const jwtKey = obj.jwt;
+    
+    
+        const bodyData = {
+            jwt: jwtKey,
+            mensaje: "muchos",
+            datos: datosFinales
+        };
+    
+        const headers = {
+            'Authorization': jwtKey
+        };
+    
+        const urlcompleta = urlBack.url + '/FormasdePago/crearformasDePago';
+        try {
+            fetch(urlcompleta, {
+                method: 'POST',
+                body: JSON.stringify(bodyData),
+                headers: {
+                    'Content-Type': 'application/json'
                 }
             })
-            .then(responseData => {
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la petición POST');
+                }
+                return response.json(); // Si la respuesta está OK, la convertimos a JSON
+            })
+            .then(data => {
+                console.log('Respuesta del servidor:', data); // Imprime la respuesta ya convertida a JSON
                 document.getElementById('successSound').play();
             })
             .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('errorSound').play();
             });
-    } catch (error) {
-        console.error('Error en la petición HTTP PUT');
-        console.error(error);
+        } catch (error) {
+            console.error('Error capturado en el bloque try-catch:', error);
+        }
+        
+    
+        /* try {
+             fetch(urlcompleta, {
+                 method: 'POST',// para el resto de peticiónes HTTP le cambias a GET, POST, PUT, DELETE, etc.
+                 body: JSON.stringify(bodyData),// Aquí va el body de tu petición tiene que ser asi en json para que el back lo pueda leer y procesar y hay algun problema me dices
+     
+             })
+                 .then(async response => {
+                     if (response.ok) {
+                         document.getElementById('successSound').play();
+                         over.style.display = "none";
+                         loader.style.display = "none";
+                         let aviso = await avisoConfirmado("Datos guardados correctamente", "success");
+                         console.log(response.json())
+                         //muchas veces mando un mensaje de sucess o algo asi para saber que todo salio bien o mal                    
+                         if (aviso) {
+                             location.reload();
+                         }
+                         return response.json();
+                     } else {
+                         document.getElementById('errorSound').play();
+                         aviso("Error al guardar los datos", "error");
+                         throw new Error('Error en la petición POST');
+                     }
+                 })
+                 .then(responseData => {
+                     console.log('Respuesta del servidor:', responseData); // Aquí imprimes la respuesta ya convertida a JSON
+     
+                     document.getElementById('successSound').play();
+                 })
+                 .catch(error => {
+                     console.error('Error:', error);
+                     document.getElementById('errorSound').play();
+                 });
+         } catch (error) {
+             console.error('Error en la petición HTTP PUT');
+             console.error(error);
+         }*/
+    
+    
     }
-
-
-}
 
 
 

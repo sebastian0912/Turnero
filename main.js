@@ -1,8 +1,5 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, shell } = require('electron');
 const { autoUpdater, AppUpdater } = require("electron-updater");
-const path = require('path');
-
-
 
 autoUpdater.autoDownload = false;
 autoUpdater.autoInstallOnAppQuit = true;
@@ -11,7 +8,7 @@ const createWindow = () => {
     const win = new BrowserWindow({
         width: 1300,
         height: 900,
-
+        
     })
 
     //win.setMenu(null)
@@ -22,8 +19,6 @@ const createWindow = () => {
 }
 
 
-// Etiqueta meta de Content Security Policy (CSP)
-const cspMetaTag = `<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">`;
 
 /*Nueva actualizacion*/
 autoUpdater.on("update-available", async () => {
