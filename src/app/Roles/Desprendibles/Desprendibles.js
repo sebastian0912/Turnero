@@ -16,7 +16,7 @@ perfil.innerHTML = perfilLocal;
 const over = document.querySelector('#overlay');
 const loader = document.querySelector('#loader');
 
-if (perfilLocal == "GERENCIA") {
+if (perfilLocal == "GERENCIA" ) {
     estadisticas.style.display = "block";
     vacantes.style.display = "block";
     publicidad.style.display = "block";
@@ -25,15 +25,17 @@ if (perfilLocal == "GERENCIA") {
     ausentismos.style.display = "block";
 }
 
-if (usernameLocal == "HEIDY TORRES" || usernameLocal == "MAYRA HUAMANI" || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {
+if (perfilLocal == "GERENCIA"  || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {
     formasDePago.style.display = "block";
 }
 
 const correo = localStorage.getItem("correo_electronico");
 console.log(correo)
 
+const descargar2 = document.querySelector('#descargar');
+
 if (correo == "nominacentral4@gmail.com") {
-    descargar.style.display = "block"
+    descargar2.style.display = "block"
     cargarA.style.display = "block"
 }
 

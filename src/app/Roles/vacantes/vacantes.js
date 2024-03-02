@@ -14,8 +14,7 @@ let input = document.getElementById('archivoInput');
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
 
-
-if (perfilLocal == "GERENCIA") {
+if (perfilLocal == "GERENCIA" ) {
     estadisticas.style.display = "block";
     vacantes.style.display = "block";
     publicidad.style.display = "block";
@@ -24,9 +23,10 @@ if (perfilLocal == "GERENCIA") {
     ausentismos.style.display = "block";
 }
 
-if (usernameLocal == "HEIDY TORRES" || usernameLocal == "MAYRA HUAMANI" || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {
+if (perfilLocal == "GERENCIA"  || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {
     formasDePago.style.display = "block";
 }
+
 
 let responseData
 let card = document.getElementById('card-container');
