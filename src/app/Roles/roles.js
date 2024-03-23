@@ -221,8 +221,6 @@ async function obtenerCodigos() {
                 `;
             }
         }
-
-
     });
 }
 

@@ -97,27 +97,28 @@
     </header>
 
     <div class="contenido">
-        <div class="cuadroTexto">
+
+        <div class="cuadroTexto" style="width: 200px; margin-right: 0px; height: 250px;">
+            <div class="valor">
+                <div class="valoresEscribir">
+                    <h1 class="titulo" style="margin-right: 10px; width: 100%;"> Por favor ingrese la cedula del usuario a buscar:
+                    </h1>
+                    <!--Cedula-->
+                    <input type="text" id="cedulaB" placeholder="Cedula" class="input" style="width: 200px; margin-left: 0;" >
+                    <button class="btn2" id="buscarCedula" style="float: right; width: 100%; margin-top: -5px;">Buscar</button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="cuadroTexto" style="margin-left: 20px;"> 
             <div class="valor">
                 <div class="valoresEscribir">
                     <h1 class="titulo" style="margin-right: 10px;"> Dilegencie la siguiente información: </h1>
 
                     <!-- Entradas para imágenes -->
-                    <div class="archivo">
-                        <input type="file" id="foto" class="boton" accept="image/*" placeholder="Foto">
-                        <button class="input" id="boton" style="width: 315px;">Foto</button>
-                    </div>
-
-                    <div class="archivo">
-                        <input type="file" id="firma" class="boton" accept="image/*" placeholder="Firma">
-                        <button class="input" id="boton" style="width: 315px;">Firma</button>
-                    </div>
-
-                    <div class="archivo">
-                        <input type="file" id="huella" class="boton" accept="image/*" placeholder="Huella">
-                        <button class="input" id="boton" style="width: 315px;">Huella</button>
-                    </div>
-
+                    
                     <input type="text" id="sitioContratacion" class="input" placeholder="Sitio que Contratación">
                     <input type="text" id="eps" class="input" placeholder="EPS">
 
@@ -189,6 +190,7 @@
                     <input type="text" id="valorTransporte" class="input" placeholder="Valor Transporte">
                     <input type="text" id="horasExtras" class="input" placeholder="Horas Extras">
                     <input type="number" id="porcentajeARL" class="input" step="0.01" placeholder="% ARL">
+                    
                     <input type="text" id="parentescoReferencia1" class="input" placeholder="Parentesco Referencia 1">
                     <input type="text" id="conoceReferencia1" class="input" placeholder="Hace Cuánto lo Conoce 1">
                     <input type="text" id="refiereReferencia1" class="input" placeholder="Cómo lo Refiere 1">
