@@ -15,6 +15,9 @@ const usernameLocal = localStorage.getItem("username");
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
 
+const over = document.querySelector('#overlay');
+const loader = document.querySelector('#loader');
+
 
 if (perfilLocal == "GERENCIA") {
     estadisticas.style.display = "block";
@@ -56,17 +59,166 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+let aux;
+
+document.getElementById('info').onclick = function () {
+    document.getElementById('infoBox').style.display = 'block';
+
+    let experiencia
+    if (aux.data[0].tiene_experiencia_laboral == "true") {
+        experiencia = "Si";
+    }
+    else {
+        experiencia = "No";
+    }
+
+    let edad
+    let fechaNacimiento = aux.data[0].fecha_nacimiento;
+    let fechaNacimientoISO = fechaNacimiento.split("T")[0]; // Esto ya está en formato "YYYY-MM-DD"
+    let fechaNacimientoDate = new Date(fechaNacimientoISO);
+
+    let hoy = new Date();
+    let edadCalculada = hoy.getFullYear() - fechaNacimientoDate.getFullYear();
+    let m = hoy.getMonth() - fechaNacimientoDate.getMonth();
+
+    if (m < 0 || (m === 0 && hoy.getDate() < fechaNacimientoDate.getDate())) {
+        edadCalculada--;
+    }
+
+    edad = edadCalculada;
+
+    // Nombre
+    nombreBox.innerHTML = aux.data[0].primer_nombre + " " + aux.data[0].segundo_nombre + " " + aux.data[0].primer_apellido + " " + aux.data[0].segundo_apellido;
+    // foto
+    var fotoBase64 = aux.data[0].fotoPersonal;
+    var imageData = 'data:image/jpeg;base64,' + fotoBase64;
+    document.getElementById('foto').src = imageData;
+    // cedula
+    cedulaBox.innerHTML = aux.data[0].numerodeceduladepersona;
+    // tipo
+    tipoBox.innerHTML = aux.data[0].tipodedocumento;
+    // Telefono
+    telefonoBox.innerHTML = aux.data[0].celular;
+    // numerowhat
+    whaBox.innerHTML = aux.data[0].whatsapp;
+    // genero
+    generoBox.innerHTML = aux.data[0].genero;
+    // edad
+    edadBox.innerHTML = edad + " años";
+    // barrio
+    barrioBox.innerHTML = aux.data[0].barrio;
+    // experiencia
+    experienciaBox.innerHTML = experiencia;
+
+};
+
 
 buscarCedula.addEventListener('click', async () => { // Se añade async aquí
     const cedula = document.getElementById('cedulaB').value;
-
+    // Mostrar elementos ocultos
+    over.style.display = "block";
+    loader.style.display = "block";
     let cedulaSeleccion = await buscarCedulaSeleccion(cedula); // Se espera el resultado con await
     if (cedulaSeleccion != "No se encontró el proceso de selección para la cédula proporcionada") {
-        console.log(cedulaSeleccion);
+        aux = await buscarCedulaContratacionGeneral(cedula); // Se espera el resultado con await
+        info.style.display = "block";
+        // Ocultar elementos después de completar la operación
+        over.style.display = "none";
+        loader.style.display = "none";
     }
 
 });
 
+
+descargarPdf.addEventListener('click', async () => { // Se añade async aquí
+
+    // Copiar pdf_base64 del array que está en aux
+    var pdf_base64 = aux.data[0].pdf_base64;
+    // Ejemplo de cómo limpiar la cadena base64 si contiene metadatos al principio
+    var pdf_base64_clean = pdf_base64.replace(/^data:application\/pdf;base64,/, "");
+
+    // Convertir la cadena base64 a un blob de datos
+    const pdfBlob = b64toBlob(pdf_base64_clean, 'application/pdf');
+
+    // Crear un URL para el blob
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+
+    // Crear un enlace <a> temporal para descargar el archivo
+    const downloadLink = document.createElement('a');
+    downloadLink.href = pdfUrl;
+    downloadLink.download = 'archivo.pdf'; // Puedes darle el nombre de archivo que prefieras
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink); // Limpiar el enlace temporal
+
+    // Función auxiliar para convertir base64 a Blob
+    function b64toBlob(b64Data, contentType = '', sliceSize = 512) {
+        const byteCharacters = atob(b64Data);
+        const byteArrays = [];
+
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            const byteNumbers = new Array(slice.length);
+            for (let i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+
+        const blob = new Blob(byteArrays, { type: contentType });
+        return blob;
+    }
+
+});
+
+
+async function buscarCedulaContratacionGeneral(cedula) {
+    // guardar cedula en el localstogare
+    localStorage.setItem("cedulaSeleccion", cedula);
+
+    var body = localStorage.getItem('key');
+    const obj = JSON.parse(body);
+    const jwtKey = obj.jwt;
+
+    const headers = {
+        'Authorization': jwtKey
+    };
+
+    const urlCompleta = urlBack.url + '/contratacion/buscarCandidato/' + cedula;
+
+    try {
+        const response = await fetch(urlCompleta, {
+            method: 'GET',
+            headers: headers,
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            return responseData;
+            // Dentro de tu función buscarCedulaSeleccion, reemplaza la parte del error 404 con esto:
+        } else if (response.status === 404) {
+            const errorData = await response.json(); // Intenta leer el cuerpo de la respuesta
+
+            if (errorData.message == "No se encontró el proceso de selección para la cédula proporcionada") {
+                aviso("No se encontro la cedula, se procede a crearla", "warning");
+                return errorData.message;
+            }
+        }
+        else {
+            // Maneja otros posibles errores HTTP
+            throw new Error('Error en la petición GET');
+        }
+    } catch (error) {
+        console.error('Error en la petición HTTP GET:', error);
+        // Considera mostrar el error al usuario de una forma que sea parte de tu UI
+        throw error;
+    }
+
+
+}
 
 async function buscarCedulaSeleccion(cedula) {
     // guardar cedula en el localstogare
@@ -389,4 +541,27 @@ async function guardarParte4(cedula, empresaUsuaria, fechaIngreso, salario, auxT
         // Considera mostrar el error al usuario de una forma que sea parte de tu UI
         throw error;
     }
+}
+
+
+
+
+
+
+// foto modal
+// Obtén los elementos
+var modal = document.getElementById("modal");
+var img = document.getElementById("foto");
+var modalImg = document.getElementById("img01");
+var cerrar = document.getElementsByClassName("cerrar")[0];
+
+// Al hacer clic en la imagen, se muestra el modal
+img.onclick = function () {
+    modal.style.display = "block";
+    modalImg.src = this.src;
+}
+
+// Al hacer clic en (x), cierra el modal
+cerrar.onclick = function () {
+    modal.style.display = "none";
 }
