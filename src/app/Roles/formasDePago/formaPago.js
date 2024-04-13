@@ -438,7 +438,6 @@ function s2ab(s) {
 
 
 async function guardarDatos(datosFinales) {
-    console.log("guardando")
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
     const jwtKey = obj.jwt;
@@ -469,13 +468,12 @@ async function guardarDatos(datosFinales) {
                 }
                 return response.json(); // Si la respuesta está OK, la convertimos a JSON
             })
-            .then(data => async () =>{
+            .then(async data => { // Aquí modificamos para que la función sea directamente asíncrona.
                 document.getElementById('successSound').play();
                 over.style.display = "none";
                 loader.style.display = "none";
                 let aviso = await avisoConfirmado("Datos guardados correctamente", "success");
                 console.log('Respuesta del servidor:', data); // Imprime la respuesta ya convertida a JSON
-                //muchas veces mando un mensaje de sucess o algo asi para saber que todo salio bien o mal                    
                 if (aviso) {
                     location.reload();
                 }
@@ -483,7 +481,12 @@ async function guardarDatos(datosFinales) {
             .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('errorSound').play();
+                over.style.display = "none";
+                loader.style.display = "none";
+                aviso("Error al guardar los datos", "error");
+                
             });
+
     } catch (error) {
         console.error('Error capturado en el bloque try-catch:', error);
     }
