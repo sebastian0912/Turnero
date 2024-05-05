@@ -22,27 +22,40 @@ icon.addEventListener("click", e => {
 signInform.addEventListener('submit', async (e) => {
     e.preventDefault();
     const values = await fetchData();
-
-    localStorage.setItem('idUsuario', values.numero_de_documento);
-    localStorage.setItem('perfil', values.rol);
-    localStorage.setItem('username', values.primer_nombre + ' ' + values.primer_apellido);
-    localStorage.setItem('sede', values.sucursalde);
-    localStorage.setItem('correo_electronico', values.correo_electronico);
-
-
-    const esKarenRiquett = values.primer_nombre === 'KAREN' && values.primer_apellido === "RIQUETT";
-    const esYeseniaPalacios = values.primer_nombre === 'Yesenia' && values.primer_apellido === "Palacios";
-
-
-    if (values.numero_de_documento != null && !esKarenRiquett && !esYeseniaPalacios) {
-        window.location.href = "../Roles/roles.html";
-    } else if (esKarenRiquett || esYeseniaPalacios) {
-        window.location.href = "../Recepcion/recepcion.html";
-    } else {
-        aviso('No tienes acceso todavía, comunícate con el administrador', 'error');
+    if (values.jwt === "Contraseña incorrecta") {
+        aviso('Contraseña incorrecta', 'error');
+        return;
     }
 
+    else if (values.jwt === "Usuario no encontrado") {
+        aviso('Usuario no encontrado', 'error');
+        return;
+    }
 
+    else if (values.message === 'success') {
+        const user = await getUserbyUsername();
+
+
+        localStorage.setItem('idUsuario', user.numero_de_documento);
+        localStorage.setItem('perfil', user.rol);
+        localStorage.setItem('username', user.primer_nombre + ' ' + user.primer_apellido);
+        localStorage.setItem('sede', user.sucursalde);
+        localStorage.setItem('correo_electronico', user.correo_electronico);
+
+
+        const esKarenRiquett = user.primer_nombre === 'KAREN' && user.primer_apellido === "RIQUETT";
+        const esYeseniaPalacios = user.primer_nombre === 'Yesenia' && user.primer_apellido === "Palacios";
+
+
+        if (user.numero_de_documento != null && !esKarenRiquett && !esYeseniaPalacios) {
+            window.location.href = "../Roles/roles.html";
+        } else if (esKarenRiquett || esYeseniaPalacios) {
+            window.location.href = "../Recepcion/recepcion.html";
+        } else {
+            aviso('No tienes acceso todavía, comunícate con el administrador', 'error');
+        }
+
+    }
 
 });
 
@@ -73,10 +86,7 @@ async function fetchData() {
         const obj = JSON.parse(body);
 
         if (responseBody != null && obj.jwt != null) {
-            const values = await getUserbyUsername(responseBody);
-            if (values != null) {
-                return values; // Devuelve el valor de 'values'
-            }
+            return obj;
         }
         return null; // Si no hay valores o hay errores, devuelve null
     } catch (error) {
@@ -85,7 +95,7 @@ async function fetchData() {
     }
 }
 
-async function getUserbyUsername(jwt) {
+async function getUserbyUsername() {
 
     var user = usuarioR;
     var body = localStorage.getItem("key");
