@@ -137,28 +137,6 @@ function crearVacante(Cargovacante_id, CargovacanteOtros, Localizaciondelavacant
     const jwtToken = obj.jwt;
     console.log(jwtToken);
 
-    let x = JSON.stringify({
-        Cargovacante: Cargovacante_id,
-        CargovacanteOtros: CargovacanteOtros,
-
-        Localizaciondelavacante: Localizaciondelavacante,
-        zonaquenoestaTrabajador: zonaquenoesta,
-
-        localizacionDeLaPersona: empresaUsuaria,
-        zonaquenoestaPostulante: empresausuariaquenoesta,
-
-
-        experiencia: experiencia,
-        Pruebatecnica: Pruebatecnica,
-        fechadePruebatecnica: fechadePruebatecnica,
-        horadepruebatecnica: horadePruebatecnica,
-        numeroDeGenteRequerida: numeroDeGenteRequerida,
-        Observaciones: observacionVacante,
-        empresaQueSolicita: empresaQueSolicita_id,
-        fechadeingreso: fechadeIngreso,
-    })
-
-    console.log(JSON.stringify(JSON.parse(x), null, 2));
     const urlcompleta = urlBack.url + '/publicacion/crearVacante';
     try {
         fetch(urlcompleta, {
