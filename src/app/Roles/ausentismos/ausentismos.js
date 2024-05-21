@@ -16,7 +16,7 @@ perfil.innerHTML = perfilLocal;
 const over = document.querySelector('#overlay');
 const loader = document.querySelector('#loader');
 
-if (perfilLocal == "GERENCIA" ) {
+if (perfilLocal == "GERENCIA") {
     estadisticas.style.display = "block";
     vacantes.style.display = "block";
     publicidad.style.display = "block";
@@ -25,7 +25,7 @@ if (perfilLocal == "GERENCIA" ) {
     ausentismos.style.display = "block";
 }
 
-if (perfilLocal == "GERENCIA"  || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {
+if (perfilLocal == "GERENCIA" || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA") {
     formasDePago.style.display = "block";
 }
 
@@ -38,7 +38,7 @@ async function traerAusentimosCedual(cedula) {
         'Authorization': jwtKey
     };
 
-    const urlcompleta = urlBack.url + '/Ausentismos/traerAusentismos/' + cedula;
+    const urlcompleta = urlBack.url + '/contratacion/buscarCandidato/' + cedula;
 
     try {
         const response = await fetch(urlcompleta, {
@@ -48,6 +48,7 @@ async function traerAusentimosCedual(cedula) {
 
         if (response.ok) {
             const responseData = await response.json();
+            console.log('Respuesta:', responseData);
             return responseData;
 
         } else {
@@ -198,7 +199,7 @@ async function cargarYMostrarDatos(cedulaEm) {
     }
 
     let datosExtraidos = await traerAusentimosCedual(cedulaEm);
-    
+
     if (datosExtraidos.Ausentismos == "Error no se encontraron datos") {
         aviso("No se encontró a la persona verifica que este bien escrito", "error");
         tabla.innerHTML = '';
@@ -206,17 +207,28 @@ async function cargarYMostrarDatos(cedulaEm) {
     }
     tabla.innerHTML = '';
 
-    let Ausentismos = datosExtraidos.Ausentismos;
-    let ausentismos2 = datosExtraidos.ProcesoContratacion
-    let auxNumeropagos = ausentismos2[0].numero_pagos
+    let auxNumeropagos = 0;
+    datosExtraidos.data.forEach(p => {
+        auxNumeropagos = p.celular;
+    });
 
-    Ausentismos.forEach(p => {
+    datosExtraidos.data.forEach(p => {    
         tabla.insertAdjacentHTML('afterbegin', `
             <tr>
                 <td>${p.numerodeceduladepersona}</td>
                 <td>${p.primer_nombre} ${p.segundo_nombre} ${p.primer_apellido} ${p.segundo_apellido}</td>
                 <td>${p.primercorreoelectronico}</td>
                 <td>${auxNumeropagos}</td>
+                <td>${p.telefono_conyugue}</td>
+                <td>${p.telefono_familiar_emergencia}</td>
+                <td>${p.telefono_madre}</td>
+                <td>${p.telefono_padre}</td>
+                <td>${p.telefono_referencia_familiar1}</td>
+                <td>${p.telefono_referencia_familiar2}</td>
+                <td>${p.telefono_referencia_personal1}</td>
+                <td>${p.telefono_referencia_personal2}</td>
+
+
                 <td> <img src="../../assets/editar.png" class="editar-icon" data-id="${p.numerodeceduladepersona}" ></td>
                 <td> <img src="../../assets/eliminar.png" class="delete-icon" data-id="${p.numerodeceduladepersona}"></td>
             </tr>
@@ -241,26 +253,37 @@ if (input) {
 
         reader.onload = (event) => {
             const fileContent = event.target.result;
-            const workbook = XLSX.read(new Uint8Array(fileContent), { type: 'array' });
+            const workbook = XLSX.read(new Uint8Array(fileContent), { type: 'array', cellDates: true });
             const sheet = workbook.Sheets[workbook.SheetNames[0]];
 
             // Obtiene el rango de la hoja
             const range = XLSX.utils.decode_range(sheet['!ref']);
 
-            for (let rowNum = 2; rowNum <= range.e.r; rowNum++) {
+            for (let rowNum = 1; rowNum <= range.e.r; rowNum++) {
                 let rowData = [];
                 for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
                     // Obtiene la celda en la posición actual
                     const cellRef = XLSX.utils.encode_cell({ r: rowNum, c: colNum });
                     const cell = sheet[cellRef];
 
-                    // Agrega la celda al array, usando espacio en blanco si la celda está vacía
-                    rowData.push(cell ? cell.v : " ");
+                    // Formatea la fecha si la celda es una fecha
+                    let cellText = "";
+                    if (cell && cell.t === 'd') {
+                        cellText = cell.v.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                    } else {
+                        cellText = cell ? `${cell.w || cell.v}` : "";
+                    }
+
+                    // Agrega el texto de la celda al array de datos finales
+                    rowData.push(cellText);
                 }
                 datosFinales.push(rowData);
             }
 
             console.log('Datos cargados desde Excel:', datosFinales);
+
+            over.style.display = "block";
+            loader.style.display = "block";
 
             guardarDatos(datosFinales);
         };
@@ -268,6 +291,38 @@ if (input) {
         reader.readAsArrayBuffer(file);
     });
 }
+
+
+
+
+async function exportarErroresAExcel(errores) {
+    // Mapear los datos de errores a un nuevo array con el mismo formato pero con el motivo constante
+    const erroresConMotivo = errores.map(error => ({
+        Registro: error.registro,
+        Error: error.error,
+        Motivo: 'El campo tiene un formato no permitido'
+    }));
+
+    // Crear un nuevo libro de trabajo
+    const workbook = XLSX.utils.book_new();
+
+    // Crear una hoja de cálculo a partir de los datos de errores con el motivo constante
+    const worksheet = XLSX.utils.json_to_sheet(erroresConMotivo);
+
+    // Definir el encabezado de la hoja de cálculo
+    worksheet['A1'] = { v: 'Registro', t: 's' };
+    worksheet['C1'] = { v: 'Error', t: 's' };
+    worksheet['D1'] = { v: 'Motivo', t: 's' };
+
+    // Agregar la hoja de cálculo al libro de trabajo
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Errores');
+
+    // Generar el archivo Excel
+    XLSX.writeFile(workbook, 'ErroresSubidaMasivaBaseContratacion.xlsx');
+}
+
+
+
 
 async function guardarDatos(datosFinales) {
 
@@ -295,15 +350,18 @@ async function guardarDatos(datosFinales) {
         })
             .then(async response => {
                 if (response.ok) {
+                    const responseData = await response.json(); // Asegurándonos de esperar la promesa
+                    await sleep(1000);
+                    await exportarErroresAExcel(responseData.errores);
+                    console.log('Respuesta:', responseData);
                     document.getElementById('successSound').play();
                     over.style.display = "none";
                     loader.style.display = "none";
                     let aviso = await avisoConfirmado("Datos guardados correctamente", "success");
-                    //muchas veces mando un mensaje de sucess o algo asi para saber que todo salio bien o mal                    
                     if (aviso) {
                         location.reload();
                     }
-                    return response.json();
+                    return responseData;
                 } else {
                     document.getElementById('errorSound').play();
                     aviso("Error al guardar los datos", "error");
@@ -311,12 +369,14 @@ async function guardarDatos(datosFinales) {
                 }
             })
             .then(responseData => {
+                // Aquí puedes manejar `responseData` si es necesario
                 document.getElementById('successSound').play();
             })
             .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('errorSound').play();
             });
+
     } catch (error) {
         console.error('Error en la petición HTTP PUT');
         console.error(error);

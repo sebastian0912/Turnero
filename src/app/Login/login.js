@@ -43,7 +43,7 @@ signInform.addEventListener('submit', async (e) => {
         localStorage.setItem('correo_electronico', user.correo_electronico);
 
 
-        const esKarenRiquett = user.primer_nombre === 'KAREN' && user.primer_apellido === "RIQUETT";
+        const esKarenRiquett = user.primer_nombre === 'Yesenia' && user.primer_apellido === "-";
         const esYeseniaPalacios = user.primer_nombre === 'Yesenia' && user.primer_apellido === "Palacios";
 
 

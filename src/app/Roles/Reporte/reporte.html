@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../reset.css" />
+  <link rel="stylesheet" href="reporte.css" />
+  <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal@4/minimal.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+  <script defer src="../../logOut2.js" type="module"></script>
+  <script defer src="reporte.js" type="module"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+</head>
+
+<body>
+
+  <div class="opciones">
+    <ul class="lista-Opciones">
+      <li>
+        <a href="../roles.html">
+          <img src="../../assets/pagina-de-inicio.png" alt="logo" class="logo" />
+          <p> Atender turno </p>
+        </a>
+      </li>
+      <li style="display: none;" id="estadisticas">
+        <a href="../Estadisticas/estadisticas.html">
+          <img src="../../assets/estadisticas.png" alt="logo" class="logo" />
+          <p> Estadisticas Sedes </p>
+        </a>
+      </li>
+      <li id="formasDePago" style="display: none;">
+        <a href="../formasDePago/formaPago.html">
+          <img src="../../assets/pago-web.png" alt="logo" class="logo" />
+          <p> Formas de pago </p>
+        </a>
+      </li>
+      <li id="vacantes" style="display: none;">
+        <a href="../vacantes/vacantes.html">
+          <img src="../../assets/trabajos.png" alt="logo" class="logo" />
+          <p> Vacantes </p>
+        </a>
+      </li>
+      <li id="publicidad" style="display: none;">
+        <a href="../publicidad/publicidad.html">
+          <img src="../../assets/publicidad-digital.png" alt="logo" class="logo" />
+          <p> Publicidad </p>
+        </a>
+      </li>
+      <li id="seleccion" style="display: none;">
+        <a href="../Seleccion/seleccion.html">
+          <img src="../../assets/delegar.png" alt="logo" class="logo" />
+          <p> Seleccion </p>
+        </a>
+      </li>
+      <li id="contratacion" style="display: none;">
+        <a href="../contratacion/contratacion.html">
+          <img src="../../assets/contratacion.png" alt="logo" class="logo" />
+          <p> Contratacion </p>
+        </a>
+      </li>
+      <li id="ausentismos" style="display: none;">
+        <a href="../ausentismos/ausentismos.html">
+          <img src="../../assets/person.png" alt="logo" class="logo" />
+          <p> Ausentismo </p>
+        </a>
+      </li>
+      <li style="display: none;">
+        <a href="../SolicitudConsulta/SolicitudConsulta.html">
+          <img src="../../assets/consulta.png" alt="logo" class="logo" />
+          <p> Solicitud Consulta </p>
+        </a>
+      </li>
+      <li>
+        <a href="../Desprendibles/Desprendibles.html">
+          <img src="../../assets/marcador.png" alt="logo" class="logo" />
+          <p> Desprendibles de pago </p>
+        </a>
+      </li>
+      <li>
+        <a href="../ARL/arl.html">
+          <img src="../../assets/evaluacion.png" alt="logo" class="logo" />
+          <p> Arl </p>
+        </a>
+      </li>
+      <li>
+        <a href="./reporte.html">
+          <img src="../../assets/reporte-de-negocios.png" alt="logo" class="logo" />
+          <p> Reporte </p>
+        </a>
+      </li>
+      <li id="logout">
+        <a href="">
+          <img src="../../assets/cerrar-sesion.png" alt="logo" class="logo" />
+          <p>Cerrar Sesion</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <header>
+    <div class="cajontitulo">
+      <h1 class="titulo">Bienvenido</h1>
+    </div>
+    <div class="perfil">
+      <h1 clas class="titulo">Hola, <span id="username"></span></h1>
+      <h1 id="perfil" class="titulo"></h1>
+    </div>
+  </header>
+
+  <a href="../../CambioContrase/cambio.html" style="margin-left: -120px;">
+    <h1 class="titulo">Cambiar contraseña</h1>
+  </a>
+
+  <div class="contenido">
+    <div class="cuadroTexto">
+      <div class="valor">
+
+        <h1>Reporte, llena los siguientes campos</h1>
+
+        <select id="sede" class="input2">
+          <option value="..">Seleccione la sede</option>
+          <option value="Facatativa">Facatativa</option>
+          <option value="Facatativa Centro">Facatativa Centro</option>
+          <option value="Facatativa PQ">Facatativa PQ</option>
+          <option value="Cartagenita">Cartagenita</option>
+          <option value="Rosal">Rosal</option>
+          <option value="Madrid">Madrid</option>
+          <option value="Funza">Funza</option>
+          <option value="Fontibon">Fontibon</option>
+          <option value="Soacha">Soacha</option>
+          <option value="Suba">Suba</option>
+          <option value="Suba Gaitana">Suba Gaitana</option>
+          <option value="Tocancipa">Tocancipa</option>
+          <option value="Bosa">Bosa</option>
+        </select>
+
+        <select id="contratosHoy" class="input2">
+          <option value="..">¿Hubo contratos hoy?</option>
+          <option value="si">Sí</option>
+          <option value="no">No</option>
+        </select>
+
+        <div id="contratosDetalles" style="display: none;">
+          <div class="subida">
+            <label>
+              <input type="checkbox" id="cedulasEscaneadas"> Cédulas Escaneadas
+            </label>
+            <input type="file" id="archivoCedulasEscaneadas" style="display: none;">
+          </div>
+          <div class="subida">
+            <label>
+              <input type="checkbox" id="cruceDiario"> Cruce diario Excel
+            </label>
+            <input type="file" id="archivoCruceDiario" style="display: none;">
+          </div>
+          <div class="subida">
+            <label>
+              <input type="checkbox" id="induccionSSO"> Inducción Seguridad y Salud en el trabajo
+            </label>
+            <input type="file" id="archivoInduccionSSO" style="display: none;">
+          </div>
+          <div class="subida">
+            <label>
+              <input type="checkbox" id="traslados"> Traslados
+            </label>
+            <input type="file" id="archivoTraslados" style="display: none;">
+          </div>
+          <div class="subida">
+            <label for="cantidadContratosTuAlianza">Cantidad de Contratos Tu Alianza:</label>
+            <input type="number" id="cantidadContratosTuAlianza" class="input2">
+          </div>
+          <div class="subida">
+            <label for="cantidadContratosApoyoLaboral">Cantidad de Contratos Apoyo Laboral:</label>
+            <input type="number" id="cantidadContratosApoyoLaboral" class="input2">
+          </div>
+          <label for="notas">Notas:</label>
+          <textarea id="notas" rows="4" cols="50" class="input"></textarea>
+        </div>
+
+        
+        <button id="enviar" class="btn" type="submit" style="display: none">Enviar</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
