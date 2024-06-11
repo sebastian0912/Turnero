@@ -11,16 +11,16 @@ const perfil = document.querySelector('#perfil');
 const perfilLocal = localStorage.getItem("perfil");
 const usernameLocal = localStorage.getItem("username");
 const sede = localStorage.getItem("sede");
-
+const correo = localStorage.getItem("correo_electronico");
 
 //Muestra en la parte superior el nombre y el perfil
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
 
-if (perfilLocal == "GERENCIA" ) {
-    estadisticas.style.display = "block";
-    vacantes.style.display = "block";
-    publicidad.style.display = "block";
+if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co") {
+    //estadisticas.style.display = "block";
+    //vacantes.style.display = "block";
+    //publicidad.style.display = "block";
     //seleccion.style.display = "block";
     //contratacion.style.display = "block";
     ausentismos.style.display = "block";
