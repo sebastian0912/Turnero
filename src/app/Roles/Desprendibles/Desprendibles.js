@@ -12,24 +12,26 @@ let input = document.getElementById('archivoInput');
 //Muestra en la parte superior el nombre y el perfil
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
+const correo = localStorage.getItem("correo_electronico");
 
 const over = document.querySelector('#overlay');
 const loader = document.querySelector('#loader');
 
-if (perfilLocal == "GERENCIA" ) {
-    estadisticas.style.display = "block";
-    vacantes.style.display = "block";
-    publicidad.style.display = "block";
+if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co" || perfilLocal == "COORDINADOR") {
+    //estadisticas.style.display = "block";
+    //vacantes.style.display = "block";
+    //publicidad.style.display = "block";
     //seleccion.style.display = "block";
     //contratacion.style.display = "block";
     ausentismos.style.display = "block";
+    //arl.style.display = "block";
+    //reporte.style.display = "block";
 }
 
 if (perfilLocal == "GERENCIA"  || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {
     formasDePago.style.display = "block";
 }
 
-const correo = localStorage.getItem("correo_electronico");
 console.log(correo)
 
 const descargar2 = document.querySelector('#descargar');
@@ -121,7 +123,7 @@ async function cargarYMostrarDatos(cedulaEm) {
     let datosExtraidos = await FormasdePago(cedulaEm);
 
     if (datosExtraidos.message == "No se encontró el número de cédula") {
-        aviso("No se encontró el número de cédula en las formas de pago", "warning");
+        aviso("No hay desprendibles con este numero de cedula verifiquelo", "warning");
         tabla.innerHTML = '';
         return;
     }

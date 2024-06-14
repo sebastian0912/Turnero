@@ -16,16 +16,16 @@ perfil.innerHTML = perfilLocal;
 const over = document.querySelector('#overlay');
 const loader = document.querySelector('#loader');
 
-if (perfilLocal == "GERENCIA") {
-    estadisticas.style.display = "block";
-    vacantes.style.display = "block";
-    publicidad.style.display = "block";
+if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co") {
+    //estadisticas.style.display = "block";
+    //vacantes.style.display = "block";
+    //publicidad.style.display = "block";
     //seleccion.style.display = "block";
     //contratacion.style.display = "block";
     ausentismos.style.display = "block";
 }
 
-if (perfilLocal == "GERENCIA" || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA") {
+if (perfilLocal == "GERENCIA"  || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {
     formasDePago.style.display = "block";
 }
 
@@ -346,7 +346,7 @@ function exportarDatosAExcel(datos) {
         const mapeado = {
             "ARL": dato.ARL,
             "ARL Fecha": dato.ARL_FECHA,
-            "Fecha de firma de contrato": dato.proceso_contratacion.fecha_contratacion,
+            "Fecha de Ingreso": dato.proceso_contratacion.fechaIngreso,
             "N° CC": dato.datos_generales.numerodeceduladepersona,
             "Código": dato.proceso_contratacion.codigo_contrato,
             "Empresa Usuaria y Centro de Costo": dato.proceso_contratacion.centro_de_costos,
