@@ -24,6 +24,7 @@ if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co") {
     //seleccion.style.display = "block";
     //contratacion.style.display = "block";
     ausentismos.style.display = "block";
+    solicitud.style.display = "block";
 }
 
 if (perfilLocal == "GERENCIA"  || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {

@@ -16,16 +16,16 @@ perfil.innerHTML = perfilLocal;
 const over = document.querySelector('#overlay');
 const loader = document.querySelector('#loader');
 
-if (perfilLocal == "GERENCIA") {
-    estadisticas.style.display = "block";
-    vacantes.style.display = "block";
-    publicidad.style.display = "block";
+if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co") {
+    //estadisticas.style.display = "block";
+    //vacantes.style.display = "block";
+    //publicidad.style.display = "block";
     //seleccion.style.display = "block";
     //contratacion.style.display = "block";
     ausentismos.style.display = "block";
 }
 
-if (perfilLocal == "GERENCIA" || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA") {
+if (perfilLocal == "GERENCIA"  || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {
     formasDePago.style.display = "block";
 }
 
