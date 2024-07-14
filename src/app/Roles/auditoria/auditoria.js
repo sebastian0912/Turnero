@@ -17,7 +17,6 @@ const correo = localStorage.getItem("correo_electronico");
 const over = document.querySelector('#overlay');
 const loader = document.querySelector('#loader');
 
-
 if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co" || perfilLocal == "COORDINADOR") {
     //estadisticas.style.display = "block";
     //vacantes.style.display = "block";
@@ -33,15 +32,8 @@ if (perfilLocal == "GERENCIA"  || perfilLocal == "COORDINADOR" || perfilLocal ==
     formasDePago.style.display = "block";
 }
 
-console.log(correo)
 
 const descargar2 = document.querySelector('#descargar');
-
-if (correo == "nominacentral4@gmail.com") {
-    descargar2.style.display = "block"
-    cargarA.style.display = "block"
-}
-
 
 
 async function FormasdePago(cedula) {

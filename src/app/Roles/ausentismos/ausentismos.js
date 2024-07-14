@@ -15,8 +15,9 @@ perfil.innerHTML = perfilLocal;
 
 const over = document.querySelector('#overlay');
 const loader = document.querySelector('#loader');
+const correo = localStorage.getItem("correo_electronico");
 
-if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co") {
+if (perfilLocal == "GERENCIA" || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA") {
     //estadisticas.style.display = "block";
     //vacantes.style.display = "block";
     //publicidad.style.display = "block";
@@ -27,6 +28,12 @@ if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co") {
 
 if (perfilLocal == "GERENCIA"  || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {
     formasDePago.style.display = "block";
+} 
+
+const cargarConsoli = document.querySelector('#cargarConsoli');
+
+if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co") {
+    cargarConsoli.style.display = "block";
 }
 
 async function traerAusentimosCedual(cedula) {
@@ -50,9 +57,8 @@ async function traerAusentimosCedual(cedula) {
             const responseData = await response.json();
             console.log('Respuesta:', responseData);
             return responseData;
-
         } else {
-            throw new Error('Error en la petición GET');
+            return response.json();
         }
     } catch (error) {
         console.error('Error en la petición HTTP GET');
@@ -199,12 +205,15 @@ async function cargarYMostrarDatos(cedulaEm) {
     }
 
     let datosExtraidos = await traerAusentimosCedual(cedulaEm);
+    console.log(datosExtraidos);
 
-    if (datosExtraidos.Ausentismos == "Error no se encontraron datos") {
-        aviso("No se encontró a la persona verifica que este bien escrito", "error");
+    if (datosExtraidos.message.startsWith("No se encontraron")) {
+        aviso("No se encontró a la persona, verifica que esté bien escrito", "error");
         tabla.innerHTML = '';
         return;
     }
+    
+
     tabla.innerHTML = '';
 
     let auxNumeropagos = 0;

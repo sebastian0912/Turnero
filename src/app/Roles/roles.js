@@ -17,7 +17,7 @@ const correo = localStorage.getItem("correo_electronico");
 titulo.innerHTML = usernameLocal;
 perfil.innerHTML = perfilLocal;
 
-if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co") {
+if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co" || perfilLocal == "COORDINADOR" || correo == "gestionhumanafacatativa@gmail.com" ) {
     //estadisticas.style.display = "block";
     //vacantes.style.display = "block";
     //publicidad.style.display = "block";
@@ -25,6 +25,8 @@ if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co") {
     //contratacion.style.display = "block";
     ausentismos.style.display = "block";
     solicitud.style.display = "block";
+    //arl.style.display = "block";
+    //reporte.style.display = "block";
 }
 
 if (perfilLocal == "GERENCIA"  || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {

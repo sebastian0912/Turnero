@@ -8,6 +8,7 @@ const perfilLocal = localStorage.getItem("perfil");
 const usernameLocal = localStorage.getItem("username");
 
 let input = document.getElementById('archivoInput');
+const correo = localStorage.getItem("correo_electronico");
 
 //Muestra en la parte superior el nombre y el perfil
 titulo.innerHTML = usernameLocal;
@@ -16,13 +17,16 @@ perfil.innerHTML = perfilLocal;
 const over = document.querySelector('#overlay');
 const loader = document.querySelector('#loader');
 
-if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co") {
+
+if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co" || perfilLocal == "COORDINADOR") {
     //estadisticas.style.display = "block";
     //vacantes.style.display = "block";
     //publicidad.style.display = "block";
     //seleccion.style.display = "block";
     //contratacion.style.display = "block";
     ausentismos.style.display = "block";
+    //arl.style.display = "block";
+    //reporte.style.display = "block";
 }
 
 if (perfilLocal == "GERENCIA"  || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {
