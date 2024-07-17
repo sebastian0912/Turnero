@@ -28,7 +28,7 @@ if (perfilLocal == "GERENCIA" || correo == "tuafiliacion@tsservicios.co" || perf
     //reporte.style.display = "block";
 }
 
-if (perfilLocal == "GERENCIA"  || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA" ) {
+if (perfilLocal == "GERENCIA" || perfilLocal == "COORDINADOR" || perfilLocal == "JEFE-DE-AREA") {
     formasDePago.style.display = "block";
 }
 
@@ -36,7 +36,7 @@ if (perfilLocal == "GERENCIA"  || perfilLocal == "COORDINADOR" || perfilLocal ==
 const descargar2 = document.querySelector('#descargar');
 
 
-async function FormasdePago(cedula) {
+async function auditoria(cedula) {
     var body = localStorage.getItem('key');
     const obj = JSON.parse(body);
     const jwtKey = obj.jwt;
@@ -45,7 +45,7 @@ async function FormasdePago(cedula) {
         'Authorization': jwtKey
     };
 
-    const urlcompleta = urlBack.url + '/Desprendibles/traerDesprendibles/' + cedula;
+    const urlcompleta = urlBack.url + '/auditoria/tu_alianza_responsable/' + usernameLocal;
 
     try {
         const response = await fetch(urlcompleta, {
@@ -65,101 +65,155 @@ async function FormasdePago(cedula) {
         console.error(error);
         throw error; // Propaga el error para que se pueda manejar fuera de la función
     }
-    
+
 }
 
-async function FormasdePagoTodo() {
-    var body = localStorage.getItem('key');
-    const obj = JSON.parse(body);
-    const jwtKey = obj.jwt;
 
-    const headers = {
-        'Authorization': jwtKey
-    };
-
-    const urlcompleta = urlBack.url + '/FormasdePago/traerformasDePago';
-
-    try {
-        const response = await fetch(urlcompleta, {
-            method: 'GET',
-            headers: headers,
-        });
-
-        if (response.ok) {
-            const responseData = await response.json();
-            return responseData;
-
-        } else {
-            throw new Error('Error en la petición GET');
-        }
-    } catch (error) {
-        console.error('Error en la petición HTTP GET');
-        console.error(error);
-        throw error; // Propaga el error para que se pueda manejar fuera de la función
-    }
-}
 
 const boton = document.querySelector('#boton');
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-async function cargarYMostrarDatos(cedulaEm) {
+async function cargarYMostrarDatos() {
+    let datos = await auditoria();
+    console.log(datos);
 
     const tabla = document.querySelector('#tabla');
-    if (!cedulaEm) {
-        aviso("Por favor ingrese una cédula", "warning");
-        return;
-    }
 
-    let datosExtraidos = await FormasdePago(cedulaEm);
+    // Limpiar la tabla antes de insertar nuevos datos
+    tabla.innerHTML = '';
 
-    if (datosExtraidos.message == "No se encontró el número de cédula") {
-        aviso("No hay desprendibles con este numero de cedula verifiquelo", "warning");
-        tabla.innerHTML = '';
-        return;
-    }
-    
-    tabla.innerHTML = '';    
+    datos.forEach((dato) => {
+        const fila = document.createElement('tr');
 
-    datosExtraidos.desprendibles.forEach(p => {
-        
-            tabla.insertAdjacentHTML('beforeend', `
-            <tr>
-                <td>${p.no}</td>
-                <td>${p.cedula}</td>
-                <td>${p.nombre}</td>
-                <td>${p.ingreso}</td>
-                <td>${p.retiro}</td>
-                <td>${p.finca}</td>
-                <td>${p.telefono}</td>
-                <td>${p.concepto}</td>
-                <td><a href="${p.desprendibles}" target="_blank">${p.desprendibles}</a></td>
-                <td><a href="${p.certificaciones}" target="_blank">${p.certificaciones}</a></td>
-                <td><a href="${p.cartas_retiro}" target="_blank">${p.cartas_retiro}</a></td>
-                <td>${p.carta_cesantias}</td>
-                <td><a href="${p.entrevista_retiro}" target="_blank">${p.entrevista_retiro}</a></td>
+        // Función para reemplazar valores null por 'x'
+        const verificarDato = (valor) => valor === null ? 'x' : valor;
 
-                <td>${p.correo}</td>
-                <td>${p.confirmacion_envio}</td>
+        fila.innerHTML = `
+            <td>${verificarDato(dato.contratos_si)}</td>
+            <td>${verificarDato(dato.contratos_no)}</td>
+            <td>${verificarDato(dato.numero_de_contrato)}</td>
+            
+            <td>${verificarDato(dato.foto)}</td>
+            <td>${verificarDato(dato.fecha_de_ingreso_FT)}</td>
+            <td>${verificarDato(dato.infolaboral_FT)}</td>
+            <td>${verificarDato(dato.firma_trabajador)}</td>
+            <td>${verificarDato(dato.huella)}</td>
+            <td>${verificarDato(dato.referencia)}</td>
+            <td>${verificarDato(dato.firma_carnet_FT)}</td>
+            <td>${verificarDato(dato.firma_loker_FT)}</td>
+            <td>${verificarDato(dato.fecha_de_ingreso_FT)}</td>
+            <td>${verificarDato(dato.empleador_FT)}</td>
+            
+            <td>${verificarDato(dato.ampliada_al_150)}</td>
+            <td>${verificarDato(dato.huellaCedula)}</td>
+            <td>${verificarDato(dato.sello)}</td>
+            <td>${verificarDato(dato.legible)}</td>
 
+            <td>${verificarDato(dato.procuraduria_vigente)}</td>
+            <td>${verificarDato(dato.fecha_procuraduria)}</td>
+            <td>${verificarDato(dato.contraloria_vigente)}</td>
+            <td>${verificarDato(dato.fecha_contraloria)}</td>
+            <td>${verificarDato(dato.ofac_lista_clinton)}</td>
+            <td>${verificarDato(dato.fecha_ofac)}</td>
+            <td>${verificarDato(dato.policivos_vigente)}</td>
+            <td>${verificarDato(dato.fecha_policivos)}</td>
+            <td>${verificarDato(dato.medidas_correstivas)}</td>
+            <td>${verificarDato(dato.fecha_medidas_correstivas)}</td>
+            
+            <td>${verificarDato(dato.adres)}</td>
+            <td>${verificarDato(dato.fecha_adres)}</td>
 
-            </tr>
-        `);           
+            <td>${verificarDato(dato.sisben)}</td>
+            <td>${verificarDato(dato.fecha_sisben)}</td>
 
+            <td>${verificarDato(dato.formatoElite)}</td>
+            <td>${verificarDato(dato.cargoElite)}</td>
+            
+            <td>${verificarDato(dato.nombres_trabajador_contrato)}</td>
+            <td>${verificarDato(dato.no_cedula_contrato)}</td>
+            <td>${verificarDato(dato.direccion)}</td>
+            <td>${verificarDato(dato.correo_electronico)}</td>
+            <td>${verificarDato(dato.fecha_de_ingreso_contrato)}</td>
+            <td>${verificarDato(dato.salario_contrato)}</td>
+            <td>${verificarDato(dato.empresa_usuaria)}</td>
+            <td>${verificarDato(dato.cargo_contrato)}</td>
+            <td>${verificarDato(dato.descripcion_temporada)}</td>
+            <td>${verificarDato(dato.firma_trabajador_contrato)}</td>
+            <td>${verificarDato(dato.firma_testigos)}</td>
+            <td>${verificarDato(dato.sello_temporal)}</td>
+
+            <td>${verificarDato(dato.autorizacion_dscto_casino)}</td>
+            <td>${verificarDato(dato.forma_de_pago)}</td>
+            <td>${verificarDato(dato.autorizacion_funerario)}</td>
+            <td>${verificarDato(dato.huellas_docs)}</td>
+            <td>${verificarDato(dato.fecha_de_recibido_docs)}</td>
+
+            <td>${verificarDato(dato.centro_de_costo_arl)}</td>
+            <td>${verificarDato(dato.clase_de_riesgo)}</td>
+            <td>${verificarDato(dato.cedula_arl)}</td>
+            <td>${verificarDato(dato.nombre_trabajador_arl)}</td>
+            <td>${verificarDato(dato.fecha_de_ingreso_arl)}</td>
+
+            <td>${verificarDato(dato.entrevista_ingreso)}</td>
+
+            <td>${verificarDato(dato.temporal)}</td>
+            <td>${verificarDato(dato.fecha_no_mayor_a_15_dias)}</td>
+            <td>${verificarDato(dato.nombres_trabajador_examenes)}</td>
+            <td>${verificarDato(dato.cargo)}</td>
+            <td>${verificarDato(dato.apto)}</td>
+            <td>${verificarDato(dato.salud_ocupacional)}</td>
+            <td>${verificarDato(dato.colinesterasa)}</td>
+            <td>${verificarDato(dato.planilla_colinesterasa)}</td>
+            <td>${verificarDato(dato.otros)}</td>
+
+            <td>${verificarDato(dato.certificado_afp)}</td>
+            <td>${verificarDato(dato.ruaf)}</td>
+            <td>${verificarDato(dato.nombre_trabajador_ruaf)}</td>
+            <td>${verificarDato(dato.cedula_ruaf)}</td>
+            <td>${verificarDato(dato.fecha_cerRuaf15menor)}</td>
+            <td>${verificarDato(dato.historia)}</td>
+
+            <td>${verificarDato(dato.fecha_radicado_eps)}</td>
+            <td>${verificarDato(dato.nombre_y_cedula_eps)}</td>
+            <td>${verificarDato(dato.salario_eps)}</td>
+
+            <td>${verificarDato(dato.fecha_radicado_caja)}</td>
+            <td>${verificarDato(dato.nombre_y_cedula_caja)}</td>
+            <td>${verificarDato(dato.salario_caja)}</td>
+
+            <td>${verificarDato(dato.nombre_y_cedula_seguridad)}</td>
+            <td>${verificarDato(dato.fecha_radicado_seguridad)}</td>
+            
+            <td>${verificarDato(dato.codigo_hoja_de_vida)}</td>
+            <td>${verificarDato(dato.foto_hoja_de_vida)}</td>
+            <td>${verificarDato(dato.nombre_y_cedula_hoja_de_vida)}</td>
+            <td>${verificarDato(dato.correo_electronico_hoja_de_vida)}</td>
+            <td>${verificarDato(dato.direccion_hoja_de_vida)}</td>
+            <td>${verificarDato(dato.referencia_hoja_de_vida)}</td>
+            <td>${verificarDato(dato.firma_carnet_hoja_de_vida)}</td>
+
+            <td>${verificarDato(dato.firma_clausulas_add)}</td>
+            <td>${verificarDato(dato.sello_temporal_clausulas_add)}</td>
+
+            <td>${verificarDato(dato.firma_add_contrato)}</td>
+            <td>${verificarDato(dato.sello_temporal_add_contrato)}</td>
+            
+            <td>${verificarDato(dato.autorizaciontratamientosDatosJDA)}</td>
+            <td>${verificarDato(dato.cartadescuentoflor)}</td>
+            <td>${verificarDato(dato.formato_timbre)}</td>
+            <td>${verificarDato(dato.cartaaurotiracioncorreo)}</td>
+        `;
+
+        // Agregar la fila a la tabla
+        tabla.appendChild(fila);
     });
 }
 
+cargarYMostrarDatos();
 
-boton.addEventListener('click', async () => {
-    let cedulaEm = document.getElementById("cedula").value;
-    cedulaEm = cedulaEm.replace(/\s/g, '').replace(/\./g, '');
 
-    cargarYMostrarDatos(cedulaEm);
-});
-
-const claves = ["No", "Cedula", "Nombre", "Ingreso", "Retiro", "Finca", "Telefono", "CONCEPTO", "Desprendibles", "Certificaciones", "Cartas_Retiro", "Carta_Cesantias", "Entrevista_Retiro", "Correo", "Confirmacion_Envio"];
 
 if (input) {
     // Agrega un escuchador de eventos al input para detectar cambios
@@ -178,13 +232,12 @@ if (input) {
                 // Convertir la hoja de trabajo en un arreglo de arreglos
                 const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: false, dateNF: "dd/mm/yyyy" });
 
-                // Procesar cada fila y asignar los valores a las claves correspondientes
-                const modifiedRows = rows.slice(1).map((row) => {
+                // Procesar cada fila a partir de la tercera fila
+                const modifiedRows = rows.slice(2).map((row, rowIndex) => {
                     let modifiedRow = {};
-                    claves.forEach((key, index) => {
-                        const cell = row[index];
-                        // Verificar si la celda está vacía y asignar 'vacia' en ese caso
-                        modifiedRow[key] = cell !== undefined && cell !== null && cell !== "" ? cell : '-';
+                    row.forEach((cell, cellIndex) => {
+                        // Verificar si la celda está vacía y asignar '-' en ese caso
+                        modifiedRow[`${cellIndex + 1}`] = cell !== undefined && cell !== null && cell !== "" ? cell : '-';
                     });
                     return modifiedRow;
                 });
@@ -199,6 +252,7 @@ if (input) {
         }
     });
 }
+
 
 async function guardarDatos(datosFinales) {
     const batchSize = 10000; // Número máximo de registros por lote
@@ -216,14 +270,15 @@ async function guardarDatos(datosFinales) {
         const bodyData = {
             jwt: jwtKey,
             mensaje: "muchos",
-            datos: chunk
+            datos: chunk,
+            responsable: usernameLocal
         };
 
         const headers = {
             'Authorization': jwtKey
         };
 
-        const urlcompleta = urlBack.url + '/Desprendibles/crear_desprendibles';
+        const urlcompleta = urlBack.url + '/auditoria/tu_alianza/';
         try {
             const response = await fetch(urlcompleta, {
                 method: 'POST',
@@ -276,11 +331,11 @@ descargar.addEventListener('click', async () => {
 
     element.download = 'PlantillaDesprendibles.xlsx';
     element.style.display = 'none';
-    
+
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
-    URL.revokeObjectURL(url);   
+    URL.revokeObjectURL(url);
 });
 
 

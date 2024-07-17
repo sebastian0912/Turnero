@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../reset.css" />
+    <link rel="stylesheet" href="E-auditoria.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal@4/minimal.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+    <script defer src="../../logOut2.js" type="module"></script>
+    <script defer src="E-auditoria.js" type="module"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Agrega este script -->
+
+
+</head>
+
+<body>
+    <audio id="successSound"
+        src="../../assets/Sounds/depositphotos_425986708-track-app-interface-button-notification.mp3"></audio>
+    <audio id="errorSound" src="../../assets/Sounds/negative_beeps-6008.mp3"></audio>
+
+    <div id="overlay" class="loader-overlay" style="display: none;"></div>
+
+    <div class="opciones">
+        <ul class="lista-Opciones">
+            <li>
+                <a href="../roles.html">
+                    <img src="../../assets/pagina-de-inicio.png" alt="logo" class="logo" />
+                    <p> Atender turno </p>
+                </a>
+            </li>
+            <li style="display: none;" id="estadisticas">
+                <a href="../Estadisticas/estadisticas.html">
+                    <img src="../../assets/estadisticas.png" alt="logo" class="logo" />
+                    <p> Estadisticas Sedes </p>
+                </a>
+            </li>
+            <li id="formasDePago" style="display: none;">
+                <a href="../formasDePago/formaPago.html">
+                    <img src="../../assets/pago-web.png" alt="logo" class="logo" />
+                    <p> Formas de pago </p>
+                </a>
+            </li>
+            <li id="vacantes" style="display: none;">
+                <a href="../vacantes/vacantes.html">
+                    <img src="../../assets/trabajos.png" alt="logo" class="logo" />
+                    <p> Vacantes </p>
+                </a>
+            </li>
+            <li id="publicidad" style="display: none;">
+                <a href="../publicidad/publicidad.html">
+                    <img src="../../assets/publicidad-digital.png" alt="logo" class="logo" />
+                    <p> Publicidad </p>
+                </a>
+            </li>
+            <li id="seleccion" style="display: none;">
+                <a href="../Seleccion/seleccion.html">
+                    <img src="../../assets/delegar.png" alt="logo" class="logo" />
+                    <p> Seleccion </p>
+                </a>
+            </li>
+            <li id="contratacion" style="display: none;">
+                <a href="../contratacion/contratacion.html">
+                    <img src="../../assets/contratacion.png" alt="logo" class="logo" />
+                    <p> Contratacion </p>
+                </a>
+            </li>
+            <li id="ausentismos" style="display: none;">
+                <a href="../ausentismos/ausentismos.html">
+                    <img src="../../assets/person.png" alt="logo" class="logo" />
+                    <p> Ausentismo </p>
+                </a>
+            </li>
+            <li style="display: none;">
+                <a href="../SolicitudConsulta/SolicitudConsulta.html">
+                    <img src="../../assets/consulta.png" alt="logo" class="logo" />
+                    <p> Solicitud Consulta </p>
+                </a>
+            </li>
+            <li>
+                <a href="./Desprendibles.html">
+                    <img src="../../assets/marcador.png" alt="logo" class="logo" />
+                    <p> Desprendibles de pago </p>
+                </a>
+            </li>
+            <li>
+                <a href="../auditoria/auditoria.html">
+                    <img src="../../assets/reporte-de-negocios.png" alt="logo" class="logo" />
+                    <p> Seguimiento HV </p>
+                </a>
+            </li>
+
+            <li>
+                <a href="./E-auditoria.html">
+                    <img src="../../assets/reporte-de-negocios.png" alt="logo" class="logo" />
+                    <p> Estadisticas HV </p>
+                </a>
+            </li>
+
+            <li id="logout">
+                <img src="../../assets/cerrar-sesion.png" alt="logo" class="logo" />
+                <p>Cerrar Sesion</p>
+            </li>
+        </ul>
+    </div>
+
+    <header>
+        <div class="cajontitulo">
+            <h1 class="titulo">Bienvenido</h1>
+        </div>
+        <div class="perfil">
+            <h1 class="titulo">Hola, <span id="username"></span></h1>
+            <h1 id="perfil" class="titulo"></h1>
+        </div>
+    </header>
+
+    <div class="contenido">
+        <div class="graficos">
+            <div class="barras">
+                <div class="seleccionar">
+                    <h1 class="titulo-grafico">Selecciona los responsables</h1>
+                    <div id="checkboxes-container"></div>
+                    <button id="updateChartButton" class="btn">Actualizar Gráfico</button>
+                </div>
+                <div class="graficoBarras">
+                    <h1 class="titulo-grafico">Estadísticas de hojas de vida por persona</h1>
+                    <div class="barChart-container">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <h1 class="titulo-grafico">Estadísticas de hojas de vida General</h1>
+            <div class="circular">
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+</body>
+
+</html>

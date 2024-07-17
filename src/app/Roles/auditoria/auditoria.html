@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -12,99 +13,82 @@
     <script defer src="../../logOut2.js" type="module"></script>
     <script defer src="auditoria.js" type="module"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
-
 </head>
 
 <body>
-    <audio id="successSound"
-        src="../../assets/Sounds/depositphotos_425986708-track-app-interface-button-notification.mp3"></audio>
+    <audio id="successSound" src="../../assets/Sounds/depositphotos_425986708-track-app-interface-button-notification.mp3"></audio>
     <audio id="errorSound" src="../../assets/Sounds/negative_beeps-6008.mp3"></audio>
 
     <div id="overlay" class="loader-overlay" style="display: none;"></div>
 
-
     <div class="opciones">
         <ul class="lista-Opciones">
-
             <li>
                 <a href="../roles.html">
                     <img src="../../assets/pagina-de-inicio.png" alt="logo" class="logo" />
                     <p> Atender turno </p>
                 </a>
             </li>
-
-
             <li style="display: none;" id="estadisticas">
                 <a href="../Estadisticas/estadisticas.html">
                     <img src="../../assets/estadisticas.png" alt="logo" class="logo" />
                     <p> Estadisticas Sedes </p>
                 </a>
             </li>
-
             <li id="formasDePago" style="display: none;">
                 <a href="../formasDePago/formaPago.html">
                     <img src="../../assets/pago-web.png" alt="logo" class="logo" />
                     <p> Formas de pago </p>
                 </a>
             </li>
-
             <li id="vacantes" style="display: none;">
                 <a href="../vacantes/vacantes.html">
                     <img src="../../assets/trabajos.png" alt="logo" class="logo" />
                     <p> Vacantes </p>
                 </a>
             </li>
-
             <li id="publicidad" style="display: none;">
                 <a href="../publicidad/publicidad.html">
                     <img src="../../assets/publicidad-digital.png" alt="logo" class="logo" />
                     <p> Publicidad </p>
                 </a>
             </li>
-
             <li id="seleccion" style="display: none;">
                 <a href="../Seleccion/seleccion.html">
                     <img src="../../assets/delegar.png" alt="logo" class="logo" />
                     <p> Seleccion </p>
                 </a>
             </li>
-
             <li id="contratacion" style="display: none;">
                 <a href="../contratacion/contratacion.html">
                     <img src="../../assets/contratacion.png" alt="logo" class="logo" />
                     <p> Contratacion </p>
                 </a>
             </li>
-
-
             <li id="ausentismos" style="display: none;">
                 <a href="../ausentismos/ausentismos.html">
                     <img src="../../assets/person.png" alt="logo" class="logo" />
                     <p> Ausentismo </p>
                 </a>
             </li>
-
             <li style="display: none;">
                 <a href="../SolicitudConsulta/SolicitudConsulta.html">
                     <img src="../../assets/consulta.png" alt="logo" class="logo" />
                     <p> Solicitud Consulta </p>
                 </a>
             </li>
-
             <li>
                 <a href="./Desprendibles.html">
                     <img src="../../assets/marcador.png" alt="logo" class="logo" />
                     <p> Desprendibles de pago </p>
                 </a>
             </li>
-
             <li>
                 <a href="./auditoria.html">
-                  <img src="../../assets/reporte-de-negocios.png" alt="logo" class="logo" />
-                  <p> Auditoria </p>
+                    <img src="../../assets/reporte-de-negocios.png" alt="logo" class="logo" />
+                    <p> Seguimiento HV </p>
                 </a>
-              </li>
-
+            </li>
             <li id="logout">
                 <img src="../../assets/cerrar-sesion.png" alt="logo" class="logo" />
                 <p>Cerrar Sesion</p>
@@ -112,13 +96,12 @@
         </ul>
     </div>
 
-
     <header>
         <div class="cajontitulo">
             <h1 class="titulo">Bienvenido</h1>
         </div>
         <div class="perfil">
-            <h1 clas class="titulo">Hola, <span id="username"></span></h1>
+            <h1 class="titulo">Hola, <span id="username"></span></h1>
             <h1 id="perfil" class="titulo"></h1>
         </div>
     </header>
@@ -128,75 +111,149 @@
             <h1 id="cont" class="contador" style="display: none;"></h1>
             <div class="custom-loader"></div>
         </div>
-
-        <div class="cuadroPlInea" id="descargar" style="cursor: pointer;">
-            <div class="cuadro">
-                <img src="../../assets/templates.png" style="width: 40px;        
-            margin-top: 20px;     
-            padding-left: 20px;">
-                <h3 class="titulo-Opciones"> 1. Descargar Plantilla </h3>
-                <h1 id="cargar" class="titulo-Opciones"></h1>
-            </div>
+<!--
+    <div class="cuadroPlInea" id="descargar" style="cursor: pointer;">
+        <div class="cuadro">
+            <img src="../../assets/templates.png" style="width: 40px; margin-top: 20px; padding-left: 20px;">
+            <h3 class="titulo-Opciones">1. Descargar Plantilla</h3>
+            <h1 id="cargar" class="titulo-Opciones"></h1>
         </div>
+    </div>
+    -->
 
-        <div class="cuadroPlInea" id="cargarA" >
+        <div class="cuadroPlInea" id="cargarA">
             <div class="cuadro">
-                <img src="../../assets/empleado.png" style="width: 40px;        
-            margin-top: 20px;     
-            padding-left: 20px;">
-                <h3 class="titulo-Opciones"> 2. Cargar desprendibles </h3>
+                <img src="../../assets/empleado.png" style="width: 40px; margin-top: 20px; padding-left: 20px;">
+                <h3 class="titulo-Opciones">Cargar seguimiento</h3>
                 <h1 id="cargar" class="titulo-Opciones"></h1>
                 <input type="file" accept=".xlsx" id="archivoInput" class="boton" />
-
             </div>
-        </div>
-
-        <div class="cuadroTexto">
-            <div class="valor">
-                <div class="valoresEscribir">
-                    <h1 class="titulo" style="margin-right: 10px;"> Digite el número de identificación del empleado a
-                        validar: </h1>
-                    <input type="text" id="cedula" placeholder="Número de identificación" class="input"
-                        style="margin-left: 50px; margin-top: -20px;" />
-
-                    <button class="btn2" id="boton" style="margin-top: 15px; margin-left: 50px;">Buscar</button>
-
-
-                </div>
-            </div>
-            <h1 id="datosPersona" class="titulo" style="float: left; margin-left: 30px"></h1>
-
         </div>
 
         <div class="tabla" id="oculto">
             <table class="tabla-contenido">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Cedula</th>
-                        <th>Nombre</th>
-                        <th>Ingreso</th>
-                        <th>Retiro</th>
-                        <th>Finca</th>
-                        <th>Telefono</th>
-                        <th>CONCEPTO</th>
-                        <th>Desprendibles</th>
-                        <th>Certificaciones</th>
-                        <th>cartas de retiro</th>
-                        <th>carta de cesantias</th>
-                        <th>entrevista de retiro</th>
-                        <th>Correo</th>
-                        <th>Confirmacion Envio</th>
-                    </tr>
-                </thead>                
+                        <th>Si se encontraron contratos con fecha diferente</th>
+                        <th>No se encontraron contratos con fecha diferente</th>
+                        <th>NUMERO DE CONTRATO</th>
+                        
+                        <th>Foto Ficha Tecnica</th>
+                        <th>Fecha de Ingreso Ficha Tecnica</th>
+                        <th>Informacion laboral Ficha Tecnica</th>
+                        <th>Firma Trabajdor Ficha Tecnica</th>
+                        <th>Huella Ficha Tecnica</th>
+                        <th>Referencia Ficha Tecnica</th>
+                        <th>Firma carnet Ficha Tecnica</th>
+                        <th>Firma loker Ficha Tecnica</th>
+                        <th>Empleador Ficha Tecnica</th>
 
-                <tbody id="tabla"> </tbody>
+                        <th>Ampliada al 150% Doc Identidad</th>
+                        <th>Huella Doc Identidad</th>
+                        <th>Sello Doc Identidad</th>
+                        <th>Legible Doc Identidad</th>
+
+                        <th>Antecedentes Procuraduría vigente</th>
+                        <th>Antecedentes Fecha Procuraduría</th>
+                        <th>Antecedentes Contraloría vigente</th>
+                        <th>Antecedentes Contraloría Fecha</th>
+                        <th>Antecedentes OFAC Lista Clinton</th>
+                        <th>Antecedentes OFAC Lista Clinton Fecha</th>
+                        <th>Antecedentes Policivos vigente</th>
+                        <th>Antecedentes Policivos Fecha</th>
+                        <th>Antecedentes Medidas Correctivas</th>
+                        <th>Antecedentes Medidad Correctivas fecha</th>
+                        
+                        <th>Adres</th>
+                        <th>Adres fecha de documento</th>
+
+                        <th>Sisben</th>
+                        <th>Sisben fecha</th>
+
+                        <th>Ordenn de ingreso (Formato Elite)</th>
+                        <th>Ordenn de ingreso (Formato Elite) cargo</th>
+                        
+                        <th>Contrato Apellidos y nombres</th>
+                        <th>Contrato No de Cédula</th>
+                        <th>Contrato Dirección</th>
+                        <th>Contrato Correo Electronico</th>
+                        <th>Contrato Fecha de Ingreso</th>
+                        <th>Contrato Salario</th>
+                        <th>Contrato Empresa Usuaria</th>
+                        <th>Contrato Cargo</th>
+                        <th>Contrato Descripción Temporada</th>
+                        <th>Contrato Firme del Trabajador</th>
+                        <th>Contrato Firma de Testigos</th>
+                        <th>Contrato Sello Temporal</th>
+                        
+                        <th>Entrega de Documentos - Autorización Dscto Casino Donde dice ( si o no) colocoar lo que respondieron</th>
+                        <th>Entrega de Documentos - Forma de pago</th>
+                        <th>Entrega de Documentos - Autorización Funerario</th>
+                        <th>Entrega de Documentos - Huellas</th>
+                        <th>Entrega de Documentos - Firma y cédula</th>
+                        <th>Entrega de Documentos - Fecha De Recibido</th>
+                        
+                        <th>ARL - Centro de Costo</th>
+                        <th>ARL - Clase De Riesgo</th>
+                        <th>ARL - Cédula</th>
+                        <th>ARL - Nombre Trabajador</th>
+                        <th>ARL - Fecha de Ingreso</th>
+
+                        <th>Entrevista Ingreso</th>
+
+                        <th>Exámenes - Nombre Temporal</th>
+                        <th>Exámenes - Fecha No Mayor a 15 Dias</th>
+                        <th>Exámenes - Nombres Trabajador</th>
+                        <th>Exámenes - Cargo</th>
+                        <th>Exámenes - N° Cédula</th>
+                        <th>Exámenes - Apto</th>
+                        <th>Exámenes - Salud Ocupacional</th>
+                        <th>Exámenes - Colinesterasa</th>
+                        <th>Exámenes - Planilla Colinesterasa</th>
+                        <th>Exámenes - Otros</th>
+                        
+                        <th>AFP - Certificado AFP (Nuevo) Ruaf</th>
+                        <th>AFP - Nombres Trabajdor</th>
+                        <th>AFP - No de Cédula</th>
+                        <th>AFP - Fecha De Certificado NO Mayor a 15 Dias</th>
+                        <th>AFP - Historia(SEMANAS) Laboral</th>
+                        
+                        <th>EPS - Fecha Radicado</th>
+                        <th>EPS - Nombre y Cedula</th>
+                        <th>EPS - Salario</th>
+                        
+                        <th>CAJA - Fecha Radicado</th>
+                        <th>CAJA - Nombre y Cedula</th>
+                        <th>CAJA - Salario</th>
+                        
+                        <th>PAGO DE SEGURIDAD - Nombre y Cedula</th>
+                        <th>PAGO DE SEGURIDAD - FECHA RADICADO</th>
+                        
+                        <th>Hoja de Vida - Código</th>
+                        <th>Hoja de Vida - Foto (cinta)</th>
+                        <th>Hoja de Vida - Nombre y N° cédula</th>
+                        <th>Hoja de Vida - CORREO</th>
+                        <th>Hoja de Vida - DIRECCION</th>
+                        <th>Hoja de Vida - Referencia</th>
+                        <th>Hoja de Vida - Firma</th>
+                        
+                        <th>Otro si Clausulas adicionales JDA - Firma</th>
+                        <th>Otro si Clausulas adicionales JDA - Sello Temporal</th>
+                        
+                        <th>Adición Contrato  (otro si) - Firma</th>
+                        <th>Adición Contrato  (otro si) - Sello Temporal</th>
+                        
+                        <th>Autorización Tratamiento de Datos JDA - Firma</th>
+                        <th>Carta descuento de flor - Firma</th>
+                        <th>Formato de timbre en hora de ingreso y salida - Firma</th>
+                        <th>Carta autorización correo electrónico - Firma</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla">
+                    <!-- Aquí se insertarán dinámicamente las filas con los datos -->
+                </tbody>
             </table>
         </div>
-
-    </div>
-
-
 
     </div>
 </body>
