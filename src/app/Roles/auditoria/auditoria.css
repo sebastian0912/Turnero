@@ -17,6 +17,11 @@ body {
   cursor: pointer;
 }
 
+i{
+  cursor: pointer;
+
+}
+
 h1 {
   margin: 0;
   padding: 0;
@@ -178,11 +183,11 @@ span {
 
 .tabla {
   width: 1000px;
-  height: 300px;
+  height: 70vh;
   overflow: auto;
   max-height: 50%;
   background: #ffffff;
-  margin: 50px 0 0 80px;
+  margin: 20px 0 0 80px;
   border-radius: 15px;
   box-shadow: 0px 0px 12px 8px rgba(0, 0, 0, 0.1);
   overflow-x: auto;

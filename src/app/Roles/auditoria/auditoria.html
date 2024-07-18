@@ -13,10 +13,13 @@
     <script defer src="../../logOut2.js" type="module"></script>
     <script defer src="auditoria.js" type="module"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 </head>
 
 <body>
-    <audio id="successSound" src="../../assets/Sounds/depositphotos_425986708-track-app-interface-button-notification.mp3"></audio>
+    <audio id="successSound"
+        src="../../assets/Sounds/depositphotos_425986708-track-app-interface-button-notification.mp3"></audio>
     <audio id="errorSound" src="../../assets/Sounds/negative_beeps-6008.mp3"></audio>
 
     <div id="overlay" class="loader-overlay" style="display: none;"></div>
@@ -89,6 +92,12 @@
                     <p> Seguimiento HV </p>
                 </a>
             </li>
+            <li>
+                <a href="../EstadisticaAuditoria/E-auditoria.html">
+                    <img src="../../assets/reporte-de-negocios.png" alt="logo" class="logo" />
+                    <p> Estadisticas HV </p>
+                </a>
+            </li>
             <li id="logout">
                 <img src="../../assets/cerrar-sesion.png" alt="logo" class="logo" />
                 <p>Cerrar Sesion</p>
@@ -111,7 +120,7 @@
             <h1 id="cont" class="contador" style="display: none;"></h1>
             <div class="custom-loader"></div>
         </div>
-<!--
+        <!--
     <div class="cuadroPlInea" id="descargar" style="cursor: pointer;">
         <div class="cuadro">
             <img src="../../assets/templates.png" style="width: 40px; margin-top: 20px; padding-left: 20px;">
@@ -133,11 +142,19 @@
         <div class="tabla" id="oculto">
             <table class="tabla-contenido">
                 <thead>
-                    <tr>
+                    <tr>                        
+                        <th>Acciones</th>
+                        <th>Tipo</th>
+                        <th>Cedula</th>
+                        <th>Apellidos y Nombres</th>
+                        <th> Fecha de Ingreso </th>
+                        <th>Centro de Costo</th>
+                        <th>Codigo Contratación</th>
+
                         <th>Si se encontraron contratos con fecha diferente</th>
                         <th>No se encontraron contratos con fecha diferente</th>
                         <th>NUMERO DE CONTRATO</th>
-                        
+
                         <th>Foto Ficha Tecnica</th>
                         <th>Fecha de Ingreso Ficha Tecnica</th>
                         <th>Informacion laboral Ficha Tecnica</th>
@@ -163,7 +180,7 @@
                         <th>Antecedentes Policivos Fecha</th>
                         <th>Antecedentes Medidas Correctivas</th>
                         <th>Antecedentes Medidad Correctivas fecha</th>
-                        
+
                         <th>Adres</th>
                         <th>Adres fecha de documento</th>
 
@@ -172,7 +189,7 @@
 
                         <th>Ordenn de ingreso (Formato Elite)</th>
                         <th>Ordenn de ingreso (Formato Elite) cargo</th>
-                        
+
                         <th>Contrato Apellidos y nombres</th>
                         <th>Contrato No de Cédula</th>
                         <th>Contrato Dirección</th>
@@ -185,14 +202,15 @@
                         <th>Contrato Firme del Trabajador</th>
                         <th>Contrato Firma de Testigos</th>
                         <th>Contrato Sello Temporal</th>
-                        
-                        <th>Entrega de Documentos - Autorización Dscto Casino Donde dice ( si o no) colocoar lo que respondieron</th>
+
+                        <th>Entrega de Documentos - Autorización Dscto Casino Donde dice ( si o no) colocoar lo que
+                            respondieron</th>
                         <th>Entrega de Documentos - Forma de pago</th>
                         <th>Entrega de Documentos - Autorización Funerario</th>
                         <th>Entrega de Documentos - Huellas</th>
                         <th>Entrega de Documentos - Firma y cédula</th>
                         <th>Entrega de Documentos - Fecha De Recibido</th>
-                        
+
                         <th>ARL - Centro de Costo</th>
                         <th>ARL - Clase De Riesgo</th>
                         <th>ARL - Cédula</th>
@@ -211,24 +229,24 @@
                         <th>Exámenes - Colinesterasa</th>
                         <th>Exámenes - Planilla Colinesterasa</th>
                         <th>Exámenes - Otros</th>
-                        
+
                         <th>AFP - Certificado AFP (Nuevo) Ruaf</th>
                         <th>AFP - Nombres Trabajdor</th>
                         <th>AFP - No de Cédula</th>
                         <th>AFP - Fecha De Certificado NO Mayor a 15 Dias</th>
                         <th>AFP - Historia(SEMANAS) Laboral</th>
-                        
+
                         <th>EPS - Fecha Radicado</th>
                         <th>EPS - Nombre y Cedula</th>
                         <th>EPS - Salario</th>
-                        
+
                         <th>CAJA - Fecha Radicado</th>
                         <th>CAJA - Nombre y Cedula</th>
                         <th>CAJA - Salario</th>
-                        
+
                         <th>PAGO DE SEGURIDAD - Nombre y Cedula</th>
                         <th>PAGO DE SEGURIDAD - FECHA RADICADO</th>
-                        
+
                         <th>Hoja de Vida - Código</th>
                         <th>Hoja de Vida - Foto (cinta)</th>
                         <th>Hoja de Vida - Nombre y N° cédula</th>
@@ -236,13 +254,13 @@
                         <th>Hoja de Vida - DIRECCION</th>
                         <th>Hoja de Vida - Referencia</th>
                         <th>Hoja de Vida - Firma</th>
-                        
+
                         <th>Otro si Clausulas adicionales JDA - Firma</th>
                         <th>Otro si Clausulas adicionales JDA - Sello Temporal</th>
-                        
-                        <th>Adición Contrato  (otro si) - Firma</th>
-                        <th>Adición Contrato  (otro si) - Sello Temporal</th>
-                        
+
+                        <th>Adición Contrato (otro si) - Firma</th>
+                        <th>Adición Contrato (otro si) - Sello Temporal</th>
+
                         <th>Autorización Tratamiento de Datos JDA - Firma</th>
                         <th>Carta descuento de flor - Firma</th>
                         <th>Formato de timbre en hora de ingreso y salida - Firma</th>
