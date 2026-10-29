@@ -25,8 +25,6 @@ Turnero reúne en una sola herramienta todo el recorrido de una persona en la se
 - Empaquetado con **electron-builder** y **Electron Forge** (Windows, con objetivos para Linux).
 - Generación de PDF en el cliente con **jsPDF**.
 
-El mismo modelo de distribución (un instalador que se actualiza solo desde Releases) es el que uso hoy en Laplace, Scripta y Tend.
-
 ---
 
 Autor: [Sebastián Guarnizo Campos](https://www.linkedin.com/in/sebastian-guarnizo-campos) · Software Architect & Tech Lead
